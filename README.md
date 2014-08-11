@@ -9,7 +9,7 @@ Library for easy form generation
 ###Todo
 
  - Add centralized `Callback` class for access both direct and through AJAX
- - Add clientsize Sanitizer implementation. Sanitize either live or on blur
+ - Add clientsize Sanitizer implementation (sanitize field value either live or on blur)
  - Add XML form definition parser
  - Add default styles with horizontal row support
  - Load forms on demand
