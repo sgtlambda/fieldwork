@@ -1,0 +1,16 @@
+div.recaptcha-img-wrap{position: relative; height: 57px; margin: 0 -10px 1px; padding: 2px 0;}
+.type-image .recaptcha-audio-link{display: none;}
+.type-audio .recaptcha-img{display: none !important;}
+img.recaptcha-img{ }
+a.recaptcha-audio-link{display: block; line-height: 30px; margin: 10px 25px; color: red;}
+a.recaptcha-audio-link:hover{color: orange;}
+ul.recaptcha-img-actions{position: absolute; right: 1px; top: 3px; list-style-type: none !important; padding-left: 0 !important; padding: 0; margin: 0; margin-top: -5px;}
+ul.recaptcha-img-actions li{margin-bottom: 3px;}
+ul.recaptcha-img-actions a{display: block; cursor: pointer; padding: 0; width: 24px; height: 24px; border: 1px solid #888; background-color: #fafafa;}
+ul.recaptcha-img-actions a.rca-reload{background-image: url('../img/icons/recaptcha/refresh.png');}
+ul.recaptcha-img-actions a.rca-switch-type{background-image: url('../img/icons/recaptcha/type.png');}
+.type-audio ul.recaptcha-img-actions a.rca-switch-type{background-position: 0 -24px;}
+ul.recaptcha-img-actions a:hover{background-color: white;}
+ul.recaptcha-img-actions a:active{box-shadow: inset 0 2px 0 rgba(0,0,0, 0.3); background-color: white;}
+.form-error{padding: 8px; margin: 12px 0 10px; border: 1px solid #f62e2e; background-color: #f4c3c3; font-weight: bold; }
+.invisible-target-button{display: none;}
