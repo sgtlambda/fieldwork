@@ -5,11 +5,11 @@ Setting up a web form can be a pain and often forces you to keep track of sepera
 
  - Define entires form using just PHP. No manual HTML or javascript coding involved
  - Sanitizes and validates twice, client-side for convenience, server-side for security
- - Can be used as a WordPress plugin
 
 ###Getting started
 
 Clone this repo or extract [master.zip](https://github.com/jmversteeg/jannieforms/archive/master.zip) somewhere.
+If you're using WordPress, install to `/wp-content/plugins/jannieforms` and activate plugin in WordPress admin for access by other plugins.
 
 Creating a form is as simple as instantiating `JannieForm`:
 
