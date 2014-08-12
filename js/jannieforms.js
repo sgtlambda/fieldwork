@@ -12,6 +12,14 @@ var _JannieForms = {};
                 return value.match(new RegExp(match[1], match[2]));
             }
         },
+        sanitizers: {
+            uppercase: function(value, validator){
+                return value.toUpperCase();
+            },
+            capitalize: function(value, validator){
+                return value.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+            }
+        },
         registerCallback: function(slug, on, fn) {
             this.i.callbacks.push({
                 slug: slug,
@@ -145,6 +153,7 @@ var _JannieForms = {};
         this.touched = false;
         this.valid = false;
         this.validators = fieldData.validators;
+        this.sanitizers = fieldData.sanitizers;
         this.isButton = fieldData.isButton === true;
         this.clicked = false;
         var field = this;
@@ -154,17 +163,25 @@ var _JannieForms = {};
             },
             focus: function(){
                 field.touched = true;
+                field.element.addClass("input-touched");
             },
             click: function(){
                 field.clicked = true;
+            },
+            keyup: function(e){
+                field.keyup(e, this);
             }
         });
     }
     $.extend(JannieField.prototype, {
         blur: function(){
             if(!this.touched) return;
+            this.sanitize(false);
             this.validate();
         }, 
+        keyup: function(e, field){
+            this.sanitize(true);
+        },
         cancelSubmit: function(){
             this.clicked = false;
         },
@@ -173,7 +190,7 @@ var _JannieForms = {};
             var valid = true;
             for(var v in this.validators)
                 if((JannieForms.validators[this.validators[v].method])){
-                    if(this.element.attr("placeholder") == val) val = "";
+                    if(this.element.attr("placeholder") === val) val = "";
                     if (! ( (JannieForms.validators[this.validators[v].method])(val, this.validators[v]) ) ){
                         this.setInvalid(this.validators[v].error);
                         valid = false;
@@ -183,6 +200,16 @@ var _JannieForms = {};
             if(valid)
                 this.setValid();
         }, 
+        sanitize: function(live){
+            var val = this.getValue();
+            var oldVal = val;
+            for(var s in this.sanitizers)
+                if((JannieForms.sanitizers[this.sanitizers[s].method]))
+                    if(!live || this.sanitizers[s].live)
+                        val = (JannieForms.sanitizers[this.sanitizers[s].method])(val, this.sanitizers[s]);
+            if(oldVal !== val)
+                this.setValue(val);
+        },
         getName: function(){
             return this.element.attr('name');
         },
@@ -192,13 +219,16 @@ var _JannieForms = {};
         getValue: function(){
             return this.element.val();
         }, 
+        setValue: function(val) {
+            this.element.val(val);
+        },
         setInvalid: function(error){
             this.element.removeClass("valid").addClass("invalid");
             this.element.jtLink(error, ['focus'], []);
             this.valid = false;
         }, 
         setValid: function(){
-            this.element.removeClass("invalid")
+            this.element.removeClass("invalid");
             if(this.validators.length)
                 this.element.addClass("valid");
             this.element.jtUnlink();
@@ -218,39 +248,8 @@ var _JannieForms = {};
         var challenge = table.find('input[name="recaptcha_challenge_field"]').val();
         $this.find('.recaptcha-img').attr('src', imgSrc);
         $this.find('.rc-challenge-field').val(challenge);
-    }
+    };
     $(function(){
-        
-        var recaptchaReload = function(){
-            Recaptcha.reload();
-            var unit = $(this).parents(".recaptcha-unit");
-            var refresh = function(){unit.recaptchaUnitRefresh();}
-            setTimeout(refresh, 100);
-            setTimeout(refresh, 500);
-        };
-        var recaptchaSwitchType = function(){
-            var unit = $(this).parents('.recaptcha-unit');
-            var image = unit.hasClass("type-image");
-            var newType = image?'audio':'image';
-            Recaptcha.switch_type(newType);
-            if(newType=='audio'){
-                unit.find('.rc-response-field').attr('placeholder', 'Type de nummers die u hoort');
-                if(window['wpTheme'] != undefined)
-                    wpTheme.applyPlaceholders();
-                var updateLink = function(){unit.find('.recaptcha-audio-link').attr('href', unit.data('recaptcha-elmt').find('#recaptcha_audio_download').attr('href'));}
-                setTimeout(updateLink, 100);
-                setTimeout(updateLink, 500);
-            }else{
-                unit.find('.rc-response-field').attr('placeholder', 'Type de bovenstaande woorden');
-                if(window['wpTheme'] != undefined)
-                    wpTheme.applyPlaceholders();
-                unit.find('.recaptcha-img').attr('src', '');
-            }
-            unit.removeClass("type-image type-audio").addClass("type-" + newType);
-            var refresh = function(){unit.recaptchaUnitRefresh();}
-            setTimeout(refresh, 100);
-            setTimeout(refresh, 500);
-        };
         var processForms = function(){
             $(".jannierecaptcha:not(.processed)").each(function(){
                 var $this = $(this);

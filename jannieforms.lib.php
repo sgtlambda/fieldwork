@@ -722,25 +722,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     }
 
-    abstract class JannieFormFieldModifier {
-
-        abstract public function run($val);
-    }
-
-    class JannieFormFieldFunctionModifier extends JannieFormFieldModifier {
-
-        private $fn;
-
-        public function __construct($fn) {
-            $this->fn = $fn;
-        }
-
-        public function run($val) {
-            return call_user_func($this->fn, $val);
-        }
-
-    }
-
     abstract class JannieFormFieldComponent extends JannieFormComponent {
 
         const DEFAULT_COOKIE_LIFETIME = 2592000; // 60 * 60 * 24 * 30  ->  30 days
@@ -757,8 +738,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $validators = array(),
                 $sanitizers = array(),
                 $collectData = true,
-                $storeValueLocally,
-                $fieldMod = array();
+                $storeValueLocally;
 
         /**
          * Creates a new form field component
@@ -774,11 +754,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->storeValueLocally = $storeValueLocally;
         }
 
-        public function addModifier($mod) {
-            $this->fieldMod[] = $mod;
-            return $this;
-        }
-
         public function setCollectData($collectData) {
             $this->collectData = $collectData;
         }
@@ -787,11 +762,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this->collectData;
         }
 
-        public function restoreValue($method, $applyModifiers = true) {
+        public function restoreValue($method, $sanitize = true) {
             $v = stripslashes($method->getValue($this->getName(), $this->value));
-            if ($applyModifiers)
-                foreach ($this->fieldMod as $m)
-                    $v = $m->run($v);
+            if ($sanitize){
+                foreach ($this->sanitizers as $s)
+                    /* @var $s JannieFormFieldSanitizer */
+                    $v = $s->sanitize ($v);
+            }
             $this->value = $v;
         }
 
@@ -846,11 +823,15 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public function getJsonData() {
-            $v = array();
+            $v = [];
+            $s = [];
             foreach ($this->validators as $validator)
                 array_push($v, $validator->getJsonData());
+            foreach ($this->sanitizers as $sanitizer)
+                $s[] = $sanitizer->getJsonData();
             return array(
                 'validators' => $v,
+                'sanitizers' => $s,
                 'id' => $this->getID(),
                 'name' => $this->getName(),
                 'collectData' => $this->collectData
@@ -876,13 +857,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
             ));
         }
 
-        public function addValidator($v) {
+        public function addValidator(JannieFormFieldValidator $v) {
             $this->validators[] = $v;
             $v->setField($this);
             return $this;
         }
 
-        public function addSanitizer($s) {
+        public function addSanitizer(JannieFormFieldSanitizer $s) {
             $this->sanitizers[] = $s;
             return $this;
         }
@@ -1152,10 +1133,60 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
+    
+    abstract class SynchronizedObject {
+        
+        abstract function getJsonData();
+        
+    }
 
-    abstract class JannieFormFieldSanitizer {
+    abstract class JannieFormFieldSanitizer extends SynchronizedObject {
 
         public abstract function sanitize($value);
+        
+        public abstract function describeMethod();
+        
+        public abstract function isLive();
+        
+        public function getJsonData() {
+            return [
+                'method' => $this->describeMethod(),
+                'live' => $this->isLive()
+            ];
+        }
+        
+    }
+    
+    class JannieFormFieldCapitalizer extends JannieFormFieldSanitizer {
+        
+        public function sanitize($value) {
+            return ucwords($value);
+        }
+        
+        public function isLive() {
+            return true;
+        }
+        
+        public function describeMethod() {
+            return 'capitalize';
+        }
+        
+    }
+    
+    class JannieFormFieldUppercaser extends JannieFormFieldSanitizer {
+        
+        public function sanitize($value) {
+            return strtoupper($value);
+        }
+        
+        public function isLive() {
+            return true;
+        }
+        
+        public function describeMethod() {
+            return 'uppercase';
+        }
+        
     }
 
     abstract class JannieFormValidator {
@@ -1193,7 +1224,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public abstract function validate(JannieForm $form);
     }
 
-    abstract class JannieFormFieldValidator {
+    abstract class JannieFormFieldValidator extends SynchronizedObject{
         /* @var $field JannieFormFieldComponent */
 
         private $errorMsg = '', $field;
@@ -1206,7 +1237,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getJsonData() {
             return array(
                 'error' => $this->errorMsg,
-                'method' => $this->getMethod()
+                'method' => $this->describeMethod()
             );
         }
 
@@ -1224,7 +1255,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public abstract function isValid($value);
 
-        public abstract function getMethod();
+        public abstract function describeMethod();
+        
     }
 
     class JannieFormRegexFieldValidator extends JannieFormFieldValidator {
@@ -1246,7 +1278,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return preg_match($this->pattern, $value);
         }
 
-        public function getMethod() {
+        public function describeMethod() {
             return 'regex';
         }
 
