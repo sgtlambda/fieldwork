@@ -764,11 +764,9 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function restoreValue($method, $sanitize = true) {
             $v = stripslashes($method->getValue($this->getName(), $this->value));
-            if ($sanitize){
+            if ($sanitize)
                 foreach ($this->sanitizers as $s)
-                    /* @var $s JannieFormFieldSanitizer */
                     $v = $s->sanitize ($v);
-            }
             $this->value = $v;
         }
 
