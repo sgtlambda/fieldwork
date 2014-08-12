@@ -1,7 +1,7 @@
 jannieforms
 ===========
 
-Library for easy form generation
+Setting up a web form can be a pain and often forces you to keep track of seperate definitions for the browser and for the server. Jannieforms takes an object-oriented approach towards building forms and will make your life a lot easier by dealing with all the trivial tasks of markup generation, validation and whatnot.
 
  - Define a form once and jannieforms will automatically set up validation clientside and serverside
  - Can be used as a WordPress plugin
