@@ -47,4 +47,6 @@ Add a submit button:
  - Add default styles with horizontal row support
  - Load forms on demand
  - Remove low-level configuration of `WRAPPER` and `INPUT` node (perhaps remove `WRAPPER` node altogether and use `box-sizing: border-box;` for input nodes)
- - Remove `JannieTooltips` from global namespace
+ - Convert client-side code to CoffeeScript
+ - Implement require.js/AMD support
+ - (optionally) Remove `JannieTooltips` and `_JannieForms` from global namespace
