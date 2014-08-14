@@ -98,7 +98,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return true;
         }
 
-        protected function add($component) {
+        protected function add(JannieFormComponent $component) {
             $this->children[] = $component;
         }
 
@@ -110,7 +110,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this->customWrapperClasses;
         }
 
-        public function addTo($parent) {
+        public function addTo(JannieFormComponent $parent) {
             $parent->add($this);
             $this->parent = $parent;
             return $this;
@@ -144,6 +144,10 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->activated = $active;
         }
 
+        /**
+         * Checks whether the component is active
+         * @return boolean
+         */
         public function isActive() {
             return $this->activated;
         }
@@ -166,13 +170,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         /**
          * Check if given component is child
-         * @param JannieFormComponent $testcomponent component to search for
+         * @param JannieFormComponent $child component to search for
          * @param boolean $recursive whether or not to search recursively
          * @return boolean 
          */
-        public function hasChild($testcomponent, $recursive = true) {
+        public function hasChild($child, $recursive = true) {
             foreach ($this->children as $component)
-                if ($component == $testcomponent || ($recursive && $component->hasChild($testcomponent, true)))
+                if ($component == $child || ($recursive && $component->hasChild($child, true)))
                     return true;
             return false;
         }
@@ -277,7 +281,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         /**
-         * Checks whether this method has been activated
+         * Checks whether the method has been activated
          * @return boolean
          */
         public function isActive() {
@@ -459,7 +463,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getValue($key, $default = '') {
             return $this->method->getValue($key, $default);
         }
-        
+
         public function hasValue($key) {
             return $this->method->hasValue($key);
         }
@@ -676,7 +680,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         /**
-         * Indicates whether this form was validated correctly and submitted.
+         * Indicates whether the form was validated correctly and submitted.
          * @return boolean
          */
         public function isSubmitted() {
@@ -833,6 +837,10 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->visible = $visible;
         }
 
+        /**
+         * Checks whether the component is visible
+         * @return type
+         */
         public function isVisible() {
             return $this->visible;
         }
@@ -1056,7 +1064,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         /**
-         * Sets whether this button uses a shim display node
+         * Sets whether the button uses a shim display node
          * @param boolean $use_shim
          * @return \JannieButton
          */
