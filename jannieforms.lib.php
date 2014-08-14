@@ -73,8 +73,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     abstract class JannieFormComponent {
 
-        protected $parent, $children = array();
-        private $slug, $customClasses = array(), $customWrapperClasses = array(), $customAttributes = array();
+        protected
+                $parent,
+                $children = array();
+        private
+                $slug,
+                $customClasses = array(),
+                $customWrapperClasses = array(),
+                $customAttributes = array();
 
         const ELMT_FIELD = 0;
         const ELMT_WRAPPER = 1;
@@ -130,7 +136,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         /**
-         * Returns a list of the component's children
+         * Returns a flat list of the component's enabled children
          * @param boolean $recursive
          * @return array
          */
@@ -766,7 +772,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $v = stripslashes($method->getValue($this->getName(), $this->value));
             if ($sanitize)
                 foreach ($this->sanitizers as $s)
-                    $v = $s->sanitize ($v);
+                    $v = $s->sanitize($v);
             $this->value = $v;
         }
 
@@ -1131,60 +1137,59 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
-    
+
     abstract class SynchronizedObject {
-        
+
         abstract function getJsonData();
-        
     }
 
     abstract class JannieFormFieldSanitizer extends SynchronizedObject {
 
         public abstract function sanitize($value);
-        
+
         public abstract function describeMethod();
-        
+
         public abstract function isLive();
-        
+
         public function getJsonData() {
             return [
                 'method' => $this->describeMethod(),
                 'live' => $this->isLive()
             ];
         }
-        
+
     }
-    
+
     class JannieFormFieldCapitalizer extends JannieFormFieldSanitizer {
-        
+
         public function sanitize($value) {
             return ucwords($value);
         }
-        
+
         public function isLive() {
             return true;
         }
-        
+
         public function describeMethod() {
             return 'capitalize';
         }
-        
+
     }
-    
+
     class JannieFormFieldUppercaser extends JannieFormFieldSanitizer {
-        
+
         public function sanitize($value) {
             return strtoupper($value);
         }
-        
+
         public function isLive() {
             return true;
         }
-        
+
         public function describeMethod() {
             return 'uppercase';
         }
-        
+
     }
 
     abstract class JannieFormValidator {
@@ -1222,7 +1227,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public abstract function validate(JannieForm $form);
     }
 
-    abstract class JannieFormFieldValidator extends SynchronizedObject{
+    abstract class JannieFormFieldValidator extends SynchronizedObject {
         /* @var $field JannieFormFieldComponent */
 
         private $errorMsg = '', $field;
@@ -1254,7 +1259,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public abstract function isValid($value);
 
         public abstract function describeMethod();
-        
     }
 
     class JannieFormRegexFieldValidator extends JannieFormFieldValidator {
