@@ -459,6 +459,10 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getValue($key, $default = '') {
             return $this->method->getValue($key, $default);
         }
+        
+        public function hasValue($key) {
+            return $this->method->hasValue($key);
+        }
 
         public function enableAJAX(JannieAjaxMethod $method, $ajaxSubmitEnabled = true) {
             $this->ajaxMethod = $method;
