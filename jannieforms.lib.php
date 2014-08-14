@@ -78,6 +78,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $children = array();
         private
                 $slug,
+                $activated = true,
                 $customClasses = array(),
                 $customWrapperClasses = array(),
                 $customAttributes = array();
@@ -135,6 +136,18 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
+        public function deactivate() {
+            $this->activated = false;
+        }
+
+        public function activate() {
+            $this->activated = true;
+        }
+
+        public function isActive() {
+            return $this->activated;
+        }
+
         /**
          * Returns a flat list of the component's enabled children
          * @param boolean $recursive
@@ -142,11 +155,12 @@ if (!defined('JANNIEFORMS_LOADED')) {
          */
         public function getChildren($recursive = true) {
             $children = array();
-            foreach ($this->children as $component) {
-                array_push($children, $component);
-                if ($recursive)
-                    $children = array_merge($children, $component->getChildren(true));
-            }
+            foreach ($this->children as $component)
+                if ($component->isActive()) {
+                    array_push($children, $component);
+                    if ($recursive)
+                        $children = array_merge($children, $component->getChildren(true));
+                }
             return $children;
         }
 
@@ -217,15 +231,16 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function getHTML($before = '', $after = '', $prefix = '', $suffix = '') {
             $html = '';
-            foreach ($this->children as $component) {
-                /* @var $component JannieFormFieldComponent */
-                $componentHTML = (
-                        ($component->isVisible() || $component->renderWhenHidden() == JannieFormFieldComponent::RM_DEFAULT ) ?
-                                $component->getHTML() :
-                                ($component->renderWhenHidden() == JannieFormFieldComponent::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
-                        );
-                $html .= $prefix . ( $component->isVisible() ? (sprintf($before, implode(' ', $component->getCustomWrapperClasses())) . $componentHTML . $after) : $component->getHTML() ) . $suffix;
-            }
+            foreach ($this->children as $component)
+                if ($component->isActive()) {
+                    /* @var $component JannieFormFieldComponent */
+                    $componentHTML = (
+                            ($component->isVisible() || $component->renderWhenHidden() == JannieFormFieldComponent::RM_DEFAULT ) ?
+                                    $component->getHTML() :
+                                    ($component->renderWhenHidden() == JannieFormFieldComponent::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
+                            );
+                    $html .= $prefix . ( $component->isVisible() ? (sprintf($before, implode(' ', $component->getCustomWrapperClasses())) . $componentHTML . $after) : $component->getHTML() ) . $suffix;
+                }
 
             return $html;
         }
