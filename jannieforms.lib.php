@@ -78,7 +78,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $children = array();
         private
                 $slug,
-                $activated = true,
+                $active = true,
                 $customClasses = array(),
                 $customWrapperClasses = array(),
                 $customAttributes = array();
@@ -141,7 +141,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * @param boolean $active
          */
         public function setActive($active = true) {
-            $this->activated = $active;
+            $this->active = $active;
+            return $this;
         }
 
         /**
@@ -149,21 +150,22 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * @return boolean
          */
         public function isActive() {
-            return $this->activated;
+            return $this->active;
         }
 
         /**
          * Returns a flat list of the component's enabled children
          * @param boolean $recursive
+         * @param boolean $includeInactiveFields whether to include inactive fields as well
          * @return array
          */
-        public function getChildren($recursive = true) {
+        public function getChildren($recursive = true, $includeInactiveFields = false) {
             $children = array();
             foreach ($this->children as $component)
-                if ($component->isActive()) {
+                if ($component->isActive() || $includeInactiveFields) {
                     array_push($children, $component);
                     if ($recursive)
-                        $children = array_merge($children, $component->getChildren(true));
+                        $children = array_merge($children, $component->getChildren(true, $includeInactiveFields));
                 }
             return $children;
         }
@@ -359,9 +361,9 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $attachRefererOnInstantiate = false,
                 $activateCallbacks = array(),
                 $javascriptCallback = array(),
-                $isActivated = false,
+                $isUserSubmitted = false,
                 $isProcessed = false,
-                $isSubmitted = false,
+                $isCallbacksubmitted = false,
                 $dataFields;
 
         /**
@@ -395,10 +397,10 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * @param string $q id to search for
          * @return bool|JannieFormFieldComponent closest match or false if not found
          */
-        public function f($q) {
+        public function f($q, $includeInactiveFields = false) {
             $minLength = -1;
             $f = false;
-            foreach ($this->getFields() as $field)
+            foreach ($this->getFields($includeInactiveFields) as $field)
                 if (preg_match("/^(.*)" . preg_quote($q) . "$/", $field->getGlobalSlug(), $matches)) {
                     $l = strlen($matches[1]);
                     if ($l < $minLength || $minLength == -1) {
@@ -546,9 +548,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return "form-" . $this->getGlobalSlug();
         }
 
-        public function getFields() {
+        /**
+         * Retrieves an array of this form's fields
+         * @param boolean $includeInactiveFields whether to include inactive fields as well
+         * @return array
+         */
+        public function getFields($includeInactiveFields = false) {
             $fields = array();
-            foreach ($this->getChildren(true) as $component)
+            foreach ($this->getChildren(true, $includeInactiveFields) as $component)
                 if (is_subclass_of($component, "JannieFormFieldComponent"))
                     array_push($fields, $component);
             return $fields;
@@ -564,8 +571,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 "dataFields" => $this->dataFields,
                 "submitCallback" => $this->javascriptCallback,
                 "isProcessed" => $this->isProcessed,
-                "isActivated" => $this->isActivated,
-                "isSubmitted" => $this->isSubmitted,
+                "isActivated" => $this->isUserSubmitted,
+                "isSubmitted" => $this->isCallbacksubmitted,
                 "ajax" => array(
                     "submitEnabled" => $this->ajaxSubmitEnabled,
                     "method" => $this->ajaxMethod !== null ? $this->ajaxMethod->getSlug() : "",
@@ -586,7 +593,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function submit() {
             foreach ($this->getFields() as $field)
                 $field->submit();
-            $this->isSubmitted = true;
+            $this->isCallbacksubmitted = true;
             foreach ($this->callback as $callback)
                 if (is_callable($callback))
                     call_user_func($callback, $this);
@@ -619,14 +626,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function attachRefererOnInstantiate() {
             $this->attachRefererOnInstantiate = true;
-        }
-
-        /**
-         * Indicates whether the form was submitted, regardless of whether it validated correctly
-         * @return boolean
-         */
-        public function isActivated() {
-            return $this->isActivated;
         }
 
         public function isValid() {
@@ -662,8 +661,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->isProcessed = true;
             foreach ($this->getFields() as $field)
                 $field->preprocess();
-            $this->isActivated = $this->getValue($this->getSubmitConfirmFieldName(), 'false') == 'true';
-            if ($this->isActivated) {
+            $this->isUserSubmitted = $this->getValue($this->getSubmitConfirmFieldName(), 'false') == 'true';
+            if ($this->isUserSubmitted) {
                 foreach ($this->getFields() as $field)
                     $field->restoreValue($this->method);
 
@@ -675,18 +674,31 @@ if (!defined('JANNIEFORMS_LOADED')) {
             }
         }
 
+        /**
+         * Checks whether the form has been processed
+         * @return boolean
+         */
         public function isProcessed() {
             return $this->isProcessed;
+        }
+
+        /**
+         * Indicates whether the form was submitted, regardless of whether it validated correctly
+         * @return boolean
+         */
+        public function isUserSubmitted() {
+            return $this->isUserSubmitted;
         }
 
         /**
          * Indicates whether the form was validated correctly and submitted.
          * @return boolean
          */
-        public function isSubmitted() {
-            return $this->isSubmitted;
+        public function isCallbackSubmitted() {
+            return $this->isCallbacksubmitted;
         }
 
+        // TODO name these methods more intuitively
     }
 
     abstract class JannieFormMethod {
@@ -827,6 +839,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function setValue($value) {
             $this->value = $value;
+            return $this;
         }
 
         /**
@@ -835,6 +848,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
          */
         public function setVisible($visible = true) {
             $this->visible = $visible;
+            return $this;
         }
 
         /**
@@ -884,7 +898,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getClasses() {
             return array_merge(parent::getClasses(), array(
                 "janniefield",
-                ($this->getRoot()->isActivated() ? ($this->isValid() ? "valid" : "invalid") : "")
+                ($this->getRoot()->isUserSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
             ));
         }
 
