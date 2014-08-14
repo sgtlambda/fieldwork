@@ -136,12 +136,12 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
-        public function deactivate() {
-            $this->activated = false;
-        }
-
-        public function activate() {
-            $this->activated = true;
+        /**
+         * Sets whether the component is active
+         * @param boolean $active
+         */
+        public function setActive($active = true) {
+            $this->activated = $active;
         }
 
         public function isActive() {
@@ -825,12 +825,12 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->value = $value;
         }
 
-        public function hide() {
-            $this->visible = false;
-        }
-
-        public function show() {
-            $this->visible = true;
+        /**
+         * Sets whether the component is visible
+         * @param type $visible
+         */
+        public function setVisible($visible = true) {
+            $this->visible = $visible;
         }
 
         public function isVisible() {
