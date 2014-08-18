@@ -253,7 +253,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function isValid() {
             foreach ($this->children as $component)
-                if (!$component->isValid())
+                if (!$component->isValid() && $component->isActive())
                     return false;
             return true;
         }
@@ -686,7 +686,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * Indicates whether the form was submitted, regardless of whether it validated correctly
          * @return boolean
          */
-        public function isUserSubmitted() {
+        public function isSubmitted() {
             return $this->isUserSubmitted;
         }
 
@@ -694,7 +694,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * Indicates whether the form was validated correctly and submitted.
          * @return boolean
          */
-        public function isCallbackSubmitted() {
+        public function isSuccess() {
             return $this->isCallbacksubmitted;
         }
 
@@ -898,7 +898,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getClasses() {
             return array_merge(parent::getClasses(), array(
                 "janniefield",
-                ($this->getRoot()->isUserSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
+                ($this->getRoot()->isSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
             ));
         }
 
@@ -1275,7 +1275,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function __construct($errorMsg) {
             $this->errorMsg = $errorMsg;
-            $this->slug = $slug;
         }
 
         public function getJsonData() {
