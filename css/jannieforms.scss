@@ -1,6 +1,16 @@
 @import "recaptcha.scss";
 @import "tooltips.scss";
 
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+$spacing: 16px;
+
 .form-error {
   padding: 8px;
   margin: 12px 0 10px;
@@ -17,8 +27,27 @@ input.janniefield, textarea.janniefield{
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    margin: 16px 0;
+    margin: $spacing 0;
     border-radius: 3px;
     background: white;
     border: 1px solid #ccc;
+    -webkit-transition: background 0.2s;
+    &.invalid:not(:focus){
+        background: lighten(red, 47%);
+    }
+}
+
+.horizontalgroup{
+    @include clearfix;
+    margin: (-$spacing) (-$spacing/2);
+    .group-item{
+        float: left;
+        box-sizing: border-box;
+        padding: 0 $spacing/2;
+    }
+    &.two-items{
+        .group-item{
+            width: 50%;
+        }
+    }
 }

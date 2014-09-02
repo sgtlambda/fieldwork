@@ -108,12 +108,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
-        public function addClass($class, $elmt = self::ELMT_FIELD) {
-            $targetArray = array();
-
-            if ($elmt == self::ELMT_FIELD)
-                $targetArray = &$this->customClasses;
-
+        /**
+         * Adds class(es) to this component's node
+         * @param string|array $class
+         * @return \JannieFormComponent
+         */
+        public function addClass($class) {
+            $targetArray = &$this->customClasses;
             if (!is_array($class))
                 $targetArray[] = $class;
             else
@@ -1133,14 +1134,16 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     class JannieHorizontalGroup extends JannieFormGroupComponent {
 
+        const CLASS_TWO_ITEMS = 'two-items';
+        
         public function getClasses() {
             return array_merge(parent::getClasses(), array(
-                'buttongroup', 'horizontalgroup'
+                'horizontalgroup'
             ));
         }
 
         public function getHTML() {
-            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div class="group-item horizontal-group-item %s">', '</div>') . '<br style="clear: both; "></div>';
+            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div class="group-item horizontal-group-item">', '</div>') . '</div>';
         }
 
     }
