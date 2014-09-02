@@ -1,0 +1,14 @@
+@import "recaptcha.scss";
+@import "tooltips.scss";
+
+.form-error {
+  padding: 8px;
+  margin: 12px 0 10px;
+  border: 1px solid #f62e2e;
+  background-color: #f4c3c3;
+  font-weight: bold;
+}
+
+.invisible-target-button {
+  display: none;
+}
