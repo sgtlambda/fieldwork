@@ -1110,7 +1110,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function getHTML() {
             $icon = ($this->icon == '' ? '' : '<img class="button-icon" src="' . $this->icon . '"> ');
-            $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i>' : '';
+            $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i> ' : '';
             if ($this->use_shim)
                 return
                         "<div class=\"button-wrap " . ($this->use_shim ? "uses-shim" : "") . "\">"
