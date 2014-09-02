@@ -11,14 +11,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
         private static $ajaxMethods = array();
 
         /**
-         * Registers given form globally
-         * @param JannieForm $form
-         */
-        static function registerForm(JannieForm $form) {
-            array_push(self::$forms, $form);
-        }
-
-        /**
          * Registers given ajax method globally.
          * @param JannieAjaxMethod $ajaxMethod
          */
