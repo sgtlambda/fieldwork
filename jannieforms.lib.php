@@ -80,11 +80,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $slug,
                 $active = true,
                 $customClasses = array(),
-                $customWrapperClasses = array(),
                 $customAttributes = array();
-
-        const ELMT_FIELD = 0;
-        const ELMT_WRAPPER = 1;
 
         public function __construct($slug) {
             $this->slug = $slug;
@@ -106,10 +102,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this->customClasses;
         }
 
-        public function getCustomWrapperClasses() {
-            return $this->customWrapperClasses;
-        }
-
         public function addTo(JannieFormComponent $parent) {
             $parent->add($this);
             $this->parent = $parent;
@@ -121,8 +113,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
             if ($elmt == self::ELMT_FIELD)
                 $targetArray = &$this->customClasses;
-            else if ($elmt == self::ELMT_WRAPPER)
-                $targetArray = &$this->customWrapperClasses;
 
             if (!is_array($class))
                 $targetArray[] = $class;
@@ -245,7 +235,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                                     $component->getHTML() :
                                     ($component->renderWhenHidden() == JannieFormFieldComponent::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
                             );
-                    $html .= $prefix . ( $component->isVisible() ? (sprintf($before, implode(' ', $component->getCustomWrapperClasses())) . $componentHTML . $after) : $component->getHTML() ) . $suffix;
+                    $html .= $prefix . ( $component->isVisible() ? ($before . $componentHTML . $after) : $component->getHTML() ) . $suffix;
                 }
 
             return $html;
@@ -540,7 +530,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             foreach ($this->validators as $validator)
                 if (!$validator->isValid())
                     $errors .= $this->renderFormError($validator->getErrorMsg());
-            return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML("<div class=\"field-wrapper %s\">", "</div>") . "</form>" . $this->getScriptHTML();
+            return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML() . "</form>" . $this->getScriptHTML();
         }
 
         public function getID() {
