@@ -373,21 +373,20 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * @param JannieFormMethod $method
          * @param string $target 
          */
-        public function __construct($slug, $action, $method, $autoRegister = true, $target = self::TARGET_SELF) {
+        public function __construct($slug, $action, $method, $target = self::TARGET_SELF) {
             parent::__construct($slug);
             $this->action = $action;
             $this->method = $method;
             $this->target = $target;
             $this->dataFields[$this->getSubmitConfirmFieldName()] = 'true';
-            if ($autoRegister)
-                $this->register();
+            $this->register();
         }
 
         /**
-         * Register form globally
+         * Registers form globally
          * @return \JannieForm this
          */
-        public function register() {
+        private function register() {
             JannieForms::registerForm($this);
             return $this;
         }
