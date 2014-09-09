@@ -29,13 +29,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Retrieves a form by its slug
          * @param string $slug
-         * @return JannieForm|boolean form or false if not found
+         * @return JannieForm|null form or null if not found
          */
         static function getForm($slug) {
             foreach (self::$forms as $form)
                 if ($form->getGlobalSlug() == $slug)
                     return $form;
-            return false;
+            return null;
         }
 
         /**
