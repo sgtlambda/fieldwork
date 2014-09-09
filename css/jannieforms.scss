@@ -1,5 +1,5 @@
-@import "recaptcha.scss";
-@import "tooltips.scss";
+@import "recaptcha";
+@import "tooltips";
 
 @mixin clearfix {
   &:after {
