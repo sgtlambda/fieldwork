@@ -892,12 +892,22 @@ if (!defined('JANNIEFORMS_LOADED')) {
             ));
         }
 
+        /**
+         * Adds validator
+         * @param JannieFormFieldValidator $v
+         * @return \JannieFormFieldComponent this
+         */
         public function addValidator(JannieFormFieldValidator $v) {
             $this->validators[] = $v;
             $v->setField($this);
             return $this;
         }
 
+        /**
+         * Adds sanitizer
+         * @param JannieFormFieldSanitizer $s
+         * @return \JannieFormFieldComponent this
+         */
         public function addSanitizer(JannieFormFieldSanitizer $s) {
             $this->sanitizers[] = $s;
             return $this;
