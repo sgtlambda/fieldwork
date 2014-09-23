@@ -1102,7 +1102,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
-        public function restoreValue($method) {
+        public function restoreValue($method, $sanitize = true) {
             $this->isClicked = $method->hasValue($this->getName());
         }
 
