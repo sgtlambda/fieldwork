@@ -970,6 +970,32 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
+    
+    class JannieCheckbox extends JannieFormFieldComponent {
+        
+        const CHECKED = 'checked';
+        
+        public function __construct($slug, $label, $value = '', $storeValueLocally = 0) {
+            parent::__construct($slug, $label, $value, $storeValueLocally);
+        }
+        
+        public function getClasses() {
+            return array_merge(
+                    parent::getClasses(), array('checkbox', 'janniecheckbox')
+            );
+        }
+        
+        public function getAttributes() {
+            return array_merge(parent::getAttributes(), array(
+                'type' => 'checkbox'
+            ));
+        }
+        
+        public function getHTML() {
+            return "<div class=\"checkbox-wrapper\"><input " . $this->getAttributesString() . "><label for=\"" . $this->getId() . "\">" . $this->label . "</label></div>";
+        }
+        
+    }
 
     class JannieHiddenField extends JannieFormFieldComponent {
 
@@ -1356,6 +1382,31 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public abstract function isValid($value);
 
         public abstract function describeMethod();
+    }
+    
+    class JannieFormCheckboxValidator extends JannieFormFieldValidator {
+        
+        private $checked;
+        
+        public function __construct($checked, $errorMsg) {
+            parent::__construct($errorMsg);
+            $this->checked = $checked;
+        }
+        
+        public function getJsonData() {
+            return array_merge(parent::getJsonData(), array(
+                'checked' => $this->checked
+            ));
+        }
+        
+        public function isValid($value) {
+            return $this->checked = ($value == 'on');
+        }
+        
+        public function describeMethod() {
+            return 'checkbox';
+        }
+        
     }
 
     class JannieFormRegexFieldValidator extends JannieFormFieldValidator {

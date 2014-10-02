@@ -9,6 +9,9 @@
             regex: function(field, validator){
                 var match = /\/(.*)\/([a-z]*)/.exec(validator.pattern);
                 return field.getValue().match(new RegExp(match[1], match[2]));
+            },
+            checkbox: function(field, validator){
+                return validator.checked === field.element.is(":checked");
             }
         },
         sanitizers: {

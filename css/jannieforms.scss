@@ -51,3 +51,11 @@ input.janniefield, textarea.janniefield{
         }
     }
 }
+
+.checkbox-wrapper{
+    input[type="checkbox"]{
+        width: auto;
+        margin: 8px;
+        vertical-align: -2px;
+    }
+}
