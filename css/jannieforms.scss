@@ -23,7 +23,7 @@ $spacing: 16px;
   display: none;
 }
 
-input.janniefield, textarea.janniefield{
+input.janniefield:not(.button), textarea.janniefield{
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
@@ -58,8 +58,33 @@ input.janniefield, textarea.janniefield{
         margin: 8px;
         vertical-align: -2px;
     }
+}
+
+.radio-option{
+    input[type="radio"]{
+        margin: 8px;
+        vertical-align: -1px;
+    }
+    label{
+        margin-left: -8px;
+        padding-left: 8px;
+    }
+}
+
 @import "jquery.datetimepicker";
 
 .xdsoft_datetimepicker{
-    z-index: 100000;
+    z-index: 1500;
+}
+
+@import "sweet-alert";
+
+.sweet-overlay{
+    z-index: 2000;
+}
+.sweet-alert{
+    z-index: 2500;
+    .error{
+        box-sizing: initial;
+    }
 }

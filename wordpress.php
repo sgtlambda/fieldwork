@@ -14,9 +14,15 @@ add_action('wp_enqueue_scripts', function() {
     wp_register_script('jannietooltips', plugins_url('js/jannietooltips.js', __FILE__) , array('jquery'));
     wp_register_script('maskedinput', plugins_url('js/jquery.maskedinput.min.js',   __FILE__), array('jquery'));
     wp_register_script('datetimepicker', plugins_url('js/jquery.datetimepicker.js', __FILE__), array('jquery'));
+    wp_register_script('sweet-alert', plugins_url('js/sweet-alert.min.js', __FILE__), array('jquery'));
     wp_register_script(
             'jannieforms', plugins_url('js/jannieforms.js', __FILE__) , array(
-                'jquery', 'jannietooltips', 'maskedinput', 'underscore', 'datetimepicker'
+                'jquery', 
+                'jannietooltips', 
+                'maskedinput', 
+                'underscore', 
+                'datetimepicker', 
+                'sweet-alert'
             ), '1.0'
         );
     wp_enqueue_script('jannieforms');

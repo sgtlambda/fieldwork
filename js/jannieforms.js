@@ -5,6 +5,7 @@
         i: {
             callbacks: []
         },
+        //validators for fields
         validators: {
             regex: function(field, validator){
                 var match = /\/(.*)\/([a-z]*)/.exec(validator.pattern);
@@ -12,6 +13,13 @@
             },
             checkbox: function(field, validator){
                 return validator.checked === field.element.is(":checked");
+            }
+        },
+        //validators for forms. naming should be improved
+        formValidators: {
+            radio: function (form, validator) {
+                var name = validator.inflictedFields[0];
+                return $('[name="' + name + '"]:checked').length > 0;
             }
         },
         sanitizers: {
@@ -78,13 +86,15 @@
         this.slug = formData.slug;
         this.submitCallback = formData.submitCallback;
         this.hiddenFieldName = formData.hiddenFieldName;
-        this.fields = [];
         this.dataFields = formData.dataFields;
         this.element = $form;
         this.ajaxEnabled = formData.ajax.submitEnabled;
-        var fieldsData = formData.fields;
-        for(var field in fieldsData)
-            this.fields.push(new JannieField(this, fieldsData[field]));
+        this.fields = [];
+        this.validators = [];
+        for (var n in formData.fields)
+            this.fields.push(new JannieField(this, formData.fields[n]));
+        for (var n in formData.liveValidators)
+            this.validators.push(new JannieFormValidator(this, formData.liveValidators[n]));
         var form = this;
         if(formData.ajax.method !== ""){
             this.ajaxMethod = formData.ajax.method;
@@ -109,15 +119,24 @@
         JannieForms.processForms();
     }
     $.extend(JannieForm.prototype, {
-        validate: function() {
-            for(var n in this.fields)
-                this.fields[n].validate();
+        validate: function () {
+            var fieldsValid = true;
+            for (var n in this.fields)
+                if (!this.fields[n].validate())
+                    fieldsValid = false;
+            if (fieldsValid)
+                for (var n in this.validators)
+                    if (!this.validators[n].validate())
+                        break;
         },
-        isValid: function() {
-            var valid = true;
-            for(var n in this.fields)
-                valid = this.fields[n].isValid() ? valid : false;
-            return valid;
+        isValid: function () {
+            for (var n in this.fields)
+                if (!this.fields[n].isValid())
+                    return false;
+            for (var n in this.validators)
+                if (!this.validators[n].isValid())
+                    return false;
+            return true;
         },
         submit: function(e){
             this.validate();
@@ -156,6 +175,28 @@
             return false;
         }
     });
+    function JannieFormValidator(form, data) {
+        this.form = form;
+        this.method = data.method;
+        this.error = data.error;
+        this.data = data;
+        this.inflictedFields = data.inflictedFields;
+        this.valid = false;
+    }
+    $.extend(JannieFormValidator.prototype, {
+        validate: function () {
+            this.valid = true;
+            if (JannieForms.formValidators[this.method])
+                if (!((JannieForms.formValidators[this.method])(this.form, this))){
+                    sweetAlert(this.error, "", "error");
+                    this.valid = false;
+                }
+            return this.valid;
+        },
+        isValid: function () {
+            return this.valid;
+        }
+    });
     function JannieField(form, fieldData){
         this.form = form;
         this.element = $("#"+fieldData.id);
@@ -184,6 +225,10 @@
                 field.keyup(e, this);
             }
         });
+        if(this.element.is('[type="checkbox"]'))
+            this.element.on('change', function(){
+                field.blur();
+            });
     }
     $.extend(JannieField.prototype, {
         blur: function(){
@@ -211,6 +256,7 @@
                 }
             if(valid)
                 this.setValid();
+            return valid;
         }, 
         sanitize: function(live){
             var val = this.getValue();

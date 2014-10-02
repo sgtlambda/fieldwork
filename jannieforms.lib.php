@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @author JM Versteeg
- */
 if (!defined('JANNIEFORMS_LOADED')) {
 
     class JannieForms {
@@ -560,9 +557,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $fields = array();
             foreach ($this->getFields() as $component)
                 $fields[$component->getID()] = $component->getJsonData();
+            $liveValidators = array();
+            foreach ($this->validators as $validator)
+                if($validator->isLive())
+                    $liveValidators[] = $validator->getJsonData();
             return array(
                 "slug" => $this->getLocalSlug(),
                 "fields" => $fields,
+                "liveValidators" => $liveValidators,
                 "dataFields" => $this->dataFields,
                 "submitCallback" => $this->javascriptCallback,
                 "isProcessed" => $this->isProcessed,
@@ -987,7 +989,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
         
         public function getAttributes() {
             return array_merge(parent::getAttributes(), array(
-                'type' => 'checkbox'
+                'type' => 'checkbox',
+                'value' => 'on'
             ));
         }
         
@@ -1190,7 +1193,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
         
     }
     
-
     class JannieHorizontalGroup extends JannieFormGroupComponent {
 
         const CLASS_TWO_ITEMS = 'two-items';
@@ -1229,17 +1231,18 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
-
-    abstract class SynchronizedObject {
-
-        abstract function getJsonData();
+    
+    interface SynchronizableObject {
+        
+        function getJsonData();
+        
+        function describeMethod();
+        
     }
 
-    abstract class JannieFormFieldSanitizer extends SynchronizedObject {
+    abstract class JannieFormFieldSanitizer implements SynchronizableObject {
 
         public abstract function sanitize($value);
-
-        public abstract function describeMethod();
 
         public abstract function isLive();
 
@@ -1336,7 +1339,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     abstract class JannieFormValidator {
 
-        private $errorMsg = '', $inflictsFields, $isValid = true;
+        private $isValid = true;
+        protected $inflictsFields, $errorMsg = '';
 
         /**
          * @param string $errorMsg Error message to show if this validator returns false
@@ -1365,11 +1369,35 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function isValid() {
             return $this->isValid;
         }
+        
+        public function isLive() {
+            return false;
+        }
 
         public abstract function validate(JannieForm $form);
     }
+    
+    abstract class JannieFormSynchronizableValidator extends JannieFormValidator implements SynchronizableObject {
+        
+        public function getJsonData() {
+            $fields = [];
+            foreach($this->inflictsFields as $field)
+                /* @var $field JannieFormFieldComponent */
+                $fields[] = $field->getName();
+            return array(
+                'inflictedFields' => $fields,
+                'error' => $this->errorMsg,
+                'method' => $this->describeMethod()
+            );
+        }
+        
+        public function isLive() {
+            return true;
+        }
+        
+    }
 
-    abstract class JannieFormFieldValidator extends SynchronizedObject {
+    abstract class JannieFormFieldValidator implements SynchronizableObject {
         /* @var $field JannieFormFieldComponent */
 
         private $errorMsg = '', $field;
@@ -1398,8 +1426,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public abstract function isValid($value);
-
-        public abstract function describeMethod();
+        
     }
     
     class JannieFormCheckboxValidator extends JannieFormFieldValidator {
@@ -1423,6 +1450,25 @@ if (!defined('JANNIEFORMS_LOADED')) {
         
         public function describeMethod() {
             return 'checkbox';
+        }
+        
+    }
+    
+    class JannieFormRadioValidator extends JannieFormSynchronizableValidator {
+        
+        private $select;
+        
+        public function __construct($errorMsg, JannieRadioSelect $select) {
+            parent::__construct($errorMsg, [$select]);
+            $this->select = $select;
+        }
+        
+        public function validate(\JannieForm $form) {
+            return $this->select->getValue();
+        }
+        
+        public function describeMethod() {
+            return 'radio';
         }
         
     }
@@ -1505,4 +1551,5 @@ if (!defined('JANNIEFORMS_LOADED')) {
     }
 
     define('JANNIEFORMS_LOADED', true);
+    
 }
