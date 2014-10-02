@@ -6,19 +6,19 @@
             callbacks: []
         },
         validators: {
-            regex: function(value, validator){
+            regex: function(field, validator){
                 var match = /\/(.*)\/([a-z]*)/.exec(validator.pattern);
-                return value.match(new RegExp(match[1], match[2]));
+                return field.getValue().match(new RegExp(match[1], match[2]));
             }
         },
         sanitizers: {
-            uppercase: function(value, validator){
+            uppercase: function(value, sanitizer){
                 return value.toUpperCase();
             },
-            capitalize: function(value, validator){
+            capitalize: function(value, sanitizer){
                 return value.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
             },
-            iban: function(value, validator){
+            iban: function(value, sanitizer){
                 value = value.replace(/\s/g, '');
                 var chunks = value.match(/.{1,4}/g);
                 if(chunks === null)
@@ -196,8 +196,8 @@
             var valid = true;
             for(var v in this.validators)
                 if((JannieForms.validators[this.validators[v].method])){
-                    if(this.element.attr("placeholder") === val) val = "";
-                    if (! ( (JannieForms.validators[this.validators[v].method])(val, this.validators[v]) ) ){
+                    if(this.element.attr("placeholder") === val) val = ""; // TODO this is not quite right
+                    if (! ( (JannieForms.validators[this.validators[v].method])(this, this.validators[v]) ) ){
                         this.setInvalid(this.validators[v].error);
                         valid = false;
                         break;
