@@ -1234,6 +1234,37 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
+    
+    class JannieFormFieldRegexSanitizer extends JannieFormFieldSanitizer {
+
+        private $from, $to;
+        
+        function __construct($from, $to) {
+            $this->from = $from;
+            $this->to = $to;
+        }
+
+        
+        public function sanitize($value) {
+            return preg_replace($this->from, $this->to, $value);
+        }
+
+        public function isLive() {
+            return true;
+        }
+        
+        public function describeMethod() {
+            return 'regex';
+        }
+        
+        public function getJsonData() {
+            return array_merge(parent::getJsonData(), array(
+                'from' => $this->from,
+                'to' => $this->to
+            ));
+        }
+
+    }
 
     abstract class JannieFormValidator {
 
