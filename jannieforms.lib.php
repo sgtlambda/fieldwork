@@ -241,7 +241,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                                     $component->getHTML() :
                                     ($component->renderWhenHidden() == JannieFormFieldComponent::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
                             );
-                    $html .= $prefix . ( $component->isVisible() ? ($before . $componentHTML . $after) : $component->getHTML() ) . $suffix;
+                    $html .= $prefix . ( $component->isVisible() ? (str_replace('%slug%', $component->getGlobalSlug(), $before) . $componentHTML . $after) : $component->getHTML() ) . $suffix;
                 }
 
             return $html;
@@ -1158,7 +1158,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public function getHTML() {
-            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div class="group-item horizontal-group-item">', '</div>') . '</div>';
+            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div data-wrapper-for="%slug%" class="group-item horizontal-group-item">', '</div>') . '</div>';
         }
 
     }
