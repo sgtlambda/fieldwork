@@ -20,7 +20,6 @@ add_action('wp_enqueue_scripts', function() {
         );
     wp_enqueue_script('jannieforms');
 
-    wp_enqueue_style('jannietooltips', plugins_url('css/jannietooltips.css', __FILE__));
     wp_enqueue_style('jannieforms', plugins_url('css/jannieforms.css', __FILE__));
 } );
 

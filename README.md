@@ -43,7 +43,7 @@ Add a submit button:
  - Translate error messages
  - Generate PHPDocs
  - Add centralized `Callback` class for access both direct and through AJAX
- - Add XML form definition parser
+ - Add JSON form definition format specs & parser to go along with it
  - Add default styles with horizontal row support
  - Load forms on demand
  - Remove low-level configuration of `WRAPPER` and `INPUT` node (perhaps remove `WRAPPER` node altogether and use `box-sizing: border-box;` for input nodes)

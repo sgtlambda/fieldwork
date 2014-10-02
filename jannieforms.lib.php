@@ -29,13 +29,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Retrieves a form by its slug
          * @param string $slug
-         * @return JannieForm|boolean form or false if not found
+         * @return JannieForm|null form or null if not found
          */
         static function getForm($slug) {
             foreach (self::$forms as $form)
                 if ($form->getGlobalSlug() == $slug)
                     return $form;
-            return false;
+            return null;
         }
 
         /**
@@ -80,11 +80,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $slug,
                 $active = true,
                 $customClasses = array(),
-                $customWrapperClasses = array(),
                 $customAttributes = array();
-
-        const ELMT_FIELD = 0;
-        const ELMT_WRAPPER = 1;
 
         public function __construct($slug) {
             $this->slug = $slug;
@@ -106,24 +102,19 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this->customClasses;
         }
 
-        public function getCustomWrapperClasses() {
-            return $this->customWrapperClasses;
-        }
-
         public function addTo(JannieFormComponent $parent) {
             $parent->add($this);
             $this->parent = $parent;
             return $this;
         }
 
-        public function addClass($class, $elmt = self::ELMT_FIELD) {
-            $targetArray = array();
-
-            if ($elmt == self::ELMT_FIELD)
-                $targetArray = &$this->customClasses;
-            else if ($elmt == self::ELMT_WRAPPER)
-                $targetArray = &$this->customWrapperClasses;
-
+        /**
+         * Adds class(es) to this component's node
+         * @param string|array $class
+         * @return \JannieFormComponent
+         */
+        public function addClass($class) {
+            $targetArray = &$this->customClasses;
             if (!is_array($class))
                 $targetArray[] = $class;
             else
@@ -245,7 +236,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                                     $component->getHTML() :
                                     ($component->renderWhenHidden() == JannieFormFieldComponent::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
                             );
-                    $html .= $prefix . ( $component->isVisible() ? (sprintf($before, implode(' ', $component->getCustomWrapperClasses())) . $componentHTML . $after) : $component->getHTML() ) . $suffix;
+                    $html .= $prefix . ( $component->isVisible() ? ($before . $componentHTML . $after) : $component->getHTML() ) . $suffix;
                 }
 
             return $html;
@@ -373,21 +364,20 @@ if (!defined('JANNIEFORMS_LOADED')) {
          * @param JannieFormMethod $method
          * @param string $target 
          */
-        public function __construct($slug, $action, $method, $autoRegister = true, $target = self::TARGET_SELF) {
+        public function __construct($slug, $action, $method, $target = self::TARGET_SELF) {
             parent::__construct($slug);
             $this->action = $action;
             $this->method = $method;
             $this->target = $target;
             $this->dataFields[$this->getSubmitConfirmFieldName()] = 'true';
-            if ($autoRegister)
-                $this->register();
+            $this->register();
         }
 
         /**
-         * Register form globally
+         * Registers form globally
          * @return \JannieForm this
          */
-        public function register() {
+        private function register() {
             JannieForms::registerForm($this);
             return $this;
         }
@@ -541,7 +531,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             foreach ($this->validators as $validator)
                 if (!$validator->isValid())
                     $errors .= $this->renderFormError($validator->getErrorMsg());
-            return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML("<div class=\"field-wrapper %s\">", "</div>") . "</form>" . $this->getScriptHTML();
+            return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML() . "</form>" . $this->getScriptHTML();
         }
 
         public function getID() {
@@ -902,12 +892,22 @@ if (!defined('JANNIEFORMS_LOADED')) {
             ));
         }
 
+        /**
+         * Adds validator
+         * @param JannieFormFieldValidator $v
+         * @return \JannieFormFieldComponent this
+         */
         public function addValidator(JannieFormFieldValidator $v) {
             $this->validators[] = $v;
             $v->setField($this);
             return $this;
         }
 
+        /**
+         * Adds sanitizer
+         * @param JannieFormFieldSanitizer $s
+         * @return \JannieFormFieldComponent this
+         */
         public function addSanitizer(JannieFormFieldSanitizer $s) {
             $this->sanitizers[] = $s;
             return $this;
@@ -1102,7 +1102,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
-        public function restoreValue($method) {
+        public function restoreValue($method, $sanitize = true) {
             $this->isClicked = $method->hasValue($this->getName());
         }
 
@@ -1121,7 +1121,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function getHTML() {
             $icon = ($this->icon == '' ? '' : '<img class="button-icon" src="' . $this->icon . '"> ');
-            $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i>' : '';
+            $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i> ' : '';
             if ($this->use_shim)
                 return
                         "<div class=\"button-wrap " . ($this->use_shim ? "uses-shim" : "") . "\">"
@@ -1144,14 +1144,16 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     class JannieHorizontalGroup extends JannieFormGroupComponent {
 
+        const CLASS_TWO_ITEMS = 'two-items';
+        
         public function getClasses() {
             return array_merge(parent::getClasses(), array(
-                'buttongroup', 'horizontalgroup'
+                'horizontalgroup'
             ));
         }
 
         public function getHTML() {
-            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div class="group-item horizontal-group-item %s">', '</div>') . '<br style="clear: both; "></div>';
+            return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div class="group-item horizontal-group-item">', '</div>') . '</div>';
         }
 
     }
