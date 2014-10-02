@@ -40,13 +40,11 @@ Add a submit button:
 
  - Use namespaces
  - Use build script (composer)
- - Translate error messages
+ - Error message i18n
  - Generate PHPDocs
  - Add centralized `Callback` class for access both direct and through AJAX
  - Add JSON form definition format specs & parser to go along with it
- - Add default styles with horizontal row support
  - Load forms on demand
- - Remove low-level configuration of `WRAPPER` and `INPUT` node (perhaps remove `WRAPPER` node altogether and use `box-sizing: border-box;` for input nodes)
  - Convert client-side code to CoffeeScript
  - Implement require.js/AMD support
- - (optionally) Remove `JannieTooltips` from global namespace
+ - Remove `JannieTooltips` from global namespace
