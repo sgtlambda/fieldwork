@@ -18,6 +18,14 @@ var _JannieForms = {};
             },
             capitalize: function(value, validator){
                 return value.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+            },
+            iban: function(value, validator){
+                value = value.replace(/\s/g, '');
+                var chunks = value.match(/.{1,4}/g);
+                if(chunks === null)
+                    return "";
+                else
+                    return chunks.join(" ");
             }
         },
         registerCallback: function(slug, on, fn) {

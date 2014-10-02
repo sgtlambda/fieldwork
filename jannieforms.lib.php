@@ -1265,6 +1265,25 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
+    
+    class JannieFormFieldIbanSanitizer extends JannieFormFieldSanitizer {
+        
+        
+        public function describeMethod() {
+            return 'iban';
+        }
+
+        public function isLive() {
+            return true;
+        }
+
+        public function sanitize($value) {
+            $value = preg_replace('/\s/', '', $value);
+            $parts = str_split($value, 4);
+            return implode(' ', $parts);
+        }
+
+    }
 
     abstract class JannieFormValidator {
 
@@ -1375,6 +1394,16 @@ if (!defined('JANNIEFORMS_LOADED')) {
             if ($message == null)
                 $message = "Moet minimaal $min en maximaal $max tekens bevatten.";
             parent::__construct("/^[" . $allowed . "]{" . $min . "," . $max . "}$/", $message);
+        }
+
+    }
+    
+    class JannieFormIbanValidator extends JannieFormRegexFieldValidator {
+
+        public function __construct() {
+            parent::__construct(
+                "/^[A-Z]{2}[0-9]{2} [A-Z0-9]{4} [0-9]{4} [0-9]{4}( [0-9]{4})?( [0-9]{2})?$/", "Ongeldige IBAN"
+            );
         }
 
     }
