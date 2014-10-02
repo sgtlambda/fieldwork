@@ -1,4 +1,4 @@
-var _JannieForms = {};
+//var _JannieForms = {};
 (function($){
     var JannieForms = {
         AJAXCALLBACK: 0,
@@ -54,7 +54,7 @@ var _JannieForms = {};
                 dataType: 'json',
                 type: 'POST',
                 success: function(data){
-                    _JannieForms.performCallback(
+                    JannieForms.performCallback(
                         form.ajaxMethod, 
                         JannieForms.AJAXCALLBACK, 
                         form, 
@@ -71,8 +71,8 @@ var _JannieForms = {};
             });
         }
     };
-    _JannieForms = JannieForms;
-    $(document).trigger("jannieforms-loaded", _JannieForms);
+    //JannieForms = JannieForms;
+    $(document).trigger("jannieforms-loaded", JannieForms);
     function JannieForm($form, formData){
         this.slug = formData.slug;
         this.submitCallback = formData.submitCallback;
@@ -88,7 +88,7 @@ var _JannieForms = {};
         if(formData.ajax.method !== ""){
             this.ajaxMethod = formData.ajax.method;
             if(formData.ajax.results !== null)
-                _JannieForms.performCallback(
+                JannieForms.performCallback(
                     this.ajaxMethod, 
                     JannieForms.AJAXCALLBACK,
                     this, 
@@ -105,7 +105,7 @@ var _JannieForms = {};
         $form.on({submit: function(e){   
             form.submit(e);
         }});
-        _JannieForms.processForms();
+        JannieForms.processForms();
     }
     $.extend(JannieForm.prototype, {
         validate: function() {
@@ -134,10 +134,10 @@ var _JannieForms = {};
                 if(typeof fn === 'function')
                     fn(e, this);
             }
-            _JannieForms.performCallback(this.slug, _JannieForms.SUBMITCALLBACK, this, null, e);
+            JannieForms.performCallback(this.slug, JannieForms.SUBMITCALLBACK, this, null, e);
             if(this.ajaxEnabled){
                 e.preventDefault();
-                _JannieForms.ajaxSubmitForm(this);
+                JannieForms.ajaxSubmitForm(this);
             }
         },
         getValues: function(){
@@ -298,6 +298,6 @@ var _JannieForms = {};
             $this.mask($this.data('input-mask'));
         });
         processForms();
-        _JannieForms.processForms = processForms;
+        JannieForms.processForms = processForms;
     });
 })(jQuery);
