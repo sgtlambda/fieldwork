@@ -13,9 +13,10 @@ add_action('wp_enqueue_scripts', function() {
     wp_register_script('underscore', plugins_url('js/underscore-min.js',   __FILE__));
     wp_register_script('jannietooltips', plugins_url('js/jannietooltips.js', __FILE__) , array('jquery'));
     wp_register_script('maskedinput', plugins_url('js/jquery.maskedinput.min.js',   __FILE__), array('jquery'));
+    wp_register_script('datetimepicker', plugins_url('js/jquery.datetimepicker.js', __FILE__), array('jquery'));
     wp_register_script(
             'jannieforms', plugins_url('js/jannieforms.js', __FILE__) , array(
-                'jquery', 'jannietooltips', 'maskedinput', 'underscore'
+                'jquery', 'jannietooltips', 'maskedinput', 'underscore', 'datetimepicker'
             ), '1.0'
         );
     wp_enqueue_script('jannieforms');

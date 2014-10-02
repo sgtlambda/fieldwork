@@ -1172,6 +1172,24 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
+    
+    class JannieDateTimePicker extends JannieTextField {
+        
+        var $dtConfig;
+        
+        public function __construct($slug, $label, $value = '', $dtConfig = array(), $storeValueLocally = 0) {
+            parent::__construct($slug, $label, $value, $storeValueLocally);
+            $this->dtConfig = $dtConfig;
+        }
+        
+        public function getJsonData() {
+            return array_merge(parent::getJsonData(), array(
+                'dtConfig' => $this->dtConfig
+            ));
+        }
+        
+    }
+    
 
     class JannieHorizontalGroup extends JannieFormGroupComponent {
 

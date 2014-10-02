@@ -163,6 +163,9 @@
         this.valid = false;
         this.validators = fieldData.validators;
         this.sanitizers = fieldData.sanitizers;
+        if(fieldData.hasOwnProperty('dtConfig')){
+            this.element.datetimepicker(fieldData.dtConfig);
+        }
         this.isButton = fieldData.isButton === true;
         this.clicked = false;
         var field = this;
