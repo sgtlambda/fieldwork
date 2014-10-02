@@ -1,5 +1,4 @@
-//var _JannieForms = {};
-(function($){
+(function($, window, document){
     var JannieForms = {
         AJAXCALLBACK: 0,
         SUBMITCALLBACK: 1,
@@ -71,7 +70,6 @@
             });
         }
     };
-    //JannieForms = JannieForms;
     $(document).trigger("jannieforms-loaded", JannieForms);
     function JannieForm($form, formData){
         this.slug = formData.slug;
@@ -300,4 +298,4 @@
         processForms();
         JannieForms.processForms = processForms;
     });
-})(jQuery);
+})(jQuery, window, document);
