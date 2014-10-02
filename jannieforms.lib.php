@@ -102,6 +102,11 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this->customClasses;
         }
 
+        /**
+         * Adds component to given parent component
+         * @param JannieFormComponent $parent
+         * @return \JannieFormComponent
+         */
         public function addTo(JannieFormComponent $parent) {
             $parent->add($this);
             $this->parent = $parent;
