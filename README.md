@@ -21,14 +21,6 @@ You can create a new field by instantiating any class that extends `JannieFormFi
 
 Configure the field and attach it to the form:
 
-    //Adds a validator to the field
-    $emailField->addValidator(new JannieFormEmailValidator());
-    
-    //Attaches the field to the form
-    $emailField->addTo($contactForm);
-
-Alternatively, most functions can be used in a chained call, like this:
-
     $emailField
        ->addValidator(new JannieFormEmailValidator())
        ->addTo($contactForm);
