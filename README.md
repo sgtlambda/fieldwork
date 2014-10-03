@@ -19,7 +19,7 @@ You can create a new field by instantiating any class that extends `JannieFormFi
 
     $emailField = new JannieTextField('email', 'Email address');
 
-Depending on the capabilities of the input type, the field can be configured in several ways:
+Configure the field and attach it to the form:
 
     //Adds a validator to the field
     $emailField->addValidator(new JannieFormEmailValidator());
@@ -36,7 +36,9 @@ Alternatively, most functions can be used in a chained call, like this:
 Add a submit button:
 
     $submit = new JannieButton("submit", "Send", "", JannieButton::TYPE_SUBMIT);
-    $submit->setUseShim(false)->addTo($contactForm);
+    $submit
+       ->setUseShim(false)
+       ->addTo($contactForm);
 
 ###Todo
 
