@@ -47,6 +47,6 @@ Add a submit button:
  - Add centralized `Callback` class for access both direct and through AJAX
  - Add JSON form definition format specs & parser to go along with it
  - Load forms on demand
- - Convert client-side code to CoffeeScript
- - Implement require.js/AMD support
- - Remove `JannieTooltips` from global namespace
+ - Use CoffeeScript
+ - require.js/AMD support
+ - Drop jQuery requirement
