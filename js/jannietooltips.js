@@ -1,6 +1,5 @@
-var JannieTooltips;
 (function($, window, document){
-    JannieTooltips = {
+    var JannieTooltips = {
         active: -1,
         activeTooltip: -1,
         container: 0,
