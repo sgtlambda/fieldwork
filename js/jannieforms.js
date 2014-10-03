@@ -29,6 +29,10 @@
             capitalize: function(value, sanitizer){
                 return value.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
             },
+            regexp: function(value, sanitizer){
+                var patt = new RegExp(sanitizer.regexp, sanitizer.regexpmod);
+                return value.replace(patt, sanitizer.replace);
+            },
             iban: function(value, sanitizer){
                 value = value.replace(/\s/g, '');
                 var chunks = value.match(/.{1,4}/g);

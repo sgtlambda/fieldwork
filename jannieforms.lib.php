@@ -1289,7 +1289,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
     
     class JannieFormFieldRegexSanitizer extends JannieFormFieldSanitizer {
 
-        private $from, $to;
+        protected $from, $to;
         
         function __construct($from, $to) {
             $this->from = $from;
@@ -1302,20 +1302,41 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public function isLive() {
-            return true;
+            return false;
         }
         
         public function describeMethod() {
             return 'regex';
         }
+
+    }
+    
+    class JannieFormFieldRegexpSanitizer extends JannieFormFieldRegexSanitizer {
+        
+        private $regexp, $regexpmod;
+        
+        public function __construct($from, $regexp, $to, $regexpmod = '') {
+            parent::__construct($from, $to);
+            $this->regexp = $regexp;
+            $this->regexpmod = $regexpmod;
+        }
+        
+        public function isLive() {
+            return true;
+        }
+        
+        public function describeMethod() {
+            return 'regexp';
+        }
         
         public function getJsonData() {
             return array_merge(parent::getJsonData(), array(
-                'from' => $this->from,
-                'to' => $this->to
+                'regexp' => $this->regexp,
+                'regexpmod' => $this->regexpmod,
+                'replace' => $this->to
             ));
         }
-
+        
     }
     
     class JannieFormFieldIbanSanitizer extends JannieFormFieldSanitizer {
