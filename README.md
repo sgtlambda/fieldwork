@@ -29,7 +29,9 @@ Depending on the capabilities of the input type, the field can be configured in 
 
 Alternatively, most functions can be used in a chained call, like this:
 
-    $emailField->addValidator(new JannieFormEmailValidator())->addTo($contactForm);
+    $emailField
+       ->addValidator(new JannieFormEmailValidator())
+       ->addTo($contactForm);
 
 Add a submit button:
 
