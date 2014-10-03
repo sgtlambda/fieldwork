@@ -1208,29 +1208,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
     }
-
-    class JannieRecaptcha extends JannieFormFieldComponent {
-
-        private $public_key = "";
-
-        public function __construct($label, $public_key) {
-            parent::__construct('recaptcha-response-field', $label, "");
-            $this->public_key = $public_key;
-            $this->collectData = false;
-        }
-
-        public function getClasses() {
-            return array_merge(parent::getClasses(), array(
-                'jannierecaptcha'
-            ));
-        }
-
-        public function getHTML() {
-            $rs = recaptcha_get_html($this->public_key);
-            return '<div data-recaptcha-response-field-name="' . $this->getName() . '" field-id="' . $this->getID() . '" class="' . implode(' ', $this->getClasses()) . '">' . $rs . '</div>';
-        }
-
-    }
     
     interface SynchronizableObject {
         

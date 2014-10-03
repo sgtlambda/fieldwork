@@ -303,55 +303,20 @@
     $.fn.jannieform = function(formData){
         new JannieForm($(this), formData);
     };
-    $.fn.recaptchaUnitRefresh = function(){
-        var $this = this;
-        var table = $this.data('recaptcha-elmt');
-        var imgSrc = table.find('#recaptcha_image img').attr('src');
-        var challenge = table.find('input[name="recaptcha_challenge_field"]').val();
-        $this.find('.recaptcha-img').attr('src', imgSrc);
-        $this.find('.rc-challenge-field').val(challenge);
+    JannieForms.processForms = function(){
+        $(".invisible-target-button:not(.processed)").each(function(){
+            var $this = $(this);
+            $this.addClass('processed');
+            $("#target-" + $this.attr('id')).on({click: function(){
+                $this.click();
+            }});
+        });
     };
     $(function(){
-        var processForms = function(){
-            $(".jannierecaptcha:not(.processed)").each(function(){
-                var $this = $(this);
-                var img = $this.find('#recaptcha_image img');
-                if(img.length){
-                    var responseFieldName = $this.attr('data-recaptcha-response-field-name');
-                    var captchaIsInvalid = $this.hasClass('invalid');
-                    var validClassName = (captchaIsInvalid?'invalid':'');
-                    var replacementCaptchaUnit = $('<div class="recaptcha-unit type-image"><div class="recaptcha-img-wrap"><img class="recaptcha-img"><a target="_blank" class="recaptcha-audio-link">Download geluid (.mp3)</a><ul class="recaptcha-img-actions">' + 
-                        '<li><a title="Een nieuwe verificatie proberen" class="rca-reload"></a></li>'+
-                        '<li><a title="Verander type verificatie: audio/afbeelding" class="rca-switch-type current-type-image"></a></li></ul></div>'+
-                        '<input type="hidden" class="rc-challenge-field" name="recaptcha_challenge_field"><input type="text" name="' + responseFieldName + '" value="" id="'+$this.attr('field-id')+'" class="janniefield jannieinputfield recaptchafield textfield rc-response-field ' + validClassName + '" placeholder="Type de bovenstaande woorden"></div>');
-                    replacementCaptchaUnit.data('recaptcha-elmt', $this);
-                    replacementCaptchaUnit.find('.rca-reload').click(recaptchaReload);
-                    replacementCaptchaUnit.find('.rca-switch-type').click(recaptchaSwitchType);
-                    var responseField = $(replacementCaptchaUnit.find('input[name="' + responseFieldName + '"]')[0]);
-                    $this.after(replacementCaptchaUnit);
-                    $this.addClass("processed").hide();
-                    if(captchaIsInvalid){
-                        responseField.jtLink('Probeer het nog eens.', ['focus'], []);
-                        responseField.jtShow();
-                    }
-                }
-            });
-            $('.recaptcha-unit').each(function(){
-                $(this).recaptchaUnitRefresh();
-            });
-            $(".invisible-target-button:not(.processed)").each(function(){
-                var $this = $(this);
-                $this.addClass('processed');
-                $("#target-" + $this.attr('id')).on({click: function(){
-                    $this.click();
-                }});
-            });
-        };
         $('[data-input-mask]').each(function(){
             var $this = $(this);
             $this.mask($this.data('input-mask'));
         });
-        processForms();
-        JannieForms.processForms = processForms;
+        JannieForms.processForms();
     });
 })(jQuery, window, document);
