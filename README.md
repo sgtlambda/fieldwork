@@ -42,6 +42,7 @@ Add a submit button:
 
 ###Todo
 
+ - Improve class naming
  - Use namespaces
  - Use build script (composer)
  - Error message i18n
