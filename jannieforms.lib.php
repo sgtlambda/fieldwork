@@ -232,7 +232,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $html = '';
             foreach ($this->children as $component)
                 if ($component->isActive()) {
-                    /* @var $component JannieFormFieldComponent */
                     $componentHTML = (
                             ($component->isVisible() || $component->renderWhenHidden() == JannieFormFieldComponent::RM_DEFAULT ) ?
                                     $component->getHTML() :
@@ -423,7 +422,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
          */
         public function c() {
             $fields = array();
-            /* @var $field JannieFormFieldComponent */
             foreach ($this->getFields() as $field)
                 if ($field->getCollectData())
                     $fields[] = $field;
@@ -937,7 +935,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function sanitize() {
             foreach ($this->sanitizers as $sanitizer)
-            /* @var $sanitizer JannieFormFieldSanitizer */
                 $this->value = $sanitizer->sanitize($this->value);
         }
 
@@ -1380,7 +1377,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function getJsonData() {
             $fields = [];
             foreach($this->inflictsFields as $field)
-                /* @var $field JannieFormFieldComponent */
                 $fields[] = $field->getName();
             return array(
                 'inflictedFields' => $fields,
@@ -1396,7 +1392,6 @@ if (!defined('JANNIEFORMS_LOADED')) {
     }
 
     abstract class JannieFormFieldValidator implements SynchronizableObject {
-        /* @var $field JannieFormFieldComponent */
 
         private $errorMsg = '', $field;
 
