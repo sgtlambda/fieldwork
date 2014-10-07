@@ -1,9 +1,9 @@
 jannieforms
 ===========
 
-Setting up a web form can be a pain and often forces you to keep track of seperate definitions for the browser and for the server. Jannieforms takes an object-oriented approach towards building forms and will make your life easier by dealing with trivial tasks such as markup generation, validation and sanitization.
+Jannieforms will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
- - Define entire forms using just PHP. No HTML or javascript writing required.
+ - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for user convenience** and **server-side for security**.
 
 ###Getting started
