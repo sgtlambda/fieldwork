@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
 .jt-wrapper {
   padding: 4px;
   position: absolute;
@@ -1095,5 +1095,3 @@ input.janniefield:not(.button), textarea.janniefield {
   z-index: 2500; }
   .sweet-alert .error {
     box-sizing: initial; }
-
-/*# sourceMappingURL=jannieforms.css.map */
