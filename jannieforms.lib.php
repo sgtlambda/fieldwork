@@ -356,6 +356,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $isUserSubmitted = false,
                 $isProcessed = false,
                 $isCallbacksubmitted = false,
+                $forceSubmit = false,
                 $dataFields;
 
         /**
@@ -581,6 +582,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 if (is_callable($psCallback))
                     call_user_func($psCallback, $this);
         }
+        
+        /**
+         * Will attempt to submit the form upon calling the process function, even if the user has not activated it
+         */
+        public function forceSubmit() {
+            $this->forceSubmit = true;
+        }
 
         /**
          * Submits the form internally. You're not usually supposed to call this function directly.
@@ -656,7 +664,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->isProcessed = true;
             foreach ($this->getFields() as $field)
                 $field->preprocess();
-            $this->isUserSubmitted = $this->getValue($this->getSubmitConfirmFieldName(), 'false') == 'true';
+            $this->isUserSubmitted = $this->getValue($this->getSubmitConfirmFieldName(), 'false') == 'true' || $this->forceSubmit;
             if ($this->isUserSubmitted) {
                 foreach ($this->getFields() as $field)
                     $field->restoreValue($this->method);
