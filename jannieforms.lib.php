@@ -83,6 +83,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
             $this->slug = $slug;
         }
 
+        /**
+         * Resets the component
+         */
+        public function reset() {
+            foreach($this->getChildren(false) as $child)
+                $child->reset();
+        }
+
         public abstract function getHTML();
 
         public abstract function isValid();
@@ -353,11 +361,24 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $attachRefererOnInstantiate = false,
                 $activateCallbacks = array(),
                 $javascriptCallback = array(),
+
+                $forceSubmit = false,
+                $dataFields,
+
                 $isUserSubmitted = false,
                 $isProcessed = false,
-                $isCallbacksubmitted = false,
-                $forceSubmit = false,
-                $dataFields;
+                $isCallbacksubmitted = false;
+
+        /**
+         * Resets state and field values. DOES NOT remove validators and callbacks
+         */
+        public function reset()
+        {
+            $this->isUserSubmitted = false;
+            $this->isProcessed = false;
+            $this->isCallbacksubmitted = false;
+            parent::reset();
+        }
 
         /**
          * Creates a new JannieForm
@@ -777,6 +798,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
                 $label,
                 $visible = true,
                 $value,
+                $initialValue,
                 $latestErrorMsg = "",
                 $forceInvalid = false,
                 $validators = array(),
@@ -794,9 +816,16 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function __construct($slug, $label, $value = '', $storeValueLocally = 0) {
             parent::__construct($slug);
             $this->label = $label;
-            $this->value = $value;
+            $this->initialValue = $this->value = $value;
             $this->storeValueLocally = $storeValueLocally;
         }
+
+        public function reset()
+        {
+            $this->value = $this->initialValue;
+            parent::reset();
+        }
+
 
         public function setCollectData($collectData) {
             $this->collectData = $collectData;
