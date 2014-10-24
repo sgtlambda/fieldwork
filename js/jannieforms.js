@@ -34,6 +34,8 @@
                 return value.replace(patt, sanitizer.replace);
             },
             iban: function(value, sanitizer){
+                if (!/[A-Z]{2}[0-9]{2} ?[A-Z]{4}/.test(value))
+                    return value;
                 value = value.replace(/\s/g, '');
                 var chunks = value.match(/.{1,4}/g);
                 if(chunks === null)
@@ -262,12 +264,12 @@
                 this.setValid();
             return valid;
         }, 
-        sanitize: function(live){
+        sanitize: function(realtime){
             var val = this.getValue();
             var oldVal = val;
             for(var s in this.sanitizers)
                 if((JannieForms.sanitizers[this.sanitizers[s].method]))
-                    if(!live || this.sanitizers[s].live)
+                    if(!realtime || this.sanitizers[s].realtime)
                         val = (JannieForms.sanitizers[this.sanitizers[s].method])(val, this.sanitizers[s]);
             if(oldVal !== val)
                 this.setValue(val);

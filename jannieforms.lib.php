@@ -1094,6 +1094,26 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     }
 
+    class JannieIbanField extends JannieTextField {
+
+        /**
+         * Creates a new text field and adds IBAN sanitizer and validator
+         * @param string $slug
+         * @param string $label
+         * @param string $openIbanUsername openiban API username
+         * @param string $openIbanPassword openiban API password
+         * @param string $value
+         */
+        public function __construct($slug, $label, $openIbanUsername, $openIbanPassword, $value = '')
+        {
+            parent::__construct($slug, $label, $value, 0);
+            $this->addSanitizer(new JannieFormFieldUppercaser());
+            $this->addSanitizer(new JannieFormFieldIbanSanitizer($openIbanUsername, $openIbanPassword));
+            $this->addValidator(new JannieFormIbanValidator());
+        }
+
+    }
+
     class JanniePassField extends JannieTextField {
 
         public function getClasses() {
@@ -1257,10 +1277,15 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public abstract function isLive();
 
+        public function isRealtime() {
+            return true;
+        }
+
         public function getJsonData() {
             return [
                 'method' => $this->describeMethod(),
-                'live' => $this->isLive()
+                'live' => $this->isLive(),
+                'realtime' => $this->isRealtime()
             ];
         }
 
@@ -1351,8 +1376,18 @@ if (!defined('JANNIEFORMS_LOADED')) {
     }
     
     class JannieFormFieldIbanSanitizer extends JannieFormFieldSanitizer {
-        
-        
+
+        const ENDPOINT = 'http://opendata.siteworkers.nl/openiban?bban=';
+
+        private $openIbanUsername,
+                $openIbanPassword;
+
+        function __construct($openIbanUsername = NULL, $openIbanPassword = NULL)
+        {
+            $this->openIbanUsername = $openIbanUsername;
+            $this->openIbanPassword = $openIbanPassword;
+        }
+
         public function describeMethod() {
             return 'iban';
         }
@@ -1361,10 +1396,38 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return true;
         }
 
+        public function isRealtime()
+        {
+            return false;
+        }
+
         public function sanitize($value) {
+            if(preg_match('/^[0-9]{1,10}$/', $value))
+                $value = self::convertUsingOpenIban($value, $this->openIbanUsername, $this->openIbanPassword);
             $value = preg_replace('/\s/', '', $value);
             $parts = str_split($value, 4);
             return implode(' ', $parts);
+        }
+
+        /**
+         * Converst BBAN number into IBAN number using the openiban API
+         * @param $bban
+         * @param $username
+         * @param $password
+         * @return string|null
+         */
+        private static function convertUsingOpenIban($bban, $username, $password) {
+            $host = self::ENDPOINT . $bban;
+            $apiCall = curl_init(self::ENDPOINT . $bban);
+            curl_setopt($apiCall, CURLOPT_USERPWD, $username . ":" . $password);
+            curl_setopt($apiCall, CURLOPT_RETURNTRANSFER, TRUE);
+            $response = curl_exec($apiCall);
+            $apiResponse = json_decode($response, true);
+            curl_close($apiCall);
+            if($apiResponse === NULL)
+                return NULL;
+            else
+                return $apiResponse['iban'];
         }
 
     }
@@ -1505,16 +1568,18 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
     class JannieFormRegexFieldValidator extends JannieFormFieldValidator {
 
-        private $pattern;
+        private $pattern,
+                $localPattern;
 
-        public function __construct($pattern, $errorMsg) {
+        public function __construct($pattern, $errorMsg, $localPattern = NULL) {
             parent::__construct($errorMsg);
             $this->pattern = $pattern;
+            $this->localPattern = $localPattern !== NULL ? $localPattern : $pattern;
         }
 
         public function getJsonData() {
             return array_merge(parent::getJsonData(), array(
-                'pattern' => $this->pattern
+                'pattern' => $this->localPattern
             ));
         }
 
@@ -1550,9 +1615,13 @@ if (!defined('JANNIEFORMS_LOADED')) {
     
     class JannieFormIbanValidator extends JannieFormRegexFieldValidator {
 
+        const PATT = "/^[A-Z]{2}[0-9]{2} [A-Z0-9]{4} [0-9]{4} [0-9]{4}( [0-9]{4})?( [0-9]{2})?$/";
+        const PATT_LOCAL = "/^([A-Z]{2}[0-9]{2} [A-Z0-9]{4} [0-9]{4} [0-9]{4}( [0-9]{4})?( [0-9]{2})?|[0-9]{1,10})$/";
+        const ERROR = "Ongeldig rekeningnummer";
+
         public function __construct() {
             parent::__construct(
-                "/^[A-Z]{2}[0-9]{2} [A-Z0-9]{4} [0-9]{4} [0-9]{4}( [0-9]{4})?( [0-9]{2})?$/", "Ongeldige IBAN"
+                self::PATT, self::ERROR, self::PATT_LOCAL
             );
         }
 
