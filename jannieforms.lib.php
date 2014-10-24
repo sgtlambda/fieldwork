@@ -1402,7 +1402,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public function sanitize($value) {
-            if(preg_match('/^[0-9]{1,10}$/', $value))
+            if(preg_match('/^[0-9]{1,10}$/', $value) && $this->openIbanUsername !== NULL && $this->openIbanPassword !== NULL)
                 $value = self::convertUsingOpenIban($value, $this->openIbanUsername, $this->openIbanPassword);
             $value = preg_replace('/\s/', '', $value);
             $parts = str_split($value, 4);
