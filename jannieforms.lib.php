@@ -110,7 +110,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Adds component to given parent component
          * @param JannieFormComponent $parent
-         * @return \JannieFormComponent
+         * @return $this
          */
         public function addTo(JannieFormComponent $parent) {
             $parent->add($this);
@@ -121,7 +121,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Adds class(es) to this component's node
          * @param string|array $class
-         * @return \JannieFormComponent
+         * @return $this
          */
         public function addClass($class) {
             $targetArray = &$this->customClasses;
@@ -132,6 +132,12 @@ if (!defined('JANNIEFORMS_LOADED')) {
             return $this;
         }
 
+        /**
+         * Sets a custom attribute
+         * @param string $attr Attribute name
+         * @param string $value Attribtue value
+         * @return $this
+         */
         public function attr($attr, $value) {
             $this->customAttributes[$attr] = $value;
             return $this;
@@ -140,6 +146,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Sets whether the component is active
          * @param boolean $active
+         * @return $this
          */
         public function setActive($active = true) {
             $this->active = $active;
@@ -157,7 +164,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Returns a flat list of the component's enabled children
          * @param boolean $recursive
-         * @param boolean $includeInactiveFields whether to include inactive fields as well
+         * @param boolean $includeInactiveFields whether to include inactive fields
          * @return array
          */
         public function getChildren($recursive = true, $includeInactiveFields = false) {
@@ -276,6 +283,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Enables this ajax method on the current page
          * @param boolean $active
+         * @return $this
          */
         public function activate($active = true) {
             $this->active = $active;
