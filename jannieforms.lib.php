@@ -1203,7 +1203,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         public function getClasses() {
             return array_merge(
-                    parent::getClasses(), array('button', 'invisible-target-button')
+                    parent::getClasses(), array('button', $this->use_shim ? 'invisible-target-button' : 'target-button')
             );
         }
 
