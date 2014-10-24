@@ -243,7 +243,7 @@
             this.validate();
         }, 
         keyup: function(e, field){
-            this.sanitize(true);
+            //this.sanitize(true);
         },
         cancelSubmit: function(){
             this.clicked = false;
