@@ -23,7 +23,7 @@ add_action('wp_enqueue_scripts', function() {
                 'underscore', 
                 'datetimepicker', 
                 'sweet-alert'
-            ), '1.0'
+            ), '1.2'
         );
     wp_enqueue_script('jannieforms');
 
