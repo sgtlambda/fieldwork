@@ -125,6 +125,10 @@
         JannieForms.processForms();
     }
     $.extend(JannieForm.prototype, {
+        sanitize: function () {
+            for (var n in this.fields)
+                this.fields[n].sanitize(false);
+        },
         validate: function () {
             var fieldsValid = true;
             for (var n in this.fields)
@@ -145,6 +149,7 @@
             return true;
         },
         submit: function(e){
+            this.sanitize();
             this.validate();
             if(!this.isValid()){
                 e.preventDefault();
