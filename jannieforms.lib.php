@@ -950,10 +950,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Adds validator
          * @param JannieFormFieldValidator $v
+         * @param boolean $unshift Whether to add the validator to the front of the array
          * @return \JannieFormFieldComponent this
          */
-        public function addValidator(JannieFormFieldValidator $v) {
-            $this->validators[] = $v;
+        public function addValidator(JannieFormFieldValidator $v, $unshift = false) {
+            if($unshift)
+                array_unshift($this->validators, $v);
+            else
+                $this->validators[] = $v;
             $v->setField($this);
             return $this;
         }
