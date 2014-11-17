@@ -461,10 +461,14 @@ if (!defined('JANNIEFORMS_LOADED')) {
         /**
          * Adds a new form-level validator
          * @param JannieFormValidator $v validator
+         * @param boolean $unshift Whether to add the validator to the front of the array
          * @return \JannieForm this
          */
-        public function addValidator(JannieFormValidator $v) {
-            $this->validators[] = $v;
+        public function addValidator(JannieFormValidator $v, $unshift = false) {
+            if($unshift)
+                array_unshift($this->validators, $v);
+            else
+                $this->validators[] = $v;
             return $this;
         }
 
@@ -884,7 +888,8 @@ if (!defined('JANNIEFORMS_LOADED')) {
 
         /**
          * Sets whether the component is visible
-         * @param type $visible
+         * @param boolean $visible
+         * @return $this
          */
         public function setVisible($visible = true) {
             $this->visible = $visible;
@@ -1527,6 +1532,15 @@ if (!defined('JANNIEFORMS_LOADED')) {
         }
 
         public abstract function isValid($value);
+
+        /**
+         * Whether to skip the remaining field validators
+         * @param string $value
+         * @return bool
+         */
+        public function isBreak($value) {
+            return false;
+        }
         
     }
     
@@ -1654,6 +1668,33 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function __construct() {
             parent::__construct(self::PATT, self::ERROR);
         }
+
+    }
+
+    class JannieFormBreakOnValueValidator extends JannieFormFieldValidator {
+
+        private $breakValue = "";
+
+        function __construct($breakValue)
+        {
+            $this->breakValue = $breakValue;
+        }
+
+        function describeMethod()
+        {
+            return 'breakonvalue';
+        }
+
+        public function isValid($value)
+        {
+            return true;
+        }
+
+        public function isBreak($value)
+        {
+            return $value === $this->breakValue;
+        }
+
 
     }
 
