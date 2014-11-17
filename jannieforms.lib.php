@@ -979,11 +979,15 @@ if (!defined('JANNIEFORMS_LOADED')) {
         public function isValid() {
             if ($this->forceInvalid)
                 return false;
-            foreach ($this->validators as $validator)
+            foreach ($this->validators as $validator) {
+                /* @var $validator JannieFormFieldValidator */
                 if (!$validator->isValid($this->value)) {
                     $this->latestErrorMsg = $validator->getErrorMsg();
                     return false;
+                } else if($validator->isBreak($this->value)) {
+                    return true;
                 }
+            }
             return true;
         }
 
