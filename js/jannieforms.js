@@ -126,15 +126,18 @@
     }
     $.extend(JannieForm.prototype, {
         sanitize: function () {
-            for (var n in this.fields)
-                this.fields[n].sanitize(false);
+            for (var n in this.fields) {
+                if(this.fields[n].sanitize) {
+                    this.fields[n].sanitize(false);
+                }
+            }
         },
         validate: function () {
             var fieldsValid = true;
-            for (var n in this.fields)
-                if (!this.fields[n].validate())
+            for (var n in this.fields) {
+                if(this.fields[n].validate && !this.fields[n].validate())
                     fieldsValid = false;
-            if (fieldsValid)
+            } if (fieldsValid)
                 for (var n in this.validators)
                     if (!this.validators[n].validate())
                         break;
@@ -154,9 +157,10 @@
             if(!this.isValid()){
                 e.preventDefault();
                 for(var n in this.fields)
-                    this.fields[n].cancelSubmit();
+                    if(this.fields[n].cancelSubmit)
+                        this.fields[n].cancelSubmit();
                 for(n in this.fields)
-                    if(!this.fields[n].isValid()){
+                    if(this.fields[n].isValid && !this.fields[n].isValid()){
                         this.fields[n].element.focus().jtShow();
                         break;
                     }
@@ -286,6 +290,8 @@
             return (!this.isButton || this.clicked);
         },
         getValue: function(){
+            if(this.element.val() == this.element.attr('placeholder'))
+                return '';
             return this.element.val();
         }, 
         setValue: function(val) {
