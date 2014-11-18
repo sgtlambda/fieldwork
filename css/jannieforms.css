@@ -41,7 +41,7 @@ input.janniefield:not(.button), textarea.janniefield {
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
-  margin: 16px 0;
+  margin: 8px 0;
   border-radius: 3px;
   background: white;
   border: 1px solid #ccc;
@@ -50,7 +50,7 @@ input.janniefield:not(.button), textarea.janniefield {
     background: #fff0f0; }
 
 .horizontalgroup {
-  margin: -16px -8px; }
+  margin: -8px; }
   .horizontalgroup:after {
     content: "";
     display: table;
