@@ -1372,7 +1372,7 @@ if (!defined('JANNIEFORMS_LOADED')) {
         
         private $regexp, $regexpmod;
         
-        public function __construct($from, $regexp, $to, $regexpmod = '') {
+        public function __construct($from, $regexp, $to, $regexpmod = 'g') {
             parent::__construct($from, $to);
             $this->regexp = $regexp;
             $this->regexpmod = $regexpmod;
