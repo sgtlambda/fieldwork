@@ -4,7 +4,7 @@ namespace jannieforms\sanitizers;
 
 use jannieforms\sanitizers;
 
-class FieldCapitalizer extends sanitizers\AbstractFieldSaniziter
+class FieldCapitalizer extends sanitizers\FieldSanitizer
 {
 
     public function sanitize ($value)

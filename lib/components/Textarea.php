@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class Textarea extends AbstractField
+class Textarea extends Field
 {
 
     public function getAttributes ()

@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class RadioSelect extends AbstractField
+class RadioSelect extends Field
 {
 
     private $options;

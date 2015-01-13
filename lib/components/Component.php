@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-abstract class AbstractComponent
+abstract class Component
 {
 
     protected
@@ -37,7 +37,7 @@ abstract class AbstractComponent
         return true;
     }
 
-    protected function add (AbstractComponent $component)
+    protected function add (Component $component)
     {
         $this->children[] = $component;
     }
@@ -49,12 +49,14 @@ abstract class AbstractComponent
 
     /**
      * Adds component to given parent component
+
      *
-     * @param AbstractComponent $parent
+*@param Component $parent
+
      *
-     * @return $this
+*@return $this
      */
-    public function addTo (AbstractComponent $parent)
+    public function addTo (Component $parent)
     {
         $parent->add($this);
         $this->parent = $parent;
@@ -136,11 +138,13 @@ abstract class AbstractComponent
 
     /**
      * Check if given component is child
+
      *
-     * @param AbstractComponent $child     component to search for
+*@param Component $child     component to search for
      * @param boolean           $recursive whether or not to search recursively
+
      *
-     * @return boolean
+*@return boolean
      */
     public function hasChild ($child, $recursive = true)
     {

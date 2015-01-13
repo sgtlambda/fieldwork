@@ -15,7 +15,7 @@ abstract class AbstractFormValidator
      * @param array  $inflictsFields Array of names of fields to be marked "invalid" upon rendering the form if this
      *                               validator evaluates to false
      */
-    public function __construct ($errorMsg, $inflictsFields = array())
+    public function __construct ($errorMsg, array $inflictsFields = array())
     {
         $this->errorMsg       = $errorMsg;
         $this->inflictsFields = $inflictsFields;
@@ -26,7 +26,7 @@ abstract class AbstractFormValidator
         return $this->errorMsg;
     }
 
-    public function process ($form)
+    public function process (Form $form)
     {
         if (($this->isValid = $this->validate($form)))
             return true;

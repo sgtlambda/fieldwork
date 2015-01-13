@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class HiddenField extends AbstractField
+class HiddenField extends Field
 {
 
     public function isVisible ()

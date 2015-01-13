@@ -2,9 +2,9 @@
 
 namespace jannieforms\sanitizers;
 
-use jannieforms\SynchronizableObject;
+use jannieforms\Synchronizable;
 
-abstract class AbstractFieldSaniziter implements SynchronizableObject
+abstract class FieldSanitizer implements Synchronizable
 {
 
     public abstract function sanitize ($value);

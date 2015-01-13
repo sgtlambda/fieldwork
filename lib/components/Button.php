@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class Button extends AbstractField
+class Button extends Field
 {
 
     const TYPE_SUBMIT = "submit";

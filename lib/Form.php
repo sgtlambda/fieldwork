@@ -2,12 +2,12 @@
 
 namespace jannieforms;
 
-use jannieforms\components\AbstractField;
+use jannieforms\components\Field;
 use jannieforms\components\GroupComponent;
 use jannieforms\methods\Method;
 use jannieforms\validators\AbstractFormValidator;
 
-class Form extends GroupComponent implements FormData, SynchronizableObject
+class Form extends GroupComponent implements FormData, Synchronizable
 {
 
     const TARGET_SELF  = "_self";
@@ -73,11 +73,13 @@ class Form extends GroupComponent implements FormData, SynchronizableObject
 
     /**
      * Searches form fields
+
      *
-     * @param string $query id to search for
+*@param string $query id to search for
      * @param bool   $includeInactiveFields
+
      *
-     * @return bool|AbstractField closest match or false if not found
+*@return bool|Field closest match or false if not found
      */
     public function f ($query, $includeInactiveFields = false)
     {

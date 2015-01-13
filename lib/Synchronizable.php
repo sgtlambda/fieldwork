@@ -7,7 +7,7 @@ namespace jannieforms;
  * implementation in order to provide any actual functionality
  * @package jannieforms
  */
-interface SynchronizableObject
+interface Synchronizable
 {
 
     function getJsonData ();

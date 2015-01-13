@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class TextField extends AbstractField
+class TextField extends Field
 {
 
     const ON_ENTER_NEXT   = 'next';

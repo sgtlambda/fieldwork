@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class GroupComponent extends AbstractComponent
+class GroupComponent extends Component
 {
 
     public function getHTML ($before = '', $after = '', $prefix = '', $suffix = '')
@@ -11,9 +11,9 @@ class GroupComponent extends AbstractComponent
         foreach ($this->children as $component)
             if ($component->isActive()) {
                 $componentHTML = (
-                ($component->isVisible() || $component->renderWhenHidden() == AbstractField::RM_DEFAULT) ?
+                ($component->isVisible() || $component->renderWhenHidden() == Field::RM_DEFAULT) ?
                     $component->getHTML() :
-                    ($component->renderWhenHidden() == AbstractField::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
+                    ($component->renderWhenHidden() == Field::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
                 );
                 $html .= $prefix . ($component->isVisible() ? (str_replace('%slug%', $component->getGlobalSlug(), $before) . $componentHTML . $after) : $component->getHTML()) . $suffix;
             }

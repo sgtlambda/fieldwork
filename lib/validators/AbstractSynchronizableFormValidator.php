@@ -2,16 +2,18 @@
 
 namespace jannieforms\validators;
 
-use jannieforms\SynchronizableObject;
+use jannieforms\components\Field;
+use jannieforms\Synchronizable;
 use jannieforms\validators;
 
-abstract class AbstractSynchronizableFormValidator extends validators\AbstractFormValidator implements SynchronizableObject
+abstract class AbstractSynchronizableFormValidator extends AbstractFormValidator implements Synchronizable
 {
 
     public function getJsonData ()
     {
         $fields = [];
         foreach ($this->inflictsFields as $field)
+            /* @var $field Field */
             $fields[] = $field->getName();
         return array(
             'inflictedFields' => $fields,

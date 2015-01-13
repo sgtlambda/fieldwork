@@ -2,16 +2,16 @@
 
 namespace jannieforms\components;
 
-use jannieforms\sanitizers\AbstractFieldSaniziter;
+use jannieforms\methods\Method;
+use jannieforms\sanitizers\FieldSanitizer;
 use jannieforms\validators\AbstractFieldValidator;
 
-abstract class AbstractField extends AbstractComponent
+abstract class Field extends Component
 {
 
-    const DEFAULT_COOKIE_LIFETIME = 2592000; // 60 * 60 * 24 * 30  ->  30 days
-    const RM_NONE                 = 'none';
-    const RM_HIDDENFIELD          = 'hidden';
-    const RM_DEFAULT              = 'default';
+    const RM_NONE        = 'none';
+    const RM_HIDDENFIELD = 'hidden';
+    const RM_DEFAULT     = 'default';
 
     protected
         $label,
@@ -58,11 +58,12 @@ abstract class AbstractField extends AbstractComponent
         return $this->collectData;
     }
 
-    public function restoreValue ($method, $sanitize = true)
+    public function restoreValue (Method $method, $sanitize = true)
     {
         $v = stripslashes($method->getValue($this->getName(), $this->value));
         if ($sanitize)
             foreach ($this->sanitizers as $s)
+                /* @var $s FieldSanitizer */
                 $v = $s->sanitize($v);
         $this->value = $v;
     }
@@ -182,7 +183,7 @@ abstract class AbstractField extends AbstractComponent
      * @param AbstractFieldValidator $v
      * @param boolean                $unshift Whether to add the validator to the front of the array
      *
-     * @return AbstractField
+     * @return Field
      */
     public function addValidator (AbstractFieldValidator $v, $unshift = false)
     {
@@ -196,12 +197,14 @@ abstract class AbstractField extends AbstractComponent
 
     /**
      * Adds sanitizer
+
      *
-     * @param AbstractFieldSaniziter $s
+*@param FieldSanitizer $s
+
      *
-     * @return AbstractField
+*@return Field
      */
-    public function addSanitizer (AbstractFieldSaniziter $s)
+    public function addSanitizer (FieldSanitizer $s)
     {
         $this->sanitizers[] = $s;
         return $this;

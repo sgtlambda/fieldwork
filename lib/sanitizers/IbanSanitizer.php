@@ -4,7 +4,7 @@ namespace jannieforms\sanitizers;
 
 use jannieforms\sanitizers;
 
-class IbanSanitizer extends sanitizers\AbstractFieldSaniziter
+class IbanSanitizer extends sanitizers\FieldSanitizer
 {
 
     const ENDPOINT = 'http://opendata.siteworkers.nl/openiban?bban=';

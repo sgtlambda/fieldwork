@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class HTMLComponent extends AbstractComponent
+class HTMLComponent extends Component
 {
 
     private $html;

@@ -2,7 +2,7 @@
 
 namespace jannieforms\components;
 
-class Checkbox extends AbstractField
+class Checkbox extends Field
 {
 
     const CHECKED = 'checked';

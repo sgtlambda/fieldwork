@@ -4,7 +4,7 @@ namespace jannieforms\sanitizers;
 
 use jannieforms\sanitizers;
 
-class RegexReplaceSanitizer extends sanitizers\AbstractFieldSaniziter
+class RegexReplaceSanitizer extends sanitizers\FieldSanitizer
 {
 
     protected $from, $to;
