@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (C) Jan-Merijn Versteeg - All Rights Reserved
- * Unauthorized copying of this file, via any medium, is strictly prohibited
- * Proprietary and confidential
- */
 
 spl_autoload_register(function ($class) {
     $prefix   = 'jannieforms\\';
