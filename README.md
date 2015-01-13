@@ -43,16 +43,15 @@ Add a submit button:
        ->setUseShim(false)
        ->addTo($contactForm);
 
-### Todo
+#### todo
 
  - Create composer package that works with [bedrock](https://github.com/roots/bedrock)
  - Error message i18n
- - Add centralized `Callback` class for access both direct and through AJAX
- - Add JSON form definition format specs & parser to go along with it
+ - Add centralized `Callback` and `AjaxEnvironment` classes for callback centralization
+ - Add JSON form definition format specs & parser
  - Load forms on demand
  - Tidy up code
  - Drop jQuery requirement
- - ~~ORM integration~~ (not consistent with project philosophy)
 
 #### v3.0 (2015-01-13)
 
