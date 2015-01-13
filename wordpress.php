@@ -25,7 +25,7 @@ add_action('wp_enqueue_scripts', function () {
         'sweetalert'
     );
 
-    wp_register_script('jannieforms', plugins_url('dist/jannieforms.js', __FILE__), $deps);
+    wp_register_script('jannieforms', plugins_url('dist/jannieforms.min.js', __FILE__), $deps);
 
     wp_enqueue_script('jannieforms');
     wp_enqueue_style('jannieforms', plugins_url('dist/jannieforms.css', __FILE__));
