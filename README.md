@@ -14,7 +14,7 @@ If you're using WordPress, install to `/wp-content/plugins/jannieforms` and acti
 
 If you're using [bedrock](https://github.com/roots/bedrock) (which in case you aren't, you really should), you could also install to `/wp-content/mu-plugins/jannieforms` thanks to the bedrock autoloader.
 
-Creating a form is as simple as instantiating `JannieForm`:
+Creating a form is as simple as instantiating `Form`:
 
     use jannieforms\Form;
     
