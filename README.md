@@ -8,40 +8,56 @@ Jannieforms will make your life easier by dealing with the trivial tasks of buil
 
 ###Getting started
 
-Clone [this repo](https://github.com/jmversteeg/jannieforms.git) or download and extract [master.zip](https://github.com/jmversteeg/jannieforms/archive/master.zip).
+```bash
+#navigate to your plugin folder
+cd wp-content/plugins
 
-If you're using WordPress, install to `/wp-content/plugins/jannieforms` and activate plugin through WordPress back-end. 
+#or if you're using bedrock, which you should
+cd app/mu-plugins
 
-If you're using [bedrock](https://github.com/roots/bedrock) (which in case you aren't, you really should), you could also install to `/wp-content/mu-plugins/jannieforms` thanks to the bedrock autoloader.
+git clone https://github.com/jmversteeg/jannieforms.git
+cd jannieforms
+npm install
+bower install
+gulp
+```
 
 Creating a form is as simple as instantiating `jannieforms\Form`:
 
-    use jannieforms\Form;
-    
-    $contactform = new Form('contact', '', new JannieFormPostMethod() );
+```php
+use jannieforms\Form;
+
+$contactform = new Form('contact', '', new JannieFormPostMethod() );
+```
 
 You can create a new field by instantiating any class that extends `jannieforms\components\Field`:
 
-    use jannieforms\components\TextField;
-    
-    $emailField = new TextField('email', 'Email address');
+```php
+use jannieforms\components\TextField;
+
+$emailField = new TextField('email', 'Email address');
+```
 
 Configure the field and attach it to the form:
 
-    use jannieforms\validators\JannieFormEmailValidator;
-    
-    $emailField
-       ->addValidator(new JannieFormEmailValidator())
-       ->addTo($contactForm);
+```php
+use jannieforms\validators\JannieFormEmailValidator;
+
+$emailField
+   ->addValidator(new JannieFormEmailValidator())
+   ->addTo($contactForm);
+```
 
 Add a submit button:
     
-    use jannieforms\components\Button;
-    
-    $submit = new Button("submit", "Send", "", Button::TYPE_SUBMIT);
-    $submit
-       ->setUseShim(false)
-       ->addTo($contactForm);
+```php
+use jannieforms\components\Button;
+
+$submit = new Button("submit", "Send", "", Button::TYPE_SUBMIT);
+$submit
+   ->setUseShim(false)
+   ->addTo($contactForm);
+```
 
 #### todo
 
