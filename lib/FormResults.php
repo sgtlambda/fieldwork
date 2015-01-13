@@ -16,12 +16,10 @@ class FormResults implements FormData
 
     /**
      * Searches form fields
-
      *
-*@param string $query id to search for
-
+     * @param string $query id to search for
      *
-*@return bool|Field closest match or false if not found
+     * @return bool|Field closest match or false if not found
      */
     public function f ($query)
     {

@@ -49,12 +49,10 @@ abstract class Component
 
     /**
      * Adds component to given parent component
-
      *
-*@param Component $parent
-
+     * @param Component $parent
      *
-*@return $this
+     * @return $this
      */
     public function addTo (Component $parent)
     {
@@ -138,13 +136,11 @@ abstract class Component
 
     /**
      * Check if given component is child
-
      *
-*@param Component $child     component to search for
-     * @param boolean           $recursive whether or not to search recursively
-
+     * @param Component $child     component to search for
+     * @param boolean   $recursive whether or not to search recursively
      *
-*@return boolean
+     * @return boolean
      */
     public function hasChild ($child, $recursive = true)
     {

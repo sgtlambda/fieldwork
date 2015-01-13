@@ -73,13 +73,11 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Searches form fields
-
      *
-*@param string $query id to search for
+     * @param string $query id to search for
      * @param bool   $includeInactiveFields
-
      *
-*@return bool|Field closest match or false if not found
+     * @return bool|Field closest match or false if not found
      */
     public function f ($query, $includeInactiveFields = false)
     {
@@ -128,13 +126,11 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Adds a new form-level validator
-
      *
-*@param FormValidator $validator validator
-     * @param boolean               $unshift   Whether to add the validator to the front of the array
-
+     * @param FormValidator $validator validator
+     * @param boolean       $unshift   Whether to add the validator to the front of the array
      *
-*@return static
+     * @return static
      */
     public function addValidator (FormValidator $validator, $unshift = false)
     {

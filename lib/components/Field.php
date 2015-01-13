@@ -180,13 +180,11 @@ abstract class Field extends Component
 
     /**
      * Adds validator
-
      *
-*@param FieldValidator $v
-     * @param boolean                $unshift Whether to add the validator to the front of the array
-
+     * @param FieldValidator $v
+     * @param boolean        $unshift Whether to add the validator to the front of the array
      *
-*@return Field
+     * @return Field
      */
     public function addValidator (FieldValidator $v, $unshift = false)
     {
@@ -200,12 +198,10 @@ abstract class Field extends Component
 
     /**
      * Adds sanitizer
-
      *
-*@param FieldSanitizer $s
-
+     * @param FieldSanitizer $s
      *
-*@return Field
+     * @return Field
      */
     public function addSanitizer (FieldSanitizer $s)
     {
