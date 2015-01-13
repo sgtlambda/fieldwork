@@ -30,13 +30,15 @@ use jannieforms\components\TextField;
 use jannieforms\validators\JannieFormEmailValidator;
 use jannieforms\components\Button;
 
-$contactform = new Form('contact', '', new JannieFormPostMethod() );
+$contactForm = new Form('contact', '', new JannieFormPostMethod() );
 
-new TextField('email', 'Email address')
+$emailField = new TextField('email', 'Email address');
+$emailField
    ->addValidator(new JannieFormEmailValidator())
    ->addTo($contactForm);
 
-$submit = new Button('submit', 'Send', 'submit', Button::TYPE_SUBMIT)
+$submitButton = new Button('submit', 'Send', 'submit', Button::TYPE_SUBMIT);
+$submitButton
    ->addTo($contactForm);
 ```
 
