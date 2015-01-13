@@ -85,3 +85,7 @@ input.janniefield:not(.button), textarea.janniefield {
     box-sizing: initial;
   }
 }
+
+textarea.janniefield {
+  min-height: 120px;
+}
