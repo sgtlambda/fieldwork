@@ -236,7 +236,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     public function getScript ()
     {
-        return "jQuery(function(){ jQuery('#" . $this->getID() . "').jannieform(" . json_encode($this->getJsonData()) . "); });";
+        return "jQuery(function($){ $('#" . $this->getID() . "').jannieform(" . json_encode($this->getJsonData()) . "); });";
     }
 
     public function getScriptHTML ()
@@ -284,7 +284,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     {
         $fields = array();
         foreach ($this->getChildren(true, $includeInactiveFields) as $component)
-            if (is_subclass_of($component, "JannieFormFieldComponent"))
+            if ($component instanceof Field)
                 array_push($fields, $component);
         return $fields;
     }
