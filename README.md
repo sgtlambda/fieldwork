@@ -9,10 +9,10 @@ Jannieforms will make your life easier by dealing with the trivial tasks of buil
 ###Getting started
 
 ```bash
-#navigate to your plugin folder
+# navigate to your plugin folder
 cd wp-content/plugins
 
-#or if you're using bedrock, which you should
+# or if you're using bedrock
 cd app/mu-plugins
 
 git clone https://github.com/jmversteeg/jannieforms.git
