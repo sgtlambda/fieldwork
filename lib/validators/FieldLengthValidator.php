@@ -2,7 +2,7 @@
 
 namespace jannieforms\validators;
 
-use jannieforms\validators\RegexFieldValidator;
+
 
 class FieldLengthValidator extends RegexFieldValidator
 {

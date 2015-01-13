@@ -5,6 +5,9 @@ namespace jannieforms\components;
 abstract class Component
 {
 
+    const RM_NONE        = 'none';
+    const RM_HIDDENFIELD = 'hidden';
+    const RM_DEFAULT     = 'default';
     protected
         $parent,
         $children         = array();
@@ -25,6 +28,7 @@ abstract class Component
     public function reset ()
     {
         foreach ($this->getChildren(false) as $child)
+            /* @var $child Component */
             $child->reset();
     }
 
@@ -40,6 +44,16 @@ abstract class Component
     protected function add (Component $component)
     {
         $this->children[] = $component;
+    }
+
+    public function renderWhenHidden ()
+    {
+        return Field::RM_HIDDENFIELD;
+    }
+
+    public function renderHiddenField ()
+    {
+        return "<input type='hidden'" . $this->getAttributesString() . ">";
     }
 
     protected function getCustomClasses ()
@@ -126,6 +140,7 @@ abstract class Component
     {
         $children = array();
         foreach ($this->children as $component)
+            /* @var $component Component */
             if ($component->isActive() || $includeInactiveFields) {
                 array_push($children, $component);
                 if ($recursive)
@@ -145,6 +160,7 @@ abstract class Component
     public function hasChild ($child, $recursive = true)
     {
         foreach ($this->children as $component)
+            /* @var $component Component */
             if ($component == $child || ($recursive && $component->hasChild($child, true)))
                 return true;
         return false;
@@ -190,15 +206,18 @@ abstract class Component
 
     public function getGlobalSlug ()
     {
-        if ($this->parent)
+        if ($this->parent instanceof Component)
             return $this->parent->getGlobalSlug() . '-' . $this->slug;
         else
             return $this->slug;
     }
 
+    /**
+     * @return Component
+     */
     public function getRoot ()
     {
-        if ($this->parent)
+        if ($this->parent instanceof Component)
             return $this->parent->getRoot();
         else
             return $this;

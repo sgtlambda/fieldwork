@@ -9,6 +9,7 @@ class GroupComponent extends Component
     {
         $html = '';
         foreach ($this->children as $component)
+            /* @var $component static */
             if ($component->isActive()) {
                 $componentHTML = (
                 ($component->isVisible() || $component->renderWhenHidden() == Field::RM_DEFAULT) ?
@@ -24,6 +25,7 @@ class GroupComponent extends Component
     public function isValid ()
     {
         foreach ($this->children as $component)
+            /* @var $component Component */
             if (!$component->isValid() && $component->isActive())
                 return false;
         return true;

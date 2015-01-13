@@ -2,16 +2,13 @@
 
 namespace jannieforms\components;
 
+use jannieforms\Form;
 use jannieforms\methods\Method;
 use jannieforms\sanitizers\FieldSanitizer;
 use jannieforms\validators\FieldValidator;
 
 abstract class Field extends Component
 {
-
-    const RM_NONE        = 'none';
-    const RM_HIDDENFIELD = 'hidden';
-    const RM_DEFAULT     = 'default';
 
     protected
         $label,
@@ -128,16 +125,6 @@ abstract class Field extends Component
         return $this->visible;
     }
 
-    public function renderWhenHidden ()
-    {
-        return self::RM_HIDDENFIELD;
-    }
-
-    public function renderHiddenField ()
-    {
-        return "<input type='hidden'" . $this->getAttributesString() . ">";
-    }
-
     public function getJsonData ()
     {
         $v = [];
@@ -146,6 +133,7 @@ abstract class Field extends Component
             /* @var $validator FieldValidator */
             array_push($v, $validator->getJsonData());
         foreach ($this->sanitizers as $sanitizer)
+            /* @var $sanitizer FieldSanitizer */
             $s[] = $sanitizer->getJsonData();
         return array(
             'validators'  => $v,
@@ -172,9 +160,11 @@ abstract class Field extends Component
 
     public function getClasses ()
     {
+        $form = $this->getRoot();
+        /* @var $form Form */
         return array_merge(parent::getClasses(), array(
             "janniefield",
-            ($this->getRoot()->isSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
+            ($form->isSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
         ));
     }
 
@@ -233,6 +223,7 @@ abstract class Field extends Component
     public function sanitize ()
     {
         foreach ($this->sanitizers as $sanitizer)
+            /* @var $sanitizer FieldSanitizer */
             $this->value = $sanitizer->sanitize($this->value);
     }
 

@@ -27,7 +27,7 @@ class Button extends Field
      *
      * @param boolean $use_shim
      *
-     * @return \JannieButton
+     * @return static
      */
     public function setUseShim ($use_shim = true)
     {

@@ -22,7 +22,7 @@ class IbanField extends TextField
         components\parent::__construct($slug, $label, $value, 0);
         $this->addSanitizer(new sanitizers\FieldUppercaser());
         $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
-        $this->addValidator(new validators\JannieFormIbanValidator());
+        $this->addValidator(new validators\IbanFieldValidator());
     }
 
 }

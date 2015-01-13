@@ -2,10 +2,12 @@
 
 namespace jannieforms;
 
+
 use jannieforms\components\Field;
 use jannieforms\components\GroupComponent;
 use jannieforms\methods\Method;
 use jannieforms\validators\FormValidator;
+use jannieforms\validators\SynchronizableFormValidator;
 
 class Form extends GroupComponent implements FormData, Synchronizable
 {
@@ -84,6 +86,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
         $minLength = -1;
         $f         = false;
         foreach ($this->getFields($includeInactiveFields) as $field)
+            /* @var $field Field */
             if (preg_match("/^(.*)" . preg_quote($query) . "$/", $field->getGlobalSlug(), $matches)) {
                 $l = strlen($matches[1]);
                 if ($l < $minLength || $minLength == -1) {
@@ -119,6 +122,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     {
         $fields = array();
         foreach ($this->getFields() as $field)
+            /* @var $field Field */
             if ($field->getCollectData())
                 $fields[] = $field;
         return $fields;
@@ -151,11 +155,20 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return $this->getDataFieldName('submit');
     }
 
+    /**
+     * Finds a field by its localslug value
+     *
+     * @param $localSlug
+     *
+     * @return Field|null
+     */
     public function getField ($localSlug)
     {
         foreach ($this->getFields() as $field)
+            /* @var $field Field */
             if ($field->getLocalSlug() == $localSlug)
                 return $field;
+        return null;
     }
 
     public function getValue ($key, $default = '')
@@ -227,9 +240,9 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     public function getScriptHTML ()
     {
-        return "<script type='text/javascript'>
-            " . $this->getScript() . "
-                </script>";
+        $openingTag = "<script type='text/javascript'>";
+        $closingTag = "</script>";
+        return $openingTag . $this->getScript() . $closingTag;
     }
 
     protected function renderFormError ($errorMsg)
@@ -248,6 +261,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
             $dataFields .= "<input type=\"hidden\" name=\"$key\" value=\"$value\">";
         $errors = '';
         foreach ($this->validators as $validator)
+            /* @var $validator FormValidator */
             if (!$validator->isValid())
                 $errors .= $this->renderFormError($validator->getErrorMsg());
         return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML() . "</form>" . $this->getScriptHTML();
@@ -277,10 +291,12 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function getJsonData ()
     {
         $fields = array();
-        foreach ($this->getFields() as $component)
-            $fields[$component->getID()] = $component->getJsonData();
+        foreach ($this->getFields() as $field)
+            /* @var $field Field */
+            $fields[$field->getID()] = $field->getJsonData();
         $liveValidators = array();
         foreach ($this->validators as $validator)
+            /* @var $validator SynchronizableFormValidator */
             if ($validator->isLive())
                 $liveValidators[] = $validator->getJsonData();
         return array(
@@ -294,7 +310,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
             "isSubmitted"    => $this->isCallbacksubmitted,
             "ajax"           => array(
                 "submitEnabled" => $this->ajaxSubmitEnabled,
-                "method"        => $this->ajaxMethod !== null ? $this->ajaxMethod->getSlug() : "",
+                "method"        => $this->ajaxMethod instanceof AbstractCallback ? $this->ajaxMethod->getSlug() : "",
                 "results"       => $this->ajaxResult
             )
         );
@@ -321,14 +337,13 @@ class Form extends GroupComponent implements FormData, Synchronizable
     private function submit ()
     {
         foreach ($this->getFields() as $field)
+            /* @var $field Field */
             $field->submit();
         $this->isCallbacksubmitted = true;
         foreach ($this->callback as $callback)
             if (is_callable($callback))
                 call_user_func($callback, $this);
-        if ($this->ajaxMethod !== null) {
-            $this->processAjaxLocally();
-        }
+        $this->processAjaxLocally();
     }
 
     public function isValid ()
@@ -336,6 +351,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
         if (!parent::isValid())
             return false;
         foreach ($this->validators as $validator)
+            /* @var $validator FormValidator */
             if (!$validator->process($this))
                 return false;
         return true;
@@ -345,6 +361,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     {
         $e = array();
         foreach ($this->validators as $validator)
+            /* @var $validator FormValidator */
             if (!$validator->isValid())
                 $e[] = $validator->getErrorMsg();
         return $e;
@@ -355,7 +372,8 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     private function processAjaxLocally ()
     {
-        $this->ajaxResult = $this->ajaxMethod->run($this);
+        if ($this->ajaxMethod instanceof AbstractCallback)
+            $this->ajaxResult = $this->ajaxMethod->run($this);
     }
 
     /**
@@ -368,6 +386,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
             return;
         $this->isProcessed = true;
         foreach ($this->getFields() as $field)
+            /* @var $field Field */
             $field->preprocess();
         $this->isUserSubmitted = $this->getValue($this->getSubmitConfirmFieldName(), 'false') == 'true' || $this->forceSubmit;
         if ($this->isUserSubmitted) {

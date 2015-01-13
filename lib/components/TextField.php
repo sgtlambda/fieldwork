@@ -32,7 +32,7 @@ class TextField extends Field
      *
      * @param string $mask
      *
-     * @return \JannieTextField
+     * @return static
      */
     public function setMask ($mask)
     {

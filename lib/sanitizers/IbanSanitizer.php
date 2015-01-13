@@ -53,7 +53,6 @@ class IbanSanitizer extends sanitizers\FieldSanitizer
      */
     private static function convertUsingOpenIban ($bban, $username, $password)
     {
-        $host    = self::ENDPOINT . $bban;
         $apiCall = curl_init(self::ENDPOINT . $bban);
         curl_setopt($apiCall, CURLOPT_USERPWD, $username . ":" . $password);
         curl_setopt($apiCall, CURLOPT_RETURNTRANSFER, true);
