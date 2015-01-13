@@ -5,7 +5,7 @@ namespace jannieforms\validators;
 use jannieforms\components\RadioSelect;
 use jannieforms\Form;
 
-class RadioGroupFormValidator extends AbstractSynchronizableFormValidator
+class RadioGroupFormValidator extends SynchronizableFormValidator
 {
 
     private $select;

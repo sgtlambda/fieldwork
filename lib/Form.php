@@ -5,7 +5,7 @@ namespace jannieforms;
 use jannieforms\components\Field;
 use jannieforms\components\GroupComponent;
 use jannieforms\methods\Method;
-use jannieforms\validators\AbstractFormValidator;
+use jannieforms\validators\FormValidator;
 
 class Form extends GroupComponent implements FormData, Synchronizable
 {
@@ -128,13 +128,15 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Adds a new form-level validator
+
      *
-     * @param AbstractFormValidator $validator validator
+*@param FormValidator $validator validator
      * @param boolean               $unshift   Whether to add the validator to the front of the array
+
      *
-     * @return static
+*@return static
      */
-    public function addValidator (AbstractFormValidator $validator, $unshift = false)
+    public function addValidator (FormValidator $validator, $unshift = false)
     {
         if ($unshift)
             array_unshift($this->validators, $validator);

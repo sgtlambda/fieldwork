@@ -7,7 +7,7 @@ class RadioSelect extends Field
 
     private $options;
 
-    public function __construct ($slug, $label, $options, $value = '', $storeValueLocally = 0)
+    public function __construct ($slug, $label, array $options = array(), $value = '', $storeValueLocally = 0)
     {
         parent::__construct($slug, $label, $value, $storeValueLocally);
         $this->options = $options;

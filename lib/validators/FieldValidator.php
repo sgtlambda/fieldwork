@@ -4,7 +4,7 @@ namespace jannieforms\validators;
 
 use jannieforms\Synchronizable;
 
-abstract class AbstractFieldValidator implements Synchronizable
+abstract class FieldValidator implements Synchronizable
 {
 
     private $errorMsg = '', $field;

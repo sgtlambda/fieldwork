@@ -4,7 +4,7 @@ namespace jannieforms\components;
 
 use jannieforms\methods\Method;
 use jannieforms\sanitizers\FieldSanitizer;
-use jannieforms\validators\AbstractFieldValidator;
+use jannieforms\validators\FieldValidator;
 
 abstract class Field extends Component
 {
@@ -143,6 +143,7 @@ abstract class Field extends Component
         $v = [];
         $s = [];
         foreach ($this->validators as $validator)
+            /* @var $validator FieldValidator */
             array_push($v, $validator->getJsonData());
         foreach ($this->sanitizers as $sanitizer)
             $s[] = $sanitizer->getJsonData();
@@ -179,13 +180,15 @@ abstract class Field extends Component
 
     /**
      * Adds validator
+
      *
-     * @param AbstractFieldValidator $v
+*@param FieldValidator $v
      * @param boolean                $unshift Whether to add the validator to the front of the array
+
      *
-     * @return Field
+*@return Field
      */
-    public function addValidator (AbstractFieldValidator $v, $unshift = false)
+    public function addValidator (FieldValidator $v, $unshift = false)
     {
         if ($unshift)
             array_unshift($this->validators, $v);
@@ -220,7 +223,7 @@ abstract class Field extends Component
         if ($this->forceInvalid)
             return false;
         foreach ($this->validators as $validator) {
-            /* @var $validator AbstractFieldValidator */
+            /* @var $validator FieldValidator */
             if (!$validator->isValid($this->value)) {
                 $this->latestErrorMsg = $validator->getErrorMsg();
                 return false;

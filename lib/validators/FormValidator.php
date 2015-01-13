@@ -4,16 +4,17 @@ namespace jannieforms\validators;
 
 use jannieforms\Form;
 
-abstract class AbstractFormValidator
+abstract class FormValidator
 {
 
-    private   $isValid                   = true;
-    protected $inflictsFields, $errorMsg = '';
+    private   $isValid        = true;
+    protected $inflictsFields = array();
+    protected $errorMsg       = '';
 
     /**
      * @param string $errorMsg       Error message to show if this validator returns false
-     * @param array  $inflictsFields Array of names of fields to be marked "invalid" upon rendering the form if this
-     *                               validator evaluates to false
+     * @param array  $inflictsFields Array of fields to be marked "invalid" upon rendering the form if this validator
+     *                               evaluates to false
      */
     public function __construct ($errorMsg, array $inflictsFields = array())
     {

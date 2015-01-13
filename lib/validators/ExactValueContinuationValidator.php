@@ -9,7 +9,7 @@ use jannieforms\validators;
  * (and effectively evaluated to true) if the value of the field equals $breakValue
  * @package jannieforms\validators
  */
-class ExactValueContinuationValidator extends validators\AbstractFieldValidator
+class ExactValueContinuationValidator extends validators\FieldValidator
 {
 
     private $breakValue = "";

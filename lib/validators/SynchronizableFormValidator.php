@@ -6,7 +6,7 @@ use jannieforms\components\Field;
 use jannieforms\Synchronizable;
 use jannieforms\validators;
 
-abstract class AbstractSynchronizableFormValidator extends AbstractFormValidator implements Synchronizable
+abstract class SynchronizableFormValidator extends FormValidator implements Synchronizable
 {
 
     public function getJsonData ()

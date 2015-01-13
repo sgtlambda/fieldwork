@@ -2,7 +2,7 @@
 
 namespace jannieforms\validators;
 
-class CheckboxFieldValidator extends AbstractFieldValidator
+class CheckboxFieldValidator extends FieldValidator
 {
 
     private $checked;

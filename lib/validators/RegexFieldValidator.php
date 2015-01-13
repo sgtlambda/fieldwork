@@ -2,7 +2,7 @@
 
 namespace jannieforms\validators;
 
-class RegexFieldValidator extends AbstractFieldValidator
+class RegexFieldValidator extends FieldValidator
 {
 
     private $pattern,
