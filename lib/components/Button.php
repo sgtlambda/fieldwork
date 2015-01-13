@@ -8,7 +8,7 @@ class Button extends Field
     const TYPE_SUBMIT = "submit";
     const TYPE_BUTTON = "button";
 
-    private $type, $icon, $glyphIcon, $isClicked = false, $title = "", $use_shim = true;
+    private $type, $icon, $glyphIcon, $isClicked = false, $title = "";
 
     public function __construct ($name, $label, $value = "", $type = Button::TYPE_BUTTON)
     {
@@ -20,19 +20,6 @@ class Button extends Field
     public function isClicked ()
     {
         return $this->isClicked;
-    }
-
-    /**
-     * Sets whether the button uses a shim display node
-     *
-     * @param boolean $use_shim
-     *
-     * @return static
-     */
-    public function setUseShim ($use_shim = true)
-    {
-        $this->use_shim = $use_shim;
-        return $this;
     }
 
     public function setTitle ($title = "")
@@ -61,15 +48,17 @@ class Button extends Field
     public function getAttributes ()
     {
         return array_merge(parent::getAttributes(), array(
-            'type'  => $this->type,
-            'value' => $this->label
+            'type' => $this->type
         ));
     }
 
     public function getClasses ()
     {
         return array_merge(
-            parent::getClasses(), array('button', $this->use_shim ? 'invisible-target-button' : 'target-button')
+            parent::getClasses(), array(
+                'button',
+                $this->type === self::TYPE_SUBMIT ? 'btn btn-primary' : 'btn-default'
+            )
         );
     }
 
@@ -77,16 +66,8 @@ class Button extends Field
     {
         $icon      = ($this->icon == '' ? '' : '<img class="button-icon" src="' . $this->icon . '"> ');
         $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i> ' : '';
-        if ($this->use_shim)
-            return
-                "<div class=\"button-wrap " . ($this->use_shim ? "uses-shim" : "") . "\">"
-                . "<input " . $this->getAttributesString() . ">"
-                . "<a id=\"target-" . $this->getId() . "\" " . (!empty($this->title) ? " title=\"{$this->title}\" " : "") . " class=\"small_button targeting-button " . implode(' ', $this->getCustomClasses()) . "\">" . $icon . $glyphIcon . $this->label .
-                "</a>"
-                . "</div>";
-        else
-            return
-                "<input " . $this->getAttributesString() . ">";
+        return
+            "<button " . $this->getAttributesString() . ">" . $icon . $glyphIcon . $this->label . "</button>";
     }
 
     public function getJsonData ()
