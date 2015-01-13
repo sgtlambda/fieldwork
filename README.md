@@ -53,9 +53,8 @@ Add a submit button:
 ```php
 use jannieforms\components\Button;
 
-$submit = new Button("submit", "Send", "", Button::TYPE_SUBMIT);
+$submit = new Button("submit", "Send", "submit", Button::TYPE_SUBMIT);
 $submit
-   ->setUseShim(false)
    ->addTo($contactForm);
 ```
 
