@@ -1,6 +1,7 @@
 <?php
 
 namespace jannieforms;
+use Exception;
 
 /**
  * Static class used to globally register and retrieve forms
@@ -56,7 +57,7 @@ class JF
      *
      * @return AbstractCallback ajaxmethod
      */
-    static function getAjaxMethod ($slug)
+    static function getCallback ($slug)
     {
         return self::$ajaxMethods[$slug];
     }
@@ -86,6 +87,27 @@ class JF
     static function after_content ()
     {
         ob_end_flush();
+    }
+
+    /**
+     * @return array response
+     */
+    static function handleAjaxRequest ()
+    {
+        try {
+            $data = new FormResults($_POST);
+            if (!isset($_GET['callback']))
+                throw new \Exception('No callback provided');
+            $callback = JF::getCallback($_GET['callback']);
+            $response = $callback->run($data);
+            return $response;
+        } catch (Exception $e) {
+            return array(
+                'error'        => true,
+                'errorClass'   => get_class($e),
+                'errorMessage' => $e->getMessage()
+            );
+        }
     }
 
 }
