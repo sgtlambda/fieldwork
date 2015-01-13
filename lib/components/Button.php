@@ -2,6 +2,8 @@
 
 namespace jannieforms\components;
 
+use jannieforms\methods\Method;
+
 class Button extends Field
 {
 
@@ -40,7 +42,7 @@ class Button extends Field
         return $this;
     }
 
-    public function restoreValue ($method, $sanitize = true)
+    public function restoreValue (Method $method, $sanitize = true)
     {
         $this->isClicked = $method->hasValue($this->getName());
     }

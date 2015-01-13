@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: JannieForms
   Description: WordPress plugin wrapper for the JannieForms library
