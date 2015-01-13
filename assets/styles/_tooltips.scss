@@ -1,0 +1,28 @@
+.jt-wrapper {
+  padding:  4px;
+  position: absolute;
+  z-index:  1400;
+}
+
+.jt-arrow {
+  left:          50%;
+  top:           1px;
+  margin-left:   -3px;
+  border-right:  3px solid transparent;
+  border-bottom: 3px solid rgb(35, 35, 35);
+  border-left:   3px solid transparent;
+  position:      absolute;
+  width:         0;
+  height:        0;
+}
+
+.jt-inner {
+  max-width:        220px;
+  padding:          9px 12px;
+  color:            white;
+  text-align:       center;
+  background-color: rgb(35, 35, 35);
+  font-family:      'Lato', sans-serif;
+  font-size:        13px;
+  border-radius:    3px;
+}

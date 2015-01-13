@@ -1,0 +1,86 @@
+@import "tooltips";
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear:   both;
+  }
+}
+
+$spacing: 16px;
+
+.form-error {
+  padding:          8px;
+  margin:           12px 0 10px;
+  border:           1px solid #f62e2e;
+  background-color: #f4c3c3;
+  font-weight:      bold;
+}
+
+.invisible-target-button {
+  display: none;
+}
+
+input.janniefield:not(.button), textarea.janniefield {
+  box-sizing:         border-box;
+  width:              100%;
+  padding:            10px;
+  margin:             $spacing/2 0;
+  border-radius:      3px;
+  background:         white;
+  border:             1px solid #ccc;
+  -webkit-transition: background 0.2s;
+  &.invalid:not(:focus) {
+    background: lighten(red, 47%);
+  }
+}
+
+.horizontalgroup {
+  @include clearfix;
+  margin: (-$spacing/2);
+  .group-item {
+    float:      left;
+    box-sizing: border-box;
+    padding:    0 $spacing/2;
+  }
+  &.two-items {
+    .group-item {
+      width: 50%;
+    }
+  }
+}
+
+.checkbox-wrapper {
+  input[type="checkbox"] {
+    width:          auto;
+    margin:         8px;
+    vertical-align: -2px;
+  }
+}
+
+.radio-option {
+  input[type="radio"] {
+    margin:         8px;
+    vertical-align: -1px;
+  }
+  label {
+    margin-left:  -8px;
+    padding-left: 8px;
+  }
+}
+
+.xdsoft_datetimepicker {
+  z-index: 1500;
+}
+
+.sweet-overlay {
+  z-index: 2000;
+}
+
+.sweet-alert {
+  z-index: 2500;
+  .error {
+    box-sizing: initial;
+  }
+}
