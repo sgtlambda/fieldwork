@@ -14,27 +14,29 @@ If you're using WordPress, install to `/wp-content/plugins/jannieforms` and acti
 
 If you're using [bedrock](https://github.com/roots/bedrock) (which in case you aren't, you really should), you could also install to `/wp-content/mu-plugins/jannieforms` thanks to the bedrock autoloader.
 
-Creating a form is as simple as instantiating `Form`:
+Creating a form is as simple as instantiating `jannieforms\Form`:
 
     use jannieforms\Form;
     
     $contactform = new Form('contact', '', new JannieFormPostMethod() );
 
-You can create a new field by instantiating any class that extends `JannieFormFieldComponent`:
+You can create a new field by instantiating any class that extends `jannieforms\components\Field`:
 
-    use jannieforms\components;
+    use jannieforms\components\TextField;
     
     $emailField = new TextField('email', 'Email address');
 
 Configure the field and attach it to the form:
 
-    use jannieforms\validators;
+    use jannieforms\validators\JannieFormEmailValidator;
     
     $emailField
        ->addValidator(new JannieFormEmailValidator())
        ->addTo($contactForm);
 
 Add a submit button:
+    
+    use jannieforms\components\Button;
     
     $submit = new Button("submit", "Send", "", Button::TYPE_SUBMIT);
     $submit
