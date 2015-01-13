@@ -49,8 +49,6 @@ $submitButton
  - Add centralized `Callback` and `AjaxEnvironment` classes for callback centralization
  - Add JSON form definition format specs & parser
  - Load forms on demand
- - Tidy up code
- - Drop jQuery requirement
 
 #### v3.0 (2015-01-13)
 
