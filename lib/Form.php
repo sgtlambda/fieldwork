@@ -6,6 +6,7 @@ namespace jannieforms;
 use jannieforms\components\Field;
 use jannieforms\components\GroupComponent;
 use jannieforms\methods\Method;
+use jannieforms\methods\POST;
 use jannieforms\validators\FormValidator;
 use jannieforms\validators\SynchronizableFormValidator;
 
@@ -42,11 +43,11 @@ class Form extends GroupComponent implements FormData, Synchronizable
      * @param Method $method
      * @param string $target
      */
-    public function __construct ($slug, $action, $method, $target = self::TARGET_SELF)
+    public function __construct ($slug, $action = '', $method = null, $target = self::TARGET_SELF)
     {
         parent::__construct($slug);
         $this->action                                         = $action;
-        $this->method                                         = $method;
+        $this->method                                         = ($method === null ? new POST() : $method);
         $this->target                                         = $target;
         $this->dataFields[$this->getSubmitConfirmFieldName()] = 'true';
         $this->register();
