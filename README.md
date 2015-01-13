@@ -6,7 +6,7 @@ Jannieforms will make your life easier by dealing with the trivial tasks of buil
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
 
-###Getting started
+### Installation
 
 ```bash
 # navigate to your plugin folder
@@ -22,39 +22,21 @@ bower install
 gulp
 ```
 
-Creating a form is as simple as instantiating `jannieforms\Form`:
+### Creating a simple form
 
 ```php
 use jannieforms\Form;
-
-$contactform = new Form('contact', '', new JannieFormPostMethod() );
-```
-
-You can create a new field by instantiating any class that extends `jannieforms\components\Field`:
-
-```php
 use jannieforms\components\TextField;
-
-$emailField = new TextField('email', 'Email address');
-```
-
-Configure the field and attach it to the form:
-
-```php
 use jannieforms\validators\JannieFormEmailValidator;
-
-$emailField
-   ->addValidator(new JannieFormEmailValidator())
-   ->addTo($contactForm);
-```
-
-Add a submit button:
-    
-```php
 use jannieforms\components\Button;
 
-$submit = new Button("submit", "Send", "submit", Button::TYPE_SUBMIT);
-$submit
+$contactform = new Form('contact', '', new JannieFormPostMethod() );
+
+new TextField('email', 'Email address')
+   ->addValidator(new JannieFormEmailValidator())
+   ->addTo($contactForm);
+
+$submit = new Button('submit', 'Send', 'submit', Button::TYPE_SUBMIT)
    ->addTo($contactForm);
 ```
 
