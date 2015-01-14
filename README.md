@@ -50,7 +50,7 @@ $submitButton
  - Add JSON form definition format specs & parser
  - Load forms on demand
 
-#### v3.0 (2015-01-13)
+#### v3.0.0 (2015-01-13)
 
  - Improved class naming
  - Introduced namespaces and autoloader
