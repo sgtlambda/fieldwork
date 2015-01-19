@@ -2,7 +2,7 @@
 
 namespace jannieforms;
 
-abstract class AbstractCallback
+abstract class Callback
 {
 
     private $slug;
@@ -23,4 +23,15 @@ abstract class AbstractCallback
      * @param FormData $form
      */
     public abstract function run (FormData $form);
+
+    /**
+     * Function added in to maintain compatibility with legacy callbacks
+     *
+     * @param FormData $formData
+     */
+    function __invoke (FormData $formData)
+    {
+        $this->run($formData);
+    }
+
 }
