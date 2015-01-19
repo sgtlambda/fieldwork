@@ -32,6 +32,7 @@ input.janniefield:not(.button), textarea.janniefield {
   background:         white;
   border:             1px solid #ccc;
   -webkit-transition: background 0.2s;
+  line-height:        1.4em;
   &.invalid:not(:focus) {
     background: lighten(red, 47%);
   }
@@ -88,4 +89,12 @@ input.janniefield:not(.button), textarea.janniefield {
 
 textarea.janniefield {
   min-height: 120px;
+}
+
+input.janniefield.subjectline {
+  margin-bottom: 0;
+  border-bottom: 0;
+  & + textarea {
+    margin-top: 0;
+  }
 }
