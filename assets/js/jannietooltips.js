@@ -1,31 +1,33 @@
-(function($, window, document){
+(function ($, window, document) {
     var JannieTooltips = {
-        active: -1,
+        active:        -1,
         activeTooltip: -1,
-        container: 0,
+        container:     0,
         trackInterval: -1,
-        track: function(){
+        track:         function () {
             var elmt = this.active;
-            if(!elmt.is(":visible"))
+            if (!elmt.is(":visible"))
                 this.dismiss();
-            else{
+            else {
                 var elmtOffset = elmt.offset();
                 this.activeTooltip.css({
-                    top: elmtOffset.top + elmt.outerHeight(),
-                    left: elmtOffset.left + elmt.outerWidth()/2 - this.activeTooltip.outerWidth()/2
+                    top:  elmtOffset.top + elmt.outerHeight(),
+                    left: elmtOffset.left + elmt.outerWidth() / 2 - this.activeTooltip.outerWidth() / 2
                 });
             }
         },
-        startTrack: function(){
-            this.trackInterval = window.setInterval(function(){JannieTooltips.track();}, 150);
+        startTrack:    function () {
+            this.trackInterval = window.setInterval(function () {
+                JannieTooltips.track();
+            }, 30);
             $(document).on({
-                'scroll.jt': function(){
+                'scroll.jt': function () {
                     JannieTooltips.track();
                 }
             });
         },
-        dismiss: function(){
-            if(this.trackInterval!==-1){
+        dismiss:       function () {
+            if (this.trackInterval !== -1) {
                 window.clearInterval(this.trackInterval);
                 this.trackInterval = -1;
             }
@@ -33,59 +35,59 @@
             var tooltip = this.activeTooltip;
             tooltip.stop().animate({
                 opacity: 0
-            },{
+            }, {
                 duration: 200,
-                complete: function(){
+                complete: function () {
                     $(this).remove();
                 }
             });
             this.active = this.activeTooltip = -1;
         },
-        isActive: function(elmt){
-            if(this.active!==-1)
+        isActive:      function (elmt) {
+            if (this.active !== -1)
                 return this.active[0] === elmt[0];
             return false;
         }
     };
-    $.fn.jtLink = function(html, showOn, hideOn){
+    $.fn.jtLink = function (html, showOn, hideOn) {
         var elmt = this;
         elmt.data('jt', {
             html: html
         });
-        for(var n in showOn)
-            elmt.on(showOn[n]+".jt", function(){
+        for (var n in showOn)
+            elmt.on(showOn[n] + ".jt", function () {
                 $(this).jtShow();
             });
-        for(var n in hideOn)
-            elmt.on(showOn[n]+".jt", function(){
+        for (var n in hideOn)
+            elmt.on(showOn[n] + ".jt", function () {
                 $(this).jtHide();
             });
     };
-    $.fn.jtUnlink = function(){
+    $.fn.jtUnlink = function () {
         var elmt = this;
         elmt.jtHide();
         elmt.removeData('jt');
         elmt.removeData('jt-tt');
         elmt.off('.jt');
     };
-    $.fn.jtShow = function(){
+    $.fn.jtShow = function () {
         var elmt = this;
-        if(!JannieTooltips.isActive(elmt)){
-            if(JannieTooltips.active !== -1)
+        if (!JannieTooltips.isActive(elmt)) {
+            if (JannieTooltips.active !== -1)
                 JannieTooltips.dismiss();
             JannieTooltips.active = elmt;
             var newTooltip = $('<div class="jt-wrapper"><div class="jt-arrow"></div><div class="jt-inner">' + elmt.data('jt').html + '</div></div>').css({
                 opacity: 0
             }).stop().animate({
                 opacity: 0.95
-            },{
+            }, {
                 duration: 200
             });
             $('body').append(newTooltip);
             var elmtOffset = elmt.offset();
             newTooltip.css({
-                top: elmtOffset.top + elmt.outerHeight(),
-                left: elmtOffset.left + elmt.outerWidth()/2 - newTooltip.outerWidth()/2
+                top:  elmtOffset.top + elmt.outerHeight(),
+                left: elmtOffset.left + elmt.outerWidth() / 2 - newTooltip.outerWidth() / 2
                 // todo this is redundant code (see track function above)
             });
             JannieTooltips.activeTooltip = newTooltip;
@@ -93,9 +95,9 @@
         }
         return this;
     };
-    $.fn.jtHide = function(){
+    $.fn.jtHide = function () {
         var elmt = this;
-        if(JannieTooltips.isActive(elmt))
+        if (JannieTooltips.isActive(elmt))
             JannieTooltips.dismiss();
         return this;
     };

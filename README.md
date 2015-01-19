@@ -4,43 +4,53 @@ jannieforms
 Jannieforms will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
- - Sanitizes and validates **client-side for user convenience** and **server-side for security**.
+ - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
 
-###Getting started
+### Installation
 
-1. Clone this repo or download and extract [master.zip](https://github.com/jmversteeg/jannieforms/archive/master.zip).
-2. (optional) If you're using WordPress, install to `/wp-content/plugins/jannieforms` and activate plugin through WordPress back-end.
+```bash
+# navigate to your plugin folder
+cd wp-content/plugins
 
-Creating a form is as simple as instantiating `JannieForm`:
+# or if you're using bedrock
+cd app/mu-plugins
 
-    $contactform = new JannieForm('contact', '', new JannieFormPostMethod() );
+git clone https://github.com/jmversteeg/jannieforms.git
+cd jannieforms
+npm install
+bower install
+gulp
+```
 
-You can create a new field by instantiating any class that extends `JannieFormFieldComponent`:
+### Creating a simple form
 
-    $emailField = new JannieTextField('email', 'Email address');
+```php
+use jannieforms\Form;
+use jannieforms\components\TextField;
+use jannieforms\validators\JannieFormEmailValidator;
+use jannieforms\components\Button;
 
-Configure the field and attach it to the form:
+$contactForm = new Form('contact', '', new JannieFormPostMethod() );
 
-    $emailField
-       ->addValidator(new JannieFormEmailValidator())
-       ->addTo($contactForm);
+$emailField = new TextField('email', 'Email address');
+$emailField
+   ->addValidator(new JannieFormEmailValidator())
+   ->addTo($contactForm);
 
-Add a submit button:
+$submitButton = new Button('submit', 'Send', 'submit', Button::TYPE_SUBMIT);
+$submitButton
+   ->addTo($contactForm);
+```
 
-    $submit = new JannieButton("submit", "Send", "", JannieButton::TYPE_SUBMIT);
-    $submit
-       ->setUseShim(false)
-       ->addTo($contactForm);
+#### todo
 
-###Todo
-
- - Improve class naming
- - Use namespaces
- - Create composer package
- - ORM integration
+ - Create composer package that works with [bedrock](https://github.com/roots/bedrock)
  - Error message i18n
- - Add centralized `Callback` class for access both direct and through AJAX
- - Add JSON form definition format specs & parser to go along with it
+ - Add centralized `Callback` and `AjaxEnvironment` classes for callback centralization
+ - Add JSON form definition format specs & parser
  - Load forms on demand
- - Tidy up code
- - Drop jQuery requirement
+
+#### v3.0.0 (2015-01-13)
+
+ - Improved class naming
+ - Introduced namespaces and autoloader

@@ -1,0 +1,11 @@
+{
+  "name": "jannieforms",
+  "homepage": "https://github.com/jmversteeg/jannieforms",
+  "private": true,
+  "dependencies": {
+    "sweetalert": "~0.3.3",
+    "jquery-maskedinputs": "~1.4.0",
+    "datetimepicker": "~2.4.1",
+    "underscore": "~1.7.0"
+  }
+}
