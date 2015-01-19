@@ -188,6 +188,12 @@ class Form extends GroupComponent implements FormData, Synchronizable
         $this->ajaxSubmitEnabled = $ajaxSubmitEnabled;
     }
 
+    /**
+     * Attach a function that will be called upon submitting the form. The first argument passed to the function will
+     * be an instance of FormData.
+     *
+     * @param callable $callback
+     */
     public function attachCallback ($callback)
     {
         $this->callback[] = $callback;
