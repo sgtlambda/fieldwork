@@ -27,9 +27,9 @@ class JF
     /**
      * Registers given ajax method globally.
      *
-     * @param AbstractCallback $ajaxMethod
+     * @param Callback $ajaxMethod
      */
-    static function registerAjaxMethod (AbstractCallback $ajaxMethod)
+    static function registerAjaxMethod (Callback $ajaxMethod)
     {
         self::$ajaxMethods[$ajaxMethod->getSlug()] = $ajaxMethod;
     }
@@ -55,7 +55,7 @@ class JF
      *
      * @param string $slug
      *
-     * @return AbstractCallback ajaxmethod
+     * @return Callback ajaxmethod
      */
     static function getCallback ($slug)
     {

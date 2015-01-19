@@ -182,7 +182,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return $this->method->hasValue($key);
     }
 
-    public function enableAJAX (AbstractCallback $method, $ajaxSubmitEnabled = true)
+    public function enableAJAX (Callback $method, $ajaxSubmitEnabled = true)
     {
         $this->ajaxMethod        = $method;
         $this->ajaxSubmitEnabled = $ajaxSubmitEnabled;
@@ -317,7 +317,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
             "isSubmitted"    => $this->isCallbacksubmitted,
             "ajax"           => array(
                 "submitEnabled" => $this->ajaxSubmitEnabled,
-                "method"        => $this->ajaxMethod instanceof AbstractCallback ? $this->ajaxMethod->getSlug() : "",
+                "method"        => $this->ajaxMethod instanceof Callback ? $this->ajaxMethod->getSlug() : "",
                 "results"       => $this->ajaxResult
             )
         );
@@ -379,7 +379,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     private function processAjaxLocally ()
     {
-        if ($this->ajaxMethod instanceof AbstractCallback)
+        if ($this->ajaxMethod instanceof Callback)
             $this->ajaxResult = $this->ajaxMethod->run($this);
     }
 
