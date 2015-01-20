@@ -38,9 +38,13 @@ input.janniefield:not(.button), textarea.janniefield {
   }
 }
 
+button.jfcomponent {
+  margin: 8px 0;
+}
+
 .horizontalgroup {
   @include clearfix;
-  margin: (-$spacing/2);
+  margin: 0 (-$spacing/2);
   .group-item {
     float:      left;
     box-sizing: border-box;
@@ -96,6 +100,9 @@ input.janniefield.subjectline {
   border-bottom: 0;
   border-bottom-left-radius:  0;
   border-bottom-right-radius: 0;
+  &:focus {
+    border-bottom: 0;
+  }
   & + textarea {
     margin-top: 0;
     border-top-left-radius:  0;
