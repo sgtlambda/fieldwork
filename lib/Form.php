@@ -236,7 +236,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function getClasses ()
     {
         return array_merge(parent::getClasses(), array(
-            'fieldwork'
+            'fieldwork-form'
         ));
     }
 
