@@ -16,7 +16,7 @@ class RadioSelect extends Field
     public function getClasses ()
     {
         return array_merge(
-            parent::getClasses(), array('radios', 'jannieradios')
+            parent::getClasses(), array('radios')
         );
     }
 

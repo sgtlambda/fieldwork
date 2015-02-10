@@ -15,7 +15,7 @@ class Checkbox extends Field
     public function getClasses ()
     {
         return array_merge(
-            parent::getClasses(), array('checkbox', 'janniecheckbox')
+            parent::getClasses(), array('checkbox')
         );
     }
 

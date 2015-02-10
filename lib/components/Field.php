@@ -163,7 +163,7 @@ abstract class Field extends Component
         $form = $this->getRoot();
         /* @var $form Form */
         return array_merge(parent::getClasses(), array(
-            "janniefield",
+            "fieldwork-field",
             ($form->isSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
         ));
     }

@@ -36,7 +36,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
         $isCallbacksubmitted = false;
 
     /**
-     * Instantiates a new JannieForm
+     * Instantiates a new Form
      *
      * @param string $slug
      * @param string $action
@@ -236,13 +236,13 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function getClasses ()
     {
         return array_merge(parent::getClasses(), array(
-            'jannieform'
+            'fieldwork'
         ));
     }
 
     public function getScript ()
     {
-        return "jQuery(function($){ $('#" . $this->getID() . "').jannieform(" . json_encode($this->getJsonData()) . "); });";
+        return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData()) . "); });";
     }
 
     public function getScriptHTML ()

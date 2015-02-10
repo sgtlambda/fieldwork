@@ -1,5 +1,5 @@
 (function ($, window, document) {
-    var JannieTooltips = {
+    var FwTooltips = {
         active:        -1,
         activeTooltip: -1,
         container:     0,
@@ -18,11 +18,11 @@
         },
         startTrack:    function () {
             this.trackInterval = window.setInterval(function () {
-                JannieTooltips.track();
+                FwTooltips.track();
             }, 30);
             $(document).on({
                 'scroll.jt': function () {
-                    JannieTooltips.track();
+                    FwTooltips.track();
                 }
             });
         },
@@ -72,10 +72,10 @@
     };
     $.fn.jtShow = function () {
         var elmt = this;
-        if (!JannieTooltips.isActive(elmt)) {
-            if (JannieTooltips.active !== -1)
-                JannieTooltips.dismiss();
-            JannieTooltips.active = elmt;
+        if (!FwTooltips.isActive(elmt)) {
+            if (FwTooltips.active !== -1)
+                FwTooltips.dismiss();
+            FwTooltips.active = elmt;
             var newTooltip = $('<div class="jt-wrapper"><div class="jt-arrow"></div><div class="jt-inner">' + elmt.data('jt').html + '</div></div>').css({
                 opacity: 0
             }).stop().animate({
@@ -90,15 +90,15 @@
                 left: elmtOffset.left + elmt.outerWidth() / 2 - newTooltip.outerWidth() / 2
                 // todo this is redundant code (see track function above)
             });
-            JannieTooltips.activeTooltip = newTooltip;
-            JannieTooltips.startTrack();
+            FwTooltips.activeTooltip = newTooltip;
+            FwTooltips.startTrack();
         }
         return this;
     };
     $.fn.jtHide = function () {
         var elmt = this;
-        if (JannieTooltips.isActive(elmt))
-            JannieTooltips.dismiss();
+        if (FwTooltips.isActive(elmt))
+            FwTooltips.dismiss();
         return this;
     };
 })(jQuery, window, document);

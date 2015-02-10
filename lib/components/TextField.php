@@ -43,7 +43,7 @@ class TextField extends Field
     public function getClasses ()
     {
         return array_merge(
-            parent::getClasses(), array('textfield', 'jannieinputfield')
+            parent::getClasses(), array('textfield', 'fieldwork-inputfield')
         );
     }
 

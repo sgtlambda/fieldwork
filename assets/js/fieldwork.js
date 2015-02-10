@@ -90,7 +90,7 @@
         }
     };
     $(document).trigger("fieldwork-loaded", Fieldwork);
-    function JannieForm($form, formData) {
+    function Form($form, formData) {
         this.slug = formData.slug;
         this.submitCallback = formData.submitCallback;
         this.hiddenFieldName = formData.hiddenFieldName;
@@ -100,9 +100,9 @@
         this.fields = [];
         this.validators = [];
         for (var n in formData.fields)
-            this.fields.push(new JannieField(this, formData.fields[n]));
+            this.fields.push(new Field(this, formData.fields[n]));
         for (var n in formData.liveValidators)
-            this.validators.push(new JannieFormValidator(this, formData.liveValidators[n]));
+            this.validators.push(new Validator(this, formData.liveValidators[n]));
         var form = this;
         if (formData.ajax.method !== "") {
             this.ajaxMethod = formData.ajax.method;
@@ -129,7 +129,7 @@
         Fieldwork.processForms();
     }
 
-    $.extend(JannieForm.prototype, {
+    $.extend(Form.prototype, {
         sanitize:       function () {
             for (var n in this.fields) {
                 if (this.fields[n].sanitize) {
@@ -196,7 +196,7 @@
             return false;
         }
     });
-    function JannieFormValidator(form, data) {
+    function Validator(form, data) {
         this.form = form;
         this.method = data.method;
         this.error = data.error;
@@ -205,7 +205,7 @@
         this.valid = false;
     }
 
-    $.extend(JannieFormValidator.prototype, {
+    $.extend(Validator.prototype, {
         validate: function () {
             this.valid = true;
             if (Fieldwork.formValidators[this.method])
@@ -219,7 +219,7 @@
             return this.valid;
         }
     });
-    function JannieField(form, fieldData) {
+    function Field(form, fieldData) {
         this.form = form;
         this.element = $("#" + fieldData.id);
         this.touched = false;
@@ -253,7 +253,7 @@
             });
     }
 
-    $.extend(JannieField.prototype, {
+    $.extend(Field.prototype, {
         blur:         function () {
             if (!this.touched) return;
             this.sanitize(false);
@@ -321,8 +321,8 @@
             return this.valid;
         }
     });
-    $.fn.jannieform = function (formData) {
-        new JannieForm($(this), formData);
+    $.fn.fieldwork = function (formData) {
+        new Form($(this), formData);
     };
     Fieldwork.processForms = function () {
         $(".invisible-target-button:not(.processed)").each(function () {

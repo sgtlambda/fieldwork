@@ -15,7 +15,7 @@ class Textarea extends Field
     public function getClasses ()
     {
         return array_merge(
-            parent::getClasses(), array('textarea', 'jannieinputfield')
+            parent::getClasses(), array('textarea', 'fieldwork-inputfield')
         );
     }
 

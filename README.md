@@ -27,17 +27,18 @@ gulp
 
 ```php
 use fieldwork\Form;
+use fieldwork\methods\POST;
 use fieldwork\components\TextField;
-use fieldwork\validators\JannieFormEmailValidator;
 use fieldwork\components\Button;
+use fieldwork\validators\EmailFieldValidator;
 
 // Instantiate a new form
-$contactForm = new Form('contact', '', new JannieFormPostMethod() );
+$contactForm = new Form('contact', '', new POST() );
 
 // Add a text field with validation
 $emailField = new TextField('email', 'Email address');
 $emailField
-   ->addValidator(new JannieFormEmailValidator())
+   ->addValidator(new EmailFieldValidator())
    ->addTo($contactForm);
 
 // Add a submit button

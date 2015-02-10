@@ -23,7 +23,7 @@ $spacing: 16px;
   display: none;
 }
 
-input.janniefield:not(.button), textarea.janniefield {
+input.fieldwork-field:not(.button), textarea.fieldwork-field {
   box-sizing:         border-box;
   width:              100%;
   padding:            10px;
@@ -91,11 +91,11 @@ button.jfcomponent {
   }
 }
 
-textarea.janniefield {
+textarea.fieldwork-field {
   min-height: 120px;
 }
 
-input.janniefield.subjectline {
+input.fieldwork-field.subjectline {
   margin-bottom: 0;
   border-bottom: 0;
   border-bottom-left-radius:  0;
