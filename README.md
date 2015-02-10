@@ -58,8 +58,8 @@ echo $contactForm->getHTML();
  - Add `Callback` class for callback centralization
  - Add JSON form definition format specs & parser OR parse from HTML
 
-#### v3.0.1 (2015-02-10)
- - Rename the library to "Fieldwork"
+#### v4.0.0 (2015-02-10)
+ - Rename the library and all related classes and namespaces to "Fieldwork"
 
 #### v3.0.0 (2015-01-13)
 
