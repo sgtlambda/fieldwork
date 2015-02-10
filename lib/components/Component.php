@@ -1,6 +1,6 @@
 <?php
 
-namespace jannieforms\components;
+namespace fieldwork\components;
 
 abstract class Component
 {

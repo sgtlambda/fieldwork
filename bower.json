@@ -1,6 +1,5 @@
 {
-  "name": "jannieforms",
-  "homepage": "https://github.com/jmversteeg/jannieforms",
+  "name": "fieldwork",
   "private": true,
   "dependencies": {
     "sweetalert": "~0.3.3",

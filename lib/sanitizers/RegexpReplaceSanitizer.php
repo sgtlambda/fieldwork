@@ -1,6 +1,6 @@
 <?php
 
-namespace jannieforms\sanitizers;
+namespace fieldwork\sanitizers;
 
 class RegexpReplaceSanitizer extends RegexReplaceSanitizer
 {

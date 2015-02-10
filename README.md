@@ -1,7 +1,8 @@
-jannieforms
+fieldwork
 ===========
+**Web forms for cool people**
 
-Jannieforms will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
+Fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
@@ -15,8 +16,8 @@ cd wp-content/plugins
 # or if you're using bedrock
 cd app/mu-plugins
 
-git clone https://github.com/jmversteeg/jannieforms.git
-cd jannieforms
+git clone https://github.com/jmversteeg/Fieldwork.git
+cd fieldwork
 npm install
 bower install
 gulp
@@ -25,10 +26,10 @@ gulp
 ### Creating a simple form
 
 ```php
-use jannieforms\Form;
-use jannieforms\components\TextField;
-use jannieforms\validators\JannieFormEmailValidator;
-use jannieforms\components\Button;
+use fieldwork\Form;
+use fieldwork\components\TextField;
+use fieldwork\validators\JannieFormEmailValidator;
+use fieldwork\components\Button;
 
 // Instantiate a new form
 $contactForm = new Form('contact', '', new JannieFormPostMethod() );
@@ -51,11 +52,13 @@ echo $contactForm->getHTML();
 
 #### todo
 
- - Create composer package that works with [bedrock](https://github.com/roots/bedrock)
- - Error message i18n
- - Add centralized `Callback` and `AjaxEnvironment` classes for callback centralization
- - Add JSON form definition format specs & parser
- - Load forms on demand
+ - Create composer package
+ - (Error message) i18n
+ - Add `Callback` class for callback centralization
+ - Add JSON form definition format specs & parser OR parse from HTML
+
+#### v3.0.1 (2015-02-10)
+ - Rename the library to "Fieldwork"
 
 #### v3.0.0 (2015-01-13)
 

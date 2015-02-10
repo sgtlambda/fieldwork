@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms;
+namespace fieldwork;
 
-use jannieforms\components\Field;
+use fieldwork\components\Field;
 
 class FormResults implements FormData
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace jannieforms\components;
+namespace fieldwork\components;
 
-use jannieforms\Form;
-use jannieforms\methods\Method;
-use jannieforms\sanitizers\FieldSanitizer;
-use jannieforms\validators\FieldValidator;
+use fieldwork\Form;
+use fieldwork\methods\Method;
+use fieldwork\sanitizers\FieldSanitizer;
+use fieldwork\validators\FieldValidator;
 
 abstract class Field extends Component
 {

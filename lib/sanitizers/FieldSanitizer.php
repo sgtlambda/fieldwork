@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms\sanitizers;
+namespace fieldwork\sanitizers;
 
-use jannieforms\Synchronizable;
+use fieldwork\Synchronizable;
 
 abstract class FieldSanitizer implements Synchronizable
 {

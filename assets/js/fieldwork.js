@@ -1,5 +1,5 @@
 (function ($, window, document) {
-    var JannieForms = {
+    var Fieldwork = {
         AJAXCALLBACK:     0,
         SUBMITCALLBACK:   1,
         i:                {
@@ -72,24 +72,24 @@
                 dataType: 'json',
                 type:     'POST',
                 success:  function (data) {
-                    JannieForms.performCallback(
+                    Fieldwork.performCallback(
                         form.ajaxMethod,
-                        JannieForms.AJAXCALLBACK,
+                        Fieldwork.AJAXCALLBACK,
                         form,
                         data, {
-                            type:    JannieForms.AJAXCALLBACK,
+                            type:    Fieldwork.AJAXCALLBACK,
                             instant: false
                         }
                     );
                 },
                 error:    function () {
                     if (console)
-                        console.log('Jannieforms Ajax encountered an error');
+                        console.log('Fieldwork Ajax encountered an error');
                 }
             });
         }
     };
-    $(document).trigger("jannieforms-loaded", JannieForms);
+    $(document).trigger("fieldwork-loaded", Fieldwork);
     function JannieForm($form, formData) {
         this.slug = formData.slug;
         this.submitCallback = formData.submitCallback;
@@ -107,12 +107,12 @@
         if (formData.ajax.method !== "") {
             this.ajaxMethod = formData.ajax.method;
             if (formData.ajax.results !== null)
-                JannieForms.performCallback(
+                Fieldwork.performCallback(
                     this.ajaxMethod,
-                    JannieForms.AJAXCALLBACK,
+                    Fieldwork.AJAXCALLBACK,
                     this,
                     formData.ajax.results, {
-                        type:    JannieForms.AJAXCALLBACK,
+                        type:    Fieldwork.AJAXCALLBACK,
                         instant: true
                     }
                 );
@@ -126,7 +126,7 @@
                 form.submit(e);
             }
         });
-        JannieForms.processForms();
+        Fieldwork.processForms();
     }
 
     $.extend(JannieForm.prototype, {
@@ -175,10 +175,10 @@
                 if (typeof fn === 'function')
                     fn(e, this);
             }
-            JannieForms.performCallback(this.slug, JannieForms.SUBMITCALLBACK, this, null, e);
+            Fieldwork.performCallback(this.slug, Fieldwork.SUBMITCALLBACK, this, null, e);
             if (this.ajaxEnabled) {
                 e.preventDefault();
-                JannieForms.ajaxSubmitForm(this);
+                Fieldwork.ajaxSubmitForm(this);
             }
         },
         getValues:      function () {
@@ -208,8 +208,8 @@
     $.extend(JannieFormValidator.prototype, {
         validate: function () {
             this.valid = true;
-            if (JannieForms.formValidators[this.method])
-                if (!((JannieForms.formValidators[this.method])(this.form, this))) {
+            if (Fieldwork.formValidators[this.method])
+                if (!((Fieldwork.formValidators[this.method])(this.form, this))) {
                     sweetAlert(this.error, "", "error");
                     this.valid = false;
                 }
@@ -269,9 +269,9 @@
             var val = this.getValue();
             var valid = true;
             for (var v in this.validators)
-                if ((JannieForms.validators[this.validators[v].method])) {
+                if ((Fieldwork.validators[this.validators[v].method])) {
                     if (this.element.attr("placeholder") === val) val = ""; // TODO this is not quite right
-                    if (!( (JannieForms.validators[this.validators[v].method])(this, this.validators[v]) )) {
+                    if (!( (Fieldwork.validators[this.validators[v].method])(this, this.validators[v]) )) {
                         this.setInvalid(this.validators[v].error);
                         valid = false;
                         break;
@@ -285,9 +285,9 @@
             var val = this.getValue();
             var oldVal = val;
             for (var s in this.sanitizers)
-                if ((JannieForms.sanitizers[this.sanitizers[s].method]))
+                if ((Fieldwork.sanitizers[this.sanitizers[s].method]))
                     if (!realtime || this.sanitizers[s].realtime)
-                        val = (JannieForms.sanitizers[this.sanitizers[s].method])(val, this.sanitizers[s]);
+                        val = (Fieldwork.sanitizers[this.sanitizers[s].method])(val, this.sanitizers[s]);
             if (oldVal !== val)
                 this.setValue(val);
         },
@@ -324,7 +324,7 @@
     $.fn.jannieform = function (formData) {
         new JannieForm($(this), formData);
     };
-    JannieForms.processForms = function () {
+    Fieldwork.processForms = function () {
         $(".invisible-target-button:not(.processed)").each(function () {
             var $this = $(this);
             $this.addClass('processed');
@@ -340,6 +340,6 @@
             var $this = $(this);
             $this.mask($this.data('input-mask'));
         });
-        JannieForms.processForms();
+        Fieldwork.processForms();
     });
 })(jQuery, window, document);

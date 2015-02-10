@@ -10,17 +10,17 @@ gulp.task('styles', function () {
     ])
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass())
-        .pipe(plugins.concat('jannieforms.css'))
+        .pipe(plugins.concat('fieldwork.css'))
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(out));
 });
 
 gulp.task('scripts', function () {
     gulp.src([
-        'assets/js/jannietooltips.js',
-        'assets/js/jannieforms.js'
+        'assets/js/fieldwork-tooltips.js',
+        'assets/js/fieldwork.js'
     ])
-        .pipe(plugins.uglifyjs('jannieforms.min.js', {
+        .pipe(plugins.uglifyjs('fieldwork.min.js', {
             outSourceMap: true
         }))
         .pipe(gulp.dest(out));

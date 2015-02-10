@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms\validators;
+namespace fieldwork\validators;
 
-use jannieforms\Synchronizable;
+use fieldwork\Synchronizable;
 
 abstract class FieldValidator implements Synchronizable
 {

@@ -1,12 +1,22 @@
 <?php
 /*
-  Plugin Name: JannieForms
-  Description: WordPress plugin wrapper for the JannieForms library
-  Version: 3.0.0
+  Plugin Name: Fieldwork
+  Description: WordPress plugin wrapper for the Fieldwork library
+  Version: 3.0.1
   Author: JM Versteeg
  */
 
-require __DIR__ . '/autoload.php';
+spl_autoload_register(function ($class) {
+    $prefix   = 'fieldwork\\';
+    $base_dir = __DIR__ . '/lib/';
+    $len      = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0)
+        return;
+    $relative_class = substr($class, $len);
+    $file           = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    if (file_exists($file))
+        require $file;
+});
 
 add_action('wp_enqueue_scripts', function () {
     $bower_components = plugins_url('bower_components/', __FILE__);
@@ -24,12 +34,12 @@ add_action('wp_enqueue_scripts', function () {
         'sweetalert'
     );
 
-    wp_enqueue_script('jannieforms', plugins_url('dist/jannieforms.min.js', __FILE__), $deps);
-    wp_enqueue_style('jannieforms', plugins_url('dist/jannieforms.css', __FILE__));
+    wp_enqueue_script('fieldwork', plugins_url('dist/fieldwork.min.js', __FILE__), $deps);
+    wp_enqueue_style('fieldwork', plugins_url('dist/fieldwork.css', __FILE__));
 });
 
 add_action('plugins_loaded', function () {
 
-    do_action('jannieforms-register-forms');
+    do_action('fieldwork-register-forms');
 
 });

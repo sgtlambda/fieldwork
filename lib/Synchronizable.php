@@ -1,11 +1,12 @@
 <?php
 
-namespace jannieforms;
+namespace fieldwork;
 
 /**
+ * Class Synchronizable
  * Represents an object which properties are shared with the clientside app through JSON. Requires a javascript
  * implementation in order to provide any actual functionality
- * @package jannieforms
+ * @package fieldwork
  */
 interface Synchronizable
 {

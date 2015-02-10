@@ -1,13 +1,14 @@
 <?php
 
-namespace jannieforms;
+namespace fieldwork;
 use Exception;
 
 /**
+ * Class JF
  * Static class used to globally register and retrieve forms
- * @package jannieforms
+ * @package fieldwork
  */
-class JF
+class FW
 {
 
     private static $forms       = array();
@@ -98,7 +99,7 @@ class JF
             $data = new FormResults($_POST);
             if (!isset($_GET['callback']))
                 throw new \Exception('No callback provided');
-            $callback = JF::getCallback($_GET['callback']);
+            $callback = FW::getCallback($_GET['callback']);
             $response = $callback->run($data);
             return $response;
         } catch (Exception $e) {

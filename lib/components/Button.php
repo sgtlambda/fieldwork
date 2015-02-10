@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms\components;
+namespace fieldwork\components;
 
-use jannieforms\methods\Method;
+use fieldwork\methods\Method;
 
 class Button extends Field
 {

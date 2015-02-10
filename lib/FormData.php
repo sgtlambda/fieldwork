@@ -1,6 +1,6 @@
 <?php
 
-namespace jannieforms;
+namespace fieldwork;
 
 interface FormData
 {

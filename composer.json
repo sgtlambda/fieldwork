@@ -1,0 +1,32 @@
+{
+  "name":        "jmversteeg/fieldwork",
+  "description": "Web forms for cool people",
+  "version":     "3.0.1",
+  "keywords":    [
+    "forms",
+    "form",
+    "generation",
+    "validation",
+    "wordpress"
+  ],
+  "authors":     [
+    {
+      "name":     "jmversteeg",
+      "email":    "janmerijnversteeg@gmail.com",
+      "homepage": "https://github.com/jmversteeg"
+    }
+  ],
+  "license":     "MIT",
+  "autoload":    {
+    "psr-4": {
+      "fieldwork\\": "lib/"
+    }
+  },
+  "support":     {
+    "issues": "https://github.com/jmversteeg/Fieldwork/issues",
+    "wiki":   "https://github.com/jmversteeg/Fieldwork/wiki"
+  },
+  "require":     {
+    "php": ">=5.3"
+  }
+}

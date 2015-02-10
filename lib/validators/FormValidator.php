@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms\validators;
+namespace fieldwork\validators;
 
-use jannieforms\Form;
+use fieldwork\Form;
 
 abstract class FormValidator
 {

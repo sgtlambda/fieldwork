@@ -1,13 +1,14 @@
 <?php
 
-namespace jannieforms\validators;
+namespace fieldwork\validators;
 
-use jannieforms\validators;
+use fieldwork\validators;
 
 /**
+ * Class ExactValueContinuationValidator
  * Adding this validator to the front of a field's validation stack will cause the rest of the validators to be skipped
  * (and effectively evaluated to true) if the value of the field equals $breakValue
- * @package jannieforms\validators
+ * @package fieldwork\validators
  */
 class ExactValueContinuationValidator extends validators\FieldValidator
 {

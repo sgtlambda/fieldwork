@@ -1,9 +1,9 @@
 <?php
 
-namespace jannieforms\validators;
+namespace fieldwork\validators;
 
-use jannieforms\components\RadioSelect;
-use jannieforms\Form;
+use fieldwork\components\RadioSelect;
+use fieldwork\Form;
 
 class RadioGroupFormValidator extends SynchronizableFormValidator
 {

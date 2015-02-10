@@ -1,6 +1,6 @@
 <?php
 
-namespace jannieforms\methods;
+namespace fieldwork\methods;
 
 class POST extends Method
 {

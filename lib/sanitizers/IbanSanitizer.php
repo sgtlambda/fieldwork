@@ -1,8 +1,8 @@
 <?php
 
-namespace jannieforms\sanitizers;
+namespace fieldwork\sanitizers;
 
-use jannieforms\sanitizers;
+use fieldwork\sanitizers;
 
 class IbanSanitizer extends sanitizers\FieldSanitizer
 {

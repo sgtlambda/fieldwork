@@ -1,9 +1,9 @@
 <?php
 
-namespace jannieforms\components;
+namespace fieldwork\components;
 
-use jannieforms\sanitizers;
-use jannieforms\validators;
+use fieldwork\sanitizers;
+use fieldwork\validators;
 
 class IbanField extends TextField
 {

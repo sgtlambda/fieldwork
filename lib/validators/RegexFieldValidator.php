@@ -1,6 +1,6 @@
 <?php
 
-namespace jannieforms\validators;
+namespace fieldwork\validators;
 
 class RegexFieldValidator extends FieldValidator
 {

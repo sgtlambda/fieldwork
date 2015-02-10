@@ -1,6 +1,6 @@
 <?php
 
-use jannieforms\JF;
+use fieldwork\FW;
 
 function loadWordpressCore ()
 {
@@ -20,10 +20,10 @@ function loadWordpressCore ()
 
 loadWordpressCore();
 
-if (!class_exists('jannieforms\JF')) {
+if (!class_exists('fieldwork\FW')) {
     require __DIR__ . '/autoload.php';
 }
 
-$response = JF::handleAjaxRequest();
+$response = FW::handleAjaxRequest();
 
 echo json_encode($response);

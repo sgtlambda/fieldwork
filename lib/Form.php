@@ -1,14 +1,14 @@
 <?php
 
-namespace jannieforms;
+namespace fieldwork;
 
 
-use jannieforms\components\Field;
-use jannieforms\components\GroupComponent;
-use jannieforms\methods\Method;
-use jannieforms\methods\POST;
-use jannieforms\validators\FormValidator;
-use jannieforms\validators\SynchronizableFormValidator;
+use fieldwork\components\Field;
+use fieldwork\components\GroupComponent;
+use fieldwork\methods\Method;
+use fieldwork\methods\POST;
+use fieldwork\validators\FormValidator;
+use fieldwork\validators\SynchronizableFormValidator;
 
 class Form extends GroupComponent implements FormData, Synchronizable
 {
@@ -70,7 +70,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     private function register ()
     {
-        JF::registerForm($this);
+        FW::registerForm($this);
         return $this;
     }
 
