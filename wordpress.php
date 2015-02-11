@@ -6,6 +6,19 @@
   Author: JM Versteeg
  */
 
+function wp_sanity_checks ()
+{
+    if (!file_exists(__DIR__ . '/vendor')) {
+        throw new Exception('vendor directory not found in ' . __DIR__ . '. Did you forget to run composer install?');
+    }
+}
+
+try {
+    wp_sanity_checks();
+} catch (Exception $e) {
+    die($e->getMessage());
+}
+
 spl_autoload_register(function ($class) {
     $prefix   = 'fieldwork\\';
     $base_dir = __DIR__ . '/src/fieldwork/';
