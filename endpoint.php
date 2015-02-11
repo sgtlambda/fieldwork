@@ -5,6 +5,8 @@ use fieldwork\FW;
 function loadWordpressCore ()
 {
     foreach (array(
+                 __DIR__ . '/../wp/wp-blog-header.php',
+                 __DIR__ . '/../web/wp/wp-blog-header.php',
                  __DIR__ . '/../../../wp-blog-header.php',
                  __DIR__ . '/../../../wp/wp-blog-header.php'
              ) as $wpLocation)
