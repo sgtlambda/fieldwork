@@ -2,13 +2,13 @@
 /*
   Plugin Name: Fieldwork
   Description: WordPress plugin wrapper for the Fieldwork library
-  Version: 4.0.0
+  Version: 4.0.1
   Author: JM Versteeg
  */
 
 spl_autoload_register(function ($class) {
     $prefix   = 'fieldwork\\';
-    $base_dir = __DIR__ . '/lib/';
+    $base_dir = __DIR__ . '/src/fieldwork/';
     $len      = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0)
         return;

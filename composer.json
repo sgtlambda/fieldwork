@@ -1,7 +1,7 @@
 {
   "name":        "jmversteeg/fieldwork",
   "description": "Web forms for cool people",
-  "version":     "4.0.0",
+  "version":     "4.0.1",
   "keywords":    [
     "forms",
     "form",
@@ -19,7 +19,7 @@
   "license":     "MIT",
   "autoload":    {
     "psr-4": {
-      "fieldwork\\": "lib/"
+      "fieldwork\\": "src/fieldwork/"
     }
   },
   "support":     {

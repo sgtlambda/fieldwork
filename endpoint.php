@@ -20,10 +20,6 @@ function loadWordpressCore ()
 
 loadWordpressCore();
 
-if (!class_exists('fieldwork\FW')) {
-    require __DIR__ . '/autoload.php';
-}
-
 $response = FW::handleAjaxRequest();
 
 echo json_encode($response);
