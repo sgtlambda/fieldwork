@@ -2,8 +2,6 @@
 
 namespace fieldwork\validators;
 
-
-
 class FieldLengthValidator extends RegexFieldValidator
 {
 
