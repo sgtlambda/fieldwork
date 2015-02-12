@@ -57,6 +57,7 @@ echo $contactForm->getHTML();
  - (Error message) i18n
  - Add `Callback` class for callback centralization
  - Add JSON form definition format specs & parser OR parse from HTML
+ - Add ability to run validation and sanitization through AJAX
 
 #### 4.0.0 (2015-02-10)
  - Rename the library and all related classes and namespaces to "Fieldwork"
