@@ -1,7 +1,6 @@
 <?php
 
 namespace fieldwork;
-use Exception;
 
 /**
  * Class JF
@@ -102,7 +101,7 @@ class FW
             $callback = FW::getCallback($_GET['callback']);
             $response = $callback->run($data);
             return $response;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array(
                 'error'        => true,
                 'errorClass'   => get_class($e),
