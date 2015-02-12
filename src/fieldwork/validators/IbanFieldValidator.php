@@ -2,8 +2,6 @@
 
 namespace fieldwork\validators;
 
-
-
 class IbanFieldValidator extends RegexFieldValidator
 {
 
