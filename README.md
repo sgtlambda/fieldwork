@@ -53,10 +53,18 @@ echo $contactForm->getHTML();
 
 #### todo
 
- - (Error message) i18n
- - Add `Callback` class for callback centralization
- - Add markup parser
- - Add ability to run validation and sanitization through AJAX
+ - Error message i18n
+ - Parse form from HTML markup
+ - Add ability to run sanitization, validation and callbacks through AJAX
+ - Complete test coverage
+
+#### 4.0.2 (2015-02-12)
+ - Add PHPunit test framework
+ - Remove Dutch error message strings
+ - Use external libraries for email and IBAN validation
+
+#### 4.0.1 (2015-02-11)
+ - Move /lib to /src/fieldwork
 
 #### 4.0.0 (2015-02-10)
  - Rename the library and all related classes and namespaces to "Fieldwork"
