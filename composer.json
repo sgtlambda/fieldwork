@@ -28,7 +28,8 @@
   },
   "require":     {
     "php": ">=5.3",
-    "aura/autoload": "~2.0"
+    "aura/autoload": "~2.0",
+    "egulias/email-validator": "~1.2"
   },
   "require-dev": {
     "phpunit/phpunit": "4.5.*"
