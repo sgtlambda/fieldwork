@@ -24,7 +24,7 @@ class RegexFieldValidator extends FieldValidator
 
     public function isValid ($value)
     {
-        return preg_match($this->pattern, $value);
+        return !!preg_match($this->pattern, $value);
     }
 
     public function describeObject ()
