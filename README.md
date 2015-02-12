@@ -53,10 +53,9 @@ echo $contactForm->getHTML();
 
 #### todo
 
- - Create composer package
  - (Error message) i18n
  - Add `Callback` class for callback centralization
- - Add JSON form definition format specs & parser OR parse from HTML
+ - Add markup parser
  - Add ability to run validation and sanitization through AJAX
 
 #### 4.0.0 (2015-02-10)
