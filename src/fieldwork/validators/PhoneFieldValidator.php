@@ -8,7 +8,7 @@ class PhoneFieldValidator extends RegexFieldValidator
 {
 
     const PATT  = "/^[0-9.+()\\/ -]{4,}$/";
-    const ERROR = "Vul een geldig telefoonnummer in.";
+    const ERROR = "Not a valid phone number";
 
     public function __construct ()
     {
