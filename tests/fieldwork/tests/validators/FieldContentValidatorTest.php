@@ -4,7 +4,7 @@ namespace fieldwork\tests\validators;
 
 use fieldwork\validators\FieldContentValidator;
 
-class TestFieldContentValidator extends FieldValidator_TestCase
+class FieldContentValidatorTest extends FieldValidator_TestCase
 {
 
     function __construct ()

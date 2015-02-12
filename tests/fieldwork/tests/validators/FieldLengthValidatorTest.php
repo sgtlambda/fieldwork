@@ -4,7 +4,7 @@ namespace fieldwork\tests\validators;
 
 use fieldwork\validators\FieldLengthValidator;
 
-class FieldLengthValidatorTestCase extends FieldValidator_TestCase
+class FieldLengthValidatorTest extends FieldValidator_TestCase
 {
     function __construct ()
     {
