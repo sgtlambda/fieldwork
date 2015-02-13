@@ -1,8 +1,8 @@
-Fieldwork
+fieldwork
 ===========
 **Web forms for cool people**
 
-Fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
+fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
