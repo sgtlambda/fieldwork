@@ -60,7 +60,7 @@ echo $contactForm->getHTML();
 
 #### 4.0.2 (2015-02-12)
  - Add PHPunit test framework
- - Remove Dutch error message strings
+ - Remove forein error message strings
  - Use external libraries for email and IBAN validation
 
 #### 4.0.1 (2015-02-11)
