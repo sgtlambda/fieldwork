@@ -11,7 +11,7 @@ fieldwork will make your life easier by dealing with the trivial tasks of buildi
 
 ```bash
 # navigate to your plugin folder
-cd wp-content/mu-plugins
+cd wp-content/plugins
 
 git clone https://github.com/jmversteeg/Fieldwork.git
 cd fieldwork
