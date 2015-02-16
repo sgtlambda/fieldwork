@@ -55,6 +55,7 @@ echo $contactForm->getHTML();
  - Parse form from HTML markup
  - Add ability to run sanitization, validation and callbacks through AJAX
  - Complete test coverage
+ - Add continuous testing via travis
 
 #### 4.0.2 (2015-02-12)
  - Add PHPunit test framework
