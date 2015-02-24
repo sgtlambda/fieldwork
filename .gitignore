@@ -1,7 +1,6 @@
 /nbproject/
 bower_components/
 node_modules/
-dist/
 .idea/
 /vendor/
 composer.lock
