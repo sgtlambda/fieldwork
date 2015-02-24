@@ -26,7 +26,7 @@ class RegexpReplaceSanitizer extends RegexReplaceSanitizer
 
     public function getJsonData ()
     {
-        return array_merge(sanitizers\parent::getJsonData(), array(
+        return array_merge(parent::getJsonData(), array(
             'regexp'    => $this->regexp,
             'regexpmod' => $this->regexpmod,
             'replace'   => $this->to

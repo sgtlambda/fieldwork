@@ -2,9 +2,7 @@
 
 namespace fieldwork\sanitizers;
 
-use fieldwork\sanitizers;
-
-class RegexReplaceSanitizer extends sanitizers\FieldSanitizer
+class RegexReplaceSanitizer extends FieldSanitizer
 {
 
     protected $from, $to;
