@@ -11,7 +11,7 @@ abstract class SynchronizableFormValidator extends FormValidator implements Sync
 
     public function getJsonData ()
     {
-        $fields = [];
+        $fields = array();
         foreach ($this->inflictsFields as $field)
             /* @var $field Field */
             $fields[] = $field->getName();

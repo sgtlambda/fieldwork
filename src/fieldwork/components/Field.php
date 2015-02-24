@@ -127,8 +127,8 @@ abstract class Field extends Component
 
     public function getJsonData ()
     {
-        $v = [];
-        $s = [];
+        $v = array();
+        $s = array();
         foreach ($this->validators as $validator)
             /* @var $validator FieldValidator */
             array_push($v, $validator->getJsonData());
