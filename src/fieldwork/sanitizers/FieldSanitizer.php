@@ -18,11 +18,11 @@ abstract class FieldSanitizer implements Synchronizable
 
     public function getJsonData ()
     {
-        return [
+        return array(
             'method'   => $this->describeObject(),
             'live'     => $this->isLive(),
             'realtime' => $this->isRealtime()
-        ];
+        );
     }
 
 }
