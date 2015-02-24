@@ -17,6 +17,11 @@ gulp.task('styles', function () {
 
 gulp.task('scripts', function () {
     gulp.src([
+        'bower_components/jquery-maskedinputs/dist/jquery.maskedinput.min.js',
+        'bower_components/underscore/underscore-min.js',
+        'bower_components/datetimepicker/jquery.datetimepicker.js',
+        'bower_components/sweetalert/lib/sweet-alert.min.js',
+
         'assets/js/fieldwork-tooltips.js',
         'assets/js/fieldwork.js'
     ])
