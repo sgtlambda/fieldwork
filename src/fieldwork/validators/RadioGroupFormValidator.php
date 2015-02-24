@@ -12,7 +12,7 @@ class RadioGroupFormValidator extends SynchronizableFormValidator
 
     public function __construct ($errorMsg, RadioSelect $select)
     {
-        validators\parent::__construct($errorMsg, [$select]);
+        parent::__construct($errorMsg, array($select));
         $this->select = $select;
     }
 
