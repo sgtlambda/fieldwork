@@ -8,13 +8,12 @@ class EmailFieldValidator extends RegexFieldValidator
 {
 
     const PATT  = "/^.*@.*\\.[A-Z]{2,}$/i"; // This is a very simple version of the email validation regular expression which is only used client-side.
-    const ERROR = "Enter a valid email address";
 
     private $validator;
 
-    public function __construct ()
+    public function __construct ($error = "Enter a valid email address")
     {
-        parent::__construct(self::PATT, self::ERROR);
+        parent::__construct(self::PATT, $error);
         $this->validator = new EmailValidator();
     }
 
