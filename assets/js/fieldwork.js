@@ -97,6 +97,7 @@
         this.dataFields = formData.dataFields;
         this.element = $form;
         this.ajaxEnabled = formData.ajax.submitEnabled;
+        $form.data('fw-form', this);
         this.fields = [];
         this.validators = [];
         for (var n in formData.fields)
