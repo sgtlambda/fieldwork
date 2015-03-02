@@ -247,10 +247,16 @@
                 field.keyup(e, this);
             }
         });
-        if (this.element.is('[type="checkbox"]'))
+        if (this.element.is('[type="checkbox"]')) {
             this.element.on('change', function () {
                 field.blur();
             });
+            this.element.parent().click(function () {
+                setTimeout(function () {
+                    field.validate();
+                }, 50);
+            });
+        }
     }
 
     $.extend(Field.prototype, {
