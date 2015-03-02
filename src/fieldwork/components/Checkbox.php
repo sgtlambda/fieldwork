@@ -7,9 +7,11 @@ class Checkbox extends Field
 
     const CHECKED = 'checked';
 
-    public function __construct ($slug, $label, $value = '', $storeValueLocally = 0)
+    const ON = 'on';
+
+    public function __construct ($slug, $label, $checked, $storeValueLocally = 0)
     {
-        parent::__construct($slug, $label, $value, $storeValueLocally);
+        parent::__construct($slug, $label, $checked ? self::ON : '', $storeValueLocally);
     }
 
     public function getClasses ()
@@ -19,12 +21,20 @@ class Checkbox extends Field
         );
     }
 
+    public function isChecked ()
+    {
+        return $this->value === self::ON;
+    }
+
     public function getAttributes ()
     {
-        return array_merge(parent::getAttributes(), array(
+        $attrs = array(
             'type'  => 'checkbox',
-            'value' => 'on'
-        ));
+            'value' => self::ON
+        );
+        if ($this->isChecked())
+            $attrs[self::CHECKED] = self::CHECKED;
+        return array_merge(parent::getAttributes(), $attrs);
     }
 
     public function getHTML ()
