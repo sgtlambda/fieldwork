@@ -307,7 +307,10 @@
         },
         setInvalid:   function (error) {
             this.element.removeClass("valid").addClass("invalid");
-            this.element.jtLink(error, ['focus'], []);
+            var tooltipElement = this.element.is('input[type="checkbox"]') ?
+                this.element.parent() :
+                this.element;
+            tooltipElement.jtLink(error, ['focus'], []);
             this.valid = false;
         },
         setValid:     function () {
