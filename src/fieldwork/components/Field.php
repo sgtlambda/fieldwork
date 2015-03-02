@@ -57,7 +57,7 @@ abstract class Field extends Component
 
     public function restoreValue (Method $method, $sanitize = true)
     {
-        $v = stripslashes($method->getValue($this->getName(), $this->value));
+        $v = stripslashes($method->getValue($this->getName(), $this->getRestoreDefault()));
         if ($sanitize)
             foreach ($this->sanitizers as $s)
                 /* @var $s FieldSanitizer */
@@ -230,6 +230,15 @@ abstract class Field extends Component
     public function getLatestErrorMsg ()
     {
         return $this->latestErrorMsg;
+    }
+
+    /**
+     * Returns the default value used if the POST var is not set
+     * @return string
+     */
+    protected function getRestoreDefault ()
+    {
+        return $this->value;
     }
 
 }

@@ -54,4 +54,9 @@ class Checkbox extends Field
         return "<div class=\"checkbox-wrapper\"><input " . $this->getAttributesString() . "><label for=\"" . $this->getId() . "\">" . $this->label . "</label></div>";
     }
 
+    protected function getRestoreDefault ()
+    {
+        return '';
+        // override this so that the checkbox is not read as "checked" when the post var is not sent along
+    }
 }
