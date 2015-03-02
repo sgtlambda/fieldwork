@@ -4,17 +4,27 @@
         activeTooltip: -1,
         container:     0,
         trackInterval: -1,
+        resolveTrackingElement: function (elmt) {
+            return elmt.is('[type="checkbox"]') ? elmt.parent() : elmt;
+        },
+        /**
+         * Positions the tooltip underneath the element
+         * @param {jQuery} tooltip
+         * @param {jQuery} elmt
+         */
+        positionTooltip:        function (tooltip, elmt) {
+            var elmtOffset = this.resolveTrackingElement(elmt).offset();
+            tooltip.css({
+                top:  elmtOffset.top + elmt.outerHeight(),
+                left: elmtOffset.left + elmt.outerWidth() / 2 - tooltip.outerWidth() / 2
+            });
+        },
         track:         function () {
             var elmt = this.active;
             if (!elmt.is(":visible"))
                 this.dismiss();
-            else {
-                var elmtOffset = elmt.offset();
-                this.activeTooltip.css({
-                    top:  elmtOffset.top + elmt.outerHeight(),
-                    left: elmtOffset.left + elmt.outerWidth() / 2 - this.activeTooltip.outerWidth() / 2
-                });
-            }
+            else
+                this.positionTooltip(this.activeTooltip, elmt);
         },
         startTrack:    function () {
             this.trackInterval = window.setInterval(function () {
@@ -84,12 +94,7 @@
                 duration: 200
             });
             $('body').append(newTooltip);
-            var elmtOffset = elmt.offset();
-            newTooltip.css({
-                top:  elmtOffset.top + elmt.outerHeight(),
-                left: elmtOffset.left + elmt.outerWidth() / 2 - newTooltip.outerWidth() / 2
-                // todo this is redundant code (see track function above)
-            });
+            FwTooltips.positionTooltip(newTooltip, elmt);
             FwTooltips.activeTooltip = newTooltip;
             FwTooltips.startTrack();
         }
