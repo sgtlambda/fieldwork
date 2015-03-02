@@ -9,7 +9,15 @@ class Checkbox extends Field
 
     const ON = 'on';
 
-    public function __construct ($slug, $label, $checked, $storeValueLocally = 0)
+    /**
+     * Constructs a new checkbox
+     *
+     * @param string $slug
+     * @param string $label   The string to display next to the checkbox
+     * @param bool   $checked Whether the checkbox should be checked initially. Defaults to false
+     * @param int    $storeValueLocally
+     */
+    public function __construct ($slug, $label, $checked = false, $storeValueLocally = 0)
     {
         parent::__construct($slug, $label, $checked ? self::ON : '', $storeValueLocally);
     }
@@ -21,6 +29,10 @@ class Checkbox extends Field
         );
     }
 
+    /**
+     * Is the checkbox checked in its current state?
+     * @return bool
+     */
     public function isChecked ()
     {
         return $this->value === self::ON;
