@@ -20,11 +20,10 @@
             });
         },
         track:         function () {
-            var elmt = this.active;
-            if (!elmt.is(":visible"))
+            if (!this.resolveTrackingElement(this.active).is(":visible"))
                 this.dismiss();
             else
-                this.positionTooltip(this.activeTooltip, elmt);
+                this.positionTooltip(this.activeTooltip, this.active);
         },
         startTrack:    function () {
             this.trackInterval = window.setInterval(function () {
