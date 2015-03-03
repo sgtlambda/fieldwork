@@ -252,7 +252,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return $openingTag . $this->getScript() . $closingTag;
     }
 
-    protected function renderFormError ($errorMsg)
+    public function renderFormError ($errorMsg)
     {
         return "<div class=\"form-error\">" . $errorMsg . "</div>";
     }
