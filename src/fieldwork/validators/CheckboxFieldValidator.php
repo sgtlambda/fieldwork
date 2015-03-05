@@ -22,7 +22,7 @@ class CheckboxFieldValidator extends FieldValidator
 
     public function isValid ($value)
     {
-        return $this->checked = ($value == 'on');
+        return $this->checked === ($value === 'on');
     }
 
     public function describeObject ()
