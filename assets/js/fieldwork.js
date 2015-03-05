@@ -349,4 +349,7 @@
         });
         Fieldwork.processForms();
     });
+    if (!Object.prototype.hasOwnProperty.call(window, 'Fieldwork')) {
+        window.Fieldwork = Fieldwork;
+    }
 })(jQuery, window, document);
