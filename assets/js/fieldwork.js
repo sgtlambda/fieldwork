@@ -26,6 +26,9 @@
             uppercase:  function (value, sanitizer) {
                 return value.toUpperCase();
             },
+            lowercase: function (value, sanitizer) {
+                return value.toLowerCase();
+            },
             capitalize: function (value, sanitizer) {
                 return value.replace(/(?:^|\s)\S/g, function (a) {
                     return a.toUpperCase();
