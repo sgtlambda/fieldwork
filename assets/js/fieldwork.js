@@ -15,10 +15,6 @@
                 return validator.checked === field.element.is(":checked");
             },
             radio:    function (field, validator) {
-                if (console) {
-                    console.log(field);
-                    console.log(validator);
-                }
                 var checkedInput = field.element.find('input[type="radio"]:checked');
                 if (!checkedInput.length) return false;
                 return validator.any ? true : checkedInput.value() === validator.value;
