@@ -13,6 +13,15 @@
             },
             checkbox: function (field, validator) {
                 return validator.checked === field.element.is(":checked");
+            },
+            radio:    function (field, validator) {
+                if (console) {
+                    console.log(field);
+                    console.log(validator);
+                }
+                var checkedInput = field.element.find('input[type="radio"]:checked');
+                if (!checkedInput.length) return false;
+                return validator.any ? true : checkedInput.value() === validator.value;
             }
         },
         //validators for forms. naming should be improved
@@ -26,7 +35,7 @@
             uppercase:  function (value, sanitizer) {
                 return value.toUpperCase();
             },
-            lowercase: function (value, sanitizer) {
+            lowercase:  function (value, sanitizer) {
                 return value.toLowerCase();
             },
             capitalize: function (value, sanitizer) {

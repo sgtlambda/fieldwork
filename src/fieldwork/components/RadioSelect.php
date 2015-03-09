@@ -22,7 +22,7 @@ class RadioSelect extends Field
 
     public function getHTML ()
     {
-        $r = "<div id=\"wrap-" . $this->getName() . "\" class=\"radios-group\"><div class=\"radios-label\">" . $this->getLabel() . "</div>";
+        $r = "<div id=\"". $this->getId() . "\" class=\"radios-group\"><div class=\"radios-label\">" . $this->getLabel() . "</div>";
         foreach ($this->options as $v => $l) {
             $r .= "<div class=\"radio-option\"><input type=\"radio\" id=\"" . $this->getGlobalSlug() . "-" . $v . "\" name=\"" . $this->getName() . "\" value=\"" . $v . "\" " . ($v == $this->getValue() ? "checked" : "") . "><label for=\"" . $this->getGlobalSlug() . "-" . $v . "\">" . $l . "</label></div>";
         }
