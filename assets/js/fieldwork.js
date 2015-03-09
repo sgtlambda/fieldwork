@@ -270,6 +270,13 @@
                 }, 50);
             });
         }
+        if (this.element.is('.radios-group')) {
+            this.element.click(function () {
+                setTimeout(function () {
+                    field.validate();
+                }, 50);
+            });
+        }
     }
 
     $.extend(Field.prototype, {
