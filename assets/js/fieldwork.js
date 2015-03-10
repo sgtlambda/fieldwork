@@ -287,21 +287,26 @@
         cancelSubmit: function () {
             this.clicked = false;
         },
+        /**
+         * Runs through all the validators and returns whether the current value is value
+         * @returns {boolean|string} True if valid, an error when invalid
+         */
+        getValidityStatus: function () {
+            for (var v in this.validators) {
+                var method = this.validators[v].method;
+                if ((Fieldwork.hasOwnProperty(method)))
+                    if (!( (Fieldwork.validators[this.validators[v].method])(this, this.validators[v]) ))
+                        return this.validators[v].error;
+            }
+            return true;
+        },
         validate:     function () {
-            var val = this.getValue();
-            var valid = true;
-            for (var v in this.validators)
-                if ((Fieldwork.validators[this.validators[v].method])) {
-                    if (this.element.attr("placeholder") === val) val = ""; // TODO this is not quite right
-                    if (!( (Fieldwork.validators[this.validators[v].method])(this, this.validators[v]) )) {
-                        this.setInvalid(this.validators[v].error);
-                        valid = false;
-                        break;
-                    }
-                }
-            if (valid)
+            var validity = this.getValidityStatus();
+            if (validity === true)
                 this.setValid();
-            return valid;
+            else
+                this.setInvalid(validity);
+            return validity === true;
         },
         sanitize:     function (realtime) {
             var val = this.getValue();
