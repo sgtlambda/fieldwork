@@ -293,10 +293,11 @@
          */
         getValidityStatus: function () {
             for (var v in this.validators) {
-                var method = this.validators[v].method;
-                if ((Fieldwork.hasOwnProperty(method)))
-                    if (!( (Fieldwork.validators[this.validators[v].method])(this, this.validators[v]) ))
-                        return this.validators[v].error;
+                var validator = this.validators[v];
+                var method = validator.method;
+                if ((Fieldwork.validators.hasOwnProperty(method)))
+                    if (!( (Fieldwork.validators[method])(this, validator) ))
+                        return validator.error;
             }
             return true;
         },
