@@ -164,7 +164,7 @@ abstract class Field extends Component
         /* @var $form Form */
         return array_merge(parent::getClasses(), array(
             "fieldwork-field",
-            ($form->isSubmitted() ? ($this->isValid() ? "valid" : "invalid") : "")
+            ($form->isRequested() ? ($this->isValid() ? "valid" : "invalid") : "")
         ));
     }
 
