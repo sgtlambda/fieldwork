@@ -45,8 +45,13 @@ $submitButton
    ->setGlyphIcon('right-open')
    ->addTo($contactForm);
 
-// Output the form
-echo $contactForm->getHTML();
+// Process the form
+$contactForm->process();
+
+if($contactForm->isSubmitted())
+    echo 'Your email address is ' . $contactForm->v('email');
+else
+    echo $contactForm->getHTML();
 ```
 
 #### todo
