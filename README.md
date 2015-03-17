@@ -13,7 +13,7 @@ fieldwork will make your life easier by dealing with the trivial tasks of buildi
 # navigate to your plugin folder
 cd wp-content/plugins
 
-git clone https://github.com/jmversteeg/Fieldwork.git
+git clone https://github.com/jmversteeg/fieldwork.git
 cd fieldwork
 composer install --no-dev
 npm install
@@ -31,7 +31,7 @@ use fieldwork\components\Button;
 use fieldwork\validators\EmailFieldValidator;
 
 // Instantiate a new form
-$contactForm = new Form('contact', '', new POST() );
+$contactForm = new Form('contactform');
 
 // Add a text field with validation
 $emailField = new TextField('email', 'Email address');
@@ -56,6 +56,11 @@ echo $contactForm->getHTML();
  - Add ability to run sanitization, validation and callbacks through AJAX
  - Complete test coverage
  - Add continuous testing via travis
+ 
+#### 4.1.0 (2015-03-17)
+ - Various bugfixes
+ - Documentation improvement
+ - Added some utility methods
 
 #### 4.0.2 (2015-02-12)
  - Add PHPunit test framework
