@@ -77,25 +77,25 @@ class Form extends GroupComponent implements FormData, Synchronizable
     /**
      * Searches form fields
      *
-     * @param string $query id to search for
-     * @param bool   $includeInactiveFields
+     * @param string $query                 ID to search for
+     * @param bool   $includeInactiveFields Whether to include inactive fields in the search
      *
-     * @return bool|Field closest match or false if not found
+     * @return null|Field closest match or null if not found
      */
     public function f ($query, $includeInactiveFields = false)
     {
         $minLength = -1;
-        $f         = false;
+        $match     = null;
         foreach ($this->getFields($includeInactiveFields) as $field)
             /* @var $field Field */
             if (preg_match("/^(.*)" . preg_quote($query) . "$/", $field->getGlobalSlug(), $matches)) {
                 $l = strlen($matches[1]);
                 if ($l < $minLength || $minLength == -1) {
                     $minLength = $l;
-                    $f         = $field;
+                    $match     = $field;
                 }
             }
-        return $f;
+        return $match;
     }
 
     /**
