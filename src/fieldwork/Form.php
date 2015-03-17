@@ -284,7 +284,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      *
      * @param boolean $includeInactiveFields whether to include inactive fields as well
      *
-     * @return array
+     * @return Field[]
      */
     public function getFields ($includeInactiveFields = false)
     {
@@ -457,5 +457,20 @@ class Form extends GroupComponent implements FormData, Synchronizable
                 $values[$field->getName()] = $field->getValue();
         $values = array_merge($values, $this->dataFields);
         return $values;
+    }
+
+    /**
+     * Restores the values from an associated array. Only defined properties will be overwritten
+     *
+     * @param array $values
+     */
+    function setValues (array $values = [])
+    {
+        foreach ($this->getFields() as $field)
+            if (array_key_exists($field->getName(), $values))
+                $field->setValue($values[$field->getName()]);
+        foreach ($this->dataFields as $dataKey => $dataVal)
+            if (array_key_exists($dataKey, $values))
+                $this->dataFields[$dataKey] = $values[$dataKey];
     }
 }
