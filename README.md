@@ -10,15 +10,8 @@ fieldwork will make your life easier by dealing with the trivial tasks of buildi
 ### Installation
 
 ```bash
-# navigate to your plugin folder
 cd wp-content/plugins
-
 git clone https://github.com/jmversteeg/fieldwork.git
-cd fieldwork
-composer install --no-dev
-npm install
-bower install
-gulp
 ```
 
 ### Creating a simple form
