@@ -32,5 +32,4 @@ class RegexpReplaceSanitizer extends RegexReplaceSanitizer
             'replace'   => $this->to
         ));
     }
-
 }

@@ -444,4 +444,18 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return "form";
     }
 
+    /**
+     * Gets a complete associated array containing all the data that needs to be stored
+     * @return array
+     */
+    function getValues ()
+    {
+        $values = [];
+        foreach ($this->getFields() as $field)
+            /* @var $field Field */
+            if ($field->getCollectData())
+                $values[$field->getName()] = $field->getValue();
+        $values = array_merge($values, $this->dataFields);
+        return $values;
+    }
 }

@@ -1,8 +1,8 @@
-Fieldwork
+fieldwork
 ===========
 **Web forms for cool people**
 
-Fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
+fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
@@ -13,11 +13,9 @@ Fieldwork will make your life easier by dealing with the trivial tasks of buildi
 # navigate to your plugin folder
 cd wp-content/plugins
 
-# or if you're using bedrock
-cd app/mu-plugins
-
 git clone https://github.com/jmversteeg/Fieldwork.git
 cd fieldwork
+composer install --no-dev
 npm install
 bower install
 gulp
@@ -57,10 +55,11 @@ echo $contactForm->getHTML();
  - Parse form from HTML markup
  - Add ability to run sanitization, validation and callbacks through AJAX
  - Complete test coverage
+ - Add continuous testing via travis
 
 #### 4.0.2 (2015-02-12)
  - Add PHPunit test framework
- - Remove Dutch error message strings
+ - Remove foreign error message strings
  - Use external libraries for email and IBAN validation
 
 #### 4.0.1 (2015-02-11)
