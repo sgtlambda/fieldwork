@@ -1,7 +1,7 @@
 {
   "name":        "jmversteeg/fieldwork",
   "description": "Web forms for cool people",
-  "version":     "4.0.2",
+  "version":     "4.1.0",
   "keywords":    [
     "forms",
     "form",
@@ -27,10 +27,10 @@
     "wiki":   "https://github.com/jmversteeg/Fieldwork/wiki"
   },
   "require":     {
-    "php": ">=5.3",
-    "aura/autoload": "~2.0",
+    "php":                     ">=5.3",
+    "aura/autoload":           "~2.0",
     "egulias/email-validator": "~1.2",
-    "jschaedl/iban": "~1.1"
+    "jschaedl/iban":           "~1.1"
   },
   "require-dev": {
     "phpunit/phpunit": "4.5.*"

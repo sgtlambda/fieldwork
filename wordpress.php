@@ -2,7 +2,7 @@
 /*
   Plugin Name: Fieldwork
   Description: WordPress plugin wrapper for the Fieldwork library
-  Version: 4.0.1
+  Version: 4.1.0
   Author: JM Versteeg
  */
 
