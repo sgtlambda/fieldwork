@@ -25,7 +25,6 @@ gulp
 
 ```php
 use fieldwork\Form;
-use fieldwork\methods\POST;
 use fieldwork\components\TextField;
 use fieldwork\components\Button;
 use fieldwork\validators\EmailFieldValidator;
