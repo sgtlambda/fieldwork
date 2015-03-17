@@ -52,10 +52,10 @@ echo $contactForm->getHTML();
 #### todo
 
  - Error message i18n
- - Parse form from HTML markup
+ - Custom layout markups (perhaps through a proprietary HTML derivative)
  - Add ability to run sanitization, validation and callbacks through AJAX
  - Complete test coverage
- - Add continuous testing via travis
+ - Add continuous integration
  
 #### 4.1.0 (2015-03-17)
  - Various bugfixes
