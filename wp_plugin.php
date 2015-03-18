@@ -2,7 +2,7 @@
 /*
   Plugin Name: Fieldwork
   Description: WordPress plugin wrapper for the Fieldwork library
-  Version: 4.0.1
+  Version: 4.1.0
   Author: JM Versteeg
  */
 
@@ -19,17 +19,11 @@ try {
     die($e->getMessage());
 }
 
-spl_autoload_register(function ($class) {
-    $prefix   = 'fieldwork\\';
-    $base_dir = __DIR__ . '/src/fieldwork/';
-    $len      = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0)
-        return;
-    $relative_class = substr($class, $len);
-    $file           = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-    if (file_exists($file))
-        require $file;
-});
+require 'vendor/autoload.php';
+
+$loader = new \Aura\Autoload\Loader();
+$loader->addPrefix('fieldwork', __DIR__ . '/src/fieldwork');
+$loader->register();
 
 add_action('wp_enqueue_scripts', function () {
     $bower_components = plugins_url('bower_components/', __FILE__);
