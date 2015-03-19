@@ -233,6 +233,7 @@
         this.element = $("#" + fieldData.id);
         this.touched = false;
         this.valid = false;
+        this.valueWhenLastFocused = '';
         this.validators = fieldData.validators;
         this.sanitizers = fieldData.sanitizers;
         if (fieldData.hasOwnProperty('dtConfig')) {
@@ -246,8 +247,7 @@
                 field.blur();
             },
             focus: function () {
-                field.touched = true;
-                field.element.addClass("input-touched");
+                field.focus();
             },
             click: function () {
                 field.clicked = true;
@@ -277,9 +277,14 @@
 
     $.extend(Field.prototype, {
         blur:         function () {
-            if (!this.touched) return;
+            if (!this.touched || (this.getValue() === '' && this.valueWhenLastFocused === '')) return;
             this.sanitize(false);
             this.validate();
+        },
+        focus:        function () {
+            this.valueWhenLastFocused = this.getValue();
+            this.touched = true;
+            this.element.addClass("input-touched");
         },
         keyup:        function (e, field) {
             //this.sanitize(true);
