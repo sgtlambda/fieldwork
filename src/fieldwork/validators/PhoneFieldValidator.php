@@ -10,9 +10,9 @@ class PhoneFieldValidator extends RegexFieldValidator
     const PATT  = "/^[0-9.+()\\/ -]{4,}$/";
     const ERROR = "Not a valid phone number";
 
-    public function __construct ()
+    public function __construct ($error = self::ERROR)
     {
-        parent::__construct(self::PATT, self::ERROR);
+        parent::__construct(self::PATT, $error);
     }
 
 }
