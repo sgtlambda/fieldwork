@@ -117,7 +117,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Returns an array of fields of which data is to be collected
-     * @return array
+     * @return Field[]
      */
     public function c ()
     {
