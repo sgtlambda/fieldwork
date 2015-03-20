@@ -258,20 +258,31 @@ class Form extends GroupComponent implements FormData, Synchronizable
     }
 
     /**
-     * Renders and returns complete form markup as HTML. Use this to echo the form to the webpage.
-     * @return string
+     * Wraps the <pre>$content</pre> inside a form tag, declaring error messages, datafields and the script contents.
+     * This method could be useful for using a form with custom custom markup.
+     *
+     * @param $content
+     *
+     * @return string The HTML content
      */
-    public function getHTML ()
+    public function wrap ($content)
     {
-        $dataFields = '';
-        foreach ($this->dataFields as $key => $value)
-            $dataFields .= "<input type=\"hidden\" name=\"$key\" value=\"$value\">";
-        $errors = '';
+        $dataFields = $this->getDataFieldsHTML();
+        $errors     = '';
         foreach ($this->validators as $validator)
             /* @var $validator FormValidator */
             if (!$validator->isValid())
                 $errors .= $this->renderFormError($validator->getErrorMsg());
-        return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . parent::getHTML() . "</form>" . $this->getScriptHTML();
+        return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . $content . "</form>" . $this->getScriptHTML();
+    }
+
+    /**
+     * Renders and returns complete form markup as HTML. Use this to echo the form using default markup to the webpage.
+     * @return string
+     */
+    public function getHTML ()
+    {
+        return $this->wrap(parent::getHTML());
     }
 
     public function getID ()
@@ -472,5 +483,16 @@ class Form extends GroupComponent implements FormData, Synchronizable
         foreach ($this->dataFields as $dataKey => $dataVal)
             if (array_key_exists($dataKey, $values))
                 $this->dataFields[$dataKey] = $values[$dataKey];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDataFieldsHTML ()
+    {
+        $dataFields = '';
+        foreach ($this->dataFields as $key => $value)
+            $dataFields .= "<input type=\"hidden\" name=\"$key\" value=\"$value\">";
+        return $dataFields;
     }
 }
