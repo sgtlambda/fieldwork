@@ -8,6 +8,7 @@ abstract class Component
     const RM_NONE        = 'none';
     const RM_HIDDENFIELD = 'hidden';
     const RM_DEFAULT     = 'default';
+
     protected
         $parent,
         $children         = array();
@@ -210,6 +211,18 @@ abstract class Component
             return $this->parent->getGlobalSlug() . '-' . $this->slug;
         else
             return $this->slug;
+    }
+
+    /**
+     * Gets an array of the custom classes, each of them prefixed with wrap-
+     * @return array
+     */
+    public function getWrapperClasses ()
+    {
+        $wrapperClasses = [];
+        foreach ($this->customClasses as $customClass)
+            $wrapperClasses[] = "wraps-$customClass";
+        return $wrapperClasses;
     }
 
     /**

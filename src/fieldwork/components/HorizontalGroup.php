@@ -16,7 +16,7 @@ class HorizontalGroup extends GroupComponent
 
     public function getHTML ()
     {
-        return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div data-wrapper-for="%slug%" class="group-item horizontal-group-item">', '</div>') . '</div>';
+        return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div data-wrapper-for="%slug%" class="group-item horizontal-group-item %classes%">', '</div>') . '</div>';
     }
 
 }

@@ -5,7 +5,7 @@ namespace fieldwork\components;
 class GroupComponent extends Component
 {
 
-    public function getHTML ($before = '', $after = '', $prefix = '', $suffix = '')
+    public function getHTML ($beforeTpl = '', $after = '', $prefix = '', $suffix = '')
     {
         $html = '';
         foreach ($this->children as $component)
@@ -16,7 +16,11 @@ class GroupComponent extends Component
                     $component->getHTML() :
                     ($component->renderWhenHidden() == Field::RM_HIDDENFIELD ? $component->renderHiddenField() : '')
                 );
-                $html .= $prefix . ($component->isVisible() ? (str_replace('%slug%', $component->getGlobalSlug(), $before) . $componentHTML . $after) : $component->getHTML()) . $suffix;
+                $globalSlug    = $component->getGlobalSlug();
+                $before        = str_replace('%slug%', $globalSlug, $beforeTpl);
+                $before        = str_replace('%classes%', implode(' ', $component->getWrapperClasses()), $before);
+                $inner         = $component->isVisible() ? ($before . $componentHTML . $after) : $component->getHTML();
+                $html .= $prefix . ($inner) . $suffix;
             }
 
         return $html;
