@@ -30,7 +30,7 @@ abstract class Field extends Component
      * @param string $value             default value
      * @param int    $storeValueLocally how long to store last used value in cookie (set to 0 for no cookie)
      */
-    public function __construct ($slug, $label, $value = '', $storeValueLocally = 0)
+    public function __construct ($slug, $label = '', $value = '', $storeValueLocally = 0)
     {
         parent::__construct($slug);
         $this->label             = $label;
@@ -43,7 +43,6 @@ abstract class Field extends Component
         $this->value = $this->initialValue;
         parent::reset();
     }
-
 
     public function setCollectData ($collectData)
     {
