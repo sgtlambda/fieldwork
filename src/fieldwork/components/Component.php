@@ -33,7 +33,21 @@ abstract class Component
             $child->reset();
     }
 
+    /**
+     * Gets the HTML markup of the component
+     * @return mixed
+     */
     public abstract function getHTML ();
+
+    /**
+     * Echoes the HTML markup of the component
+     * @return $this
+     */
+    public final function output ()
+    {
+        echo $this->getHTML();
+        return $this;
+    }
 
     public abstract function isValid ();
 

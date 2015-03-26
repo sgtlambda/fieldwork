@@ -34,4 +34,9 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest(out));
 });
 
-gulp.task('default', ['styles', 'scripts']);
+gulp.task('copy-select2-assets', function () {
+    return gulp.src('node_modules/select2/*.png')
+        .pipe(gulp.dest(out));
+});
+
+gulp.task('default', ['styles', 'scripts', 'copy-select2-assets']);

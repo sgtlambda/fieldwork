@@ -274,7 +274,8 @@
             });
         }
         if (this.element.is('select')) {
-            this.element.select2();
+            console.log(fieldData.select2);
+            this.element.select2(fieldData.select2);
         }
     }
 

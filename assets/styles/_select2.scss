@@ -9,8 +9,15 @@ div.select2-container.jfcomponent {
     height:      19px;
     line-height: 19px;
     padding:     10px;
+    .select2-search-choice-close {
+      top: 12px;
+    }
     .select2-arrow {
-      display: none;
+      background: transparent;
+      border:     none;
+      b {
+        background-position-y: 6px;
+      }
     }
   }
   &.select2-dropdown-open {
