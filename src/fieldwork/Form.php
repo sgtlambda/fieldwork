@@ -258,14 +258,11 @@ class Form extends GroupComponent implements FormData, Synchronizable
     }
 
     /**
-     * Wraps the <pre>$content</pre> inside a form tag, declaring error messages, datafields and the script contents.
-     * This method could be useful for using a form with custom custom markup.
-     *
-     * @param $content
-     *
-     * @return string The HTML content
+     * Gets the markup that is to be outputted before the actual contents of the form. This method could be used for
+     * even more manual control over outputting with a custom markup.
+     * @return string
      */
-    public function wrap ($content)
+    public function getWrapBefore ()
     {
         $dataFields = $this->getDataFieldsHTML();
         $errors     = '';
@@ -273,7 +270,34 @@ class Form extends GroupComponent implements FormData, Synchronizable
             /* @var $validator FormValidator */
             if (!$validator->isValid())
                 $errors .= $this->renderFormError($validator->getErrorMsg());
-        return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields . $content . "</form>" . $this->getScriptHTML();
+        return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields;
+    }
+
+    /**
+     * Gets the markup that is to be outputted after the actual contents of the form. This method could be used for
+     * even more manual control over outputting with a custom markup.
+     *
+     * @param bool $includeScripts Whether to include the scripts
+     *
+     * @return string
+     */
+    public function getWrapAfter ($includeScripts = true)
+    {
+        return "</form>" . $includeScripts ? $this->getScriptHTML() : '';
+    }
+
+    /**
+     * Wraps the <pre>$content</pre> inside a form tag, declaring error messages, datafields and the script contents.
+     * This method could be useful for using a form with custom custom markup.
+     *
+     * @param string $content        The form "content" to be wrapped. Should declare all the required input fields.
+     * @param bool   $includeScripts Whether to include the scripts
+     *
+     * @return string The HTML content
+     */
+    public function wrap ($content, $includeScripts = true)
+    {
+        return $this->getWrapBefore() . $content . $this->getWrapAfter($includeScripts);
     }
 
     /**
