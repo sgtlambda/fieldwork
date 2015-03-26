@@ -6,6 +6,7 @@ var out = './dist';
 gulp.task('styles', function () {
     gulp.src([
         'bower_components/datetimepicker/jquery.datetimepicker.css',
+        'node_modules/select2/select2.css',
         'assets/styles/main.scss'
     ])
         .pipe(plugins.sourcemaps.init())
@@ -18,9 +19,11 @@ gulp.task('styles', function () {
 gulp.task('scripts', function () {
     gulp.src([
         'bower_components/jquery-maskedinputs/dist/jquery.maskedinput.min.js',
-        'bower_components/underscore/underscore-min.js',
         'bower_components/datetimepicker/jquery.datetimepicker.js',
-        'bower_components/sweetalert/lib/sweet-alert.min.js',
+
+        'node_modules/underscore/underscore-min.js',
+        'node_modules/sweetalert/lib/sweet-alert.min.js',
+        'node_modules/select2/select2.js',
 
         'assets/js/fieldwork-tooltips.js',
         'assets/js/fieldwork.js'

@@ -1,0 +1,22 @@
+div.select2-container.jfcomponent {
+  margin: 8px 0;
+  width:  100%;
+  a {
+    border-radius: 3px;
+    border:        1px solid #ccc;
+  }
+  .select2-choice {
+    height:      19px;
+    line-height: 19px;
+    padding:     10px;
+    .select2-arrow {
+      display: none;
+    }
+  }
+  &.select2-dropdown-open {
+    a {
+      border:        1px solid #5897fb;
+      border-radius: 3px 3px 0 0;
+    }
+  }
+}

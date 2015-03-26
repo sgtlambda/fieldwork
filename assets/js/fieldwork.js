@@ -273,6 +273,9 @@
                 }, 50);
             });
         }
+        if (this.element.is('select')) {
+            this.element.select2();
+        }
     }
 
     $.extend(Field.prototype, {

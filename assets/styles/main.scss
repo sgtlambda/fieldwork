@@ -1,5 +1,6 @@
 @import "tooltips";
-@import "../../bower_components/sweetalert/lib/sweet-alert";
+@import "select2";
+@import "../../node_modules/sweetalert/lib/sweet-alert";
 
 @mixin clearfix {
   &:after {
@@ -33,6 +34,9 @@ input.fieldwork-field:not(.button), textarea.fieldwork-field {
   border:             1px solid #ccc;
   -webkit-transition: background 0.2s;
   line-height:        1.4em;
+  &:focus {
+    border: 1px solid #5897fb;
+  }
   &.invalid:not(:focus) {
     background: lighten(red, 47%);
   }
@@ -96,15 +100,15 @@ textarea.fieldwork-field {
 }
 
 input.fieldwork-field.subjectline {
-  margin-bottom: 0;
-  border-bottom: 0;
+  margin-bottom:              0;
+  border-bottom:              0;
   border-bottom-left-radius:  0;
   border-bottom-right-radius: 0;
   &:focus {
     border-bottom: 0;
   }
   & + textarea {
-    margin-top: 0;
+    margin-top:              0;
     border-top-left-radius:  0;
     border-top-right-radius: 0;
   }
