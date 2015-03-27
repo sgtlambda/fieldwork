@@ -488,7 +488,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     function getValues ($useName = true)
     {
-        $values = [];
+        $values = array();
         foreach ($this->getFields() as $field)
             /* @var $field Field */
             if ($field->getCollectData()) {
@@ -504,7 +504,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      *
      * @param array $values
      */
-    function setValues (array $values = [])
+    function setValues (array $values = array())
     {
         foreach ($this->getFields() as $field)
             if (array_key_exists($field->getName(), $values))
