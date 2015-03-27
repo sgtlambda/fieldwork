@@ -482,11 +482,12 @@ class Form extends GroupComponent implements FormData, Synchronizable
     /**
      * Gets a complete associated array containing all the data that needs to be stored
      *
-     * @param bool $useName Whether to use the field name (if not, the fields local slug is used)
+     * @param bool $useName           Whether to use the field name (if not, the fields local slug is used)
+     * @param bool $includeDataFields Whether to include the data fields
      *
      * @return array
      */
-    function getValues ($useName = true)
+    function getValues ($useName = true, $includeDataFields = true)
     {
         $values = array();
         foreach ($this->getFields() as $field)
@@ -495,7 +496,8 @@ class Form extends GroupComponent implements FormData, Synchronizable
                 $key          = $useName ? $field->getName() : $field->getLocalSlug();
                 $values[$key] = $field->getValue();
             }
-        $values = array_merge($values, $this->dataFields);
+        if ($includeDataFields)
+            $values = array_merge($values, $this->dataFields);
         return $values;
     }
 
