@@ -5,10 +5,40 @@ div.select2-container.jfcomponent {
     border-radius: 3px;
     border:        1px solid #ccc;
   }
+  .select2-choices {
+    @include fwfield();
+    margin: 0;
+    .select2-input {
+      height:    19px;
+      margin:    0;
+      padding:   0;
+      font-size: 14px;
+    }
+    .select2-search-choice {
+      border:      none;
+      background:  none;
+      box-shadow:  none;
+      padding:     0 5px 0 18px;
+      line-height: 19px;
+      margin:      0 2px 0 -2px;
+      .select2-search-choice-close {
+        -webkit-transition: background 0s;
+        border:             none;
+        top:                3px;
+      }
+    }
+  }
+  &.select2-dropdown-open {
+    .select2-choices {
+      @include fwfield-focus;
+      border-bottom-left-radius:  0;
+      border-bottom-right-radius: 0;
+    }
+  }
   .select2-choice {
     height:      19px;
-    line-height: 19px;
     padding:     10px;
+    line-height: 19px;
     .select2-search-choice-close {
       top: 12px;
     }
@@ -26,4 +56,12 @@ div.select2-container.jfcomponent {
       border-radius: 3px 3px 0 0;
     }
   }
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+  font-family: inherit;
+}
+
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-ajax-error, .select2-results .select2-selection-limit {
+  background: transparent;
 }
