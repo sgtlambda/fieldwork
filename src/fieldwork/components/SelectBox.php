@@ -83,7 +83,7 @@ class SelectBox extends Field
         return $attributes;
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         $r = "<select " . $this->getAttributesString() . ">";
         if ($this->usePlaceholder) {

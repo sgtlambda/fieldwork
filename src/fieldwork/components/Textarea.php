@@ -19,7 +19,7 @@ class Textarea extends Field
         );
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return "<textarea " . $this->getAttributesString() . ">" . $this->value . "</textarea>";
     }

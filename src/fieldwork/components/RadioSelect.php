@@ -20,7 +20,7 @@ class RadioSelect extends Field
         );
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         $r = "<div id=\"". $this->getId() . "\" class=\"radios-group\"><div class=\"radios-label\">" . $this->getLabel() . "</div>";
         foreach ($this->options as $v => $l) {

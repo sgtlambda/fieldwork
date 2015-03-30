@@ -47,7 +47,7 @@ class TextField extends Field
         );
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return "<input type='text'" . $this->getAttributesString() . ">";
     }

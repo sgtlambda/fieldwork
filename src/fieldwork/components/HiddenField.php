@@ -15,7 +15,7 @@ class HiddenField extends Field
         return self::RM_DEFAULT;
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return "<input type='hidden'" . $this->getAttributesString() . ">";
     }

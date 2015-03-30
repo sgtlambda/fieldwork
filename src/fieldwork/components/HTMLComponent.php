@@ -13,7 +13,7 @@ class HTMLComponent extends Component
         $this->html = $html;
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return $this->html;
     }

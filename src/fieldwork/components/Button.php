@@ -64,7 +64,7 @@ class Button extends Field
         );
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         $icon      = ($this->icon == '' ? '' : '<img class="button-icon" src="' . $this->icon . '"> ');
         $glyphIcon = !empty($this->glyphIcon) ? '<i class="button-icon icon-' . $this->glyphIcon . '"></i> ' : '';

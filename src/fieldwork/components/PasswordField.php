@@ -12,7 +12,7 @@ class PasswordField extends TextField
         );
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return "<input type='password'" . $this->getAttributesString() . ">";
     }

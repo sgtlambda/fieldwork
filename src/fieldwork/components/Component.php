@@ -35,9 +35,12 @@ abstract class Component
 
     /**
      * Gets the HTML markup of the component
+     *
+     * @param bool $showLabel
+     *
      * @return mixed
      */
-    public abstract function getHTML ();
+    public abstract function getHTML ($showLabel = true);
 
     /**
      * Echoes the HTML markup of the component
@@ -45,7 +48,7 @@ abstract class Component
      */
     public final function output ()
     {
-        echo $this->getHTML();
+        echo $this->getHTML(true);
         return $this;
     }
 

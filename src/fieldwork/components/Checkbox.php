@@ -49,9 +49,10 @@ class Checkbox extends Field
         return array_merge(parent::getAttributes(), $attrs);
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
-        return "<div class=\"checkbox-wrapper\"><input " . $this->getAttributesString() . "><label for=\"" . $this->getId() . "\">" . $this->label . "</label></div>";
+        $label = $showLabel ? "<label for=\"" . $this->getId() . "\">" . $this->label . "</label>" : "";
+        return "<div class=\"checkbox-wrapper\"><input " . $this->getAttributesString() . ">" . $label . "</div>";
     }
 
     protected function getRestoreDefault ()
