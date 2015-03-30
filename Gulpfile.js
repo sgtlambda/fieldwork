@@ -11,6 +11,7 @@ gulp.task('styles', function () {
     ])
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass())
+        .pipe(plugins.autoprefixer())
         .pipe(plugins.concat('fieldwork.css'))
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(out));
