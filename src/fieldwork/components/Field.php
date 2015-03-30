@@ -148,7 +148,7 @@ abstract class Field extends Component
     public function getValue ($condense = true)
     {
         $v = $this->value;
-        if ($condense && $this->isMultiple())
+        if ($condense && $this->isMultiple() && is_array($v))
             $v = $this->condenseMultiple($v);
         return $v;
     }
