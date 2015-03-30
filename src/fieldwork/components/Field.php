@@ -56,12 +56,51 @@ abstract class Field extends Component
 
     public function restoreValue (Method $method, $sanitize = true)
     {
-        $v = stripslashes($method->getValue($this->getName(), $this->getRestoreDefault()));
+        $v = $method->getValue($this->getName(), $this->getRestoreDefault());
+        if ($this->isMultiple() && is_array($v)) {
+            foreach ($v as &$value)
+                $value = stripslashes($value);
+        } else {
+            $v = stripslashes($v);
+        }
         if ($sanitize)
             foreach ($this->sanitizers as $s)
                 /* @var $s FieldSanitizer */
                 $v = $s->sanitize($v);
         $this->value = $v;
+    }
+
+    /**
+     * Condenses multiple values (e.g. from a multiple select box) into a single string
+     *
+     * @param string[] $values
+     *
+     * @return string
+     */
+    public function condenseMultiple ($values = [])
+    {
+        return implode(',', $values);
+    }
+
+    /**
+     * Extracts multiple values from a single string
+     *
+     * @param string $value
+     *
+     * @return string[]
+     */
+    public function extractMultiple ($value)
+    {
+        return explode(',', $value);
+    }
+
+    /**
+     * Determines whether this field allows selection of multiple values
+     * @return bool
+     */
+    public function isMultiple ()
+    {
+        return false;
     }
 
     public function submit ()
@@ -81,9 +120,17 @@ abstract class Field extends Component
         return $this->getGlobalSlug() . '-vc';
     }
 
-    public function getName ()
+    /**
+     * Gets the value of the name attribute for this field
+     *
+     * @param bool $asMarkup Whether to retrieve the value used in the markup (if true, [] will by default be appended
+     *                       to fields that allow multiple values)
+     *
+     * @return string
+     */
+    public function getName ($asMarkup = false)
     {
-        return $this->getGlobalSlug();
+        return $this->getGlobalSlug() . (($this->isMultiple() && $asMarkup) ? '[]' : '');
     }
 
     public function getLabel ()
@@ -91,9 +138,19 @@ abstract class Field extends Component
         return $this->label;
     }
 
-    public function getValue ()
+    /**
+     * Whether to condense multiple values into a single string
+     *
+     * @param bool $condense
+     *
+     * @return string|string[]
+     */
+    public function getValue ($condense = true)
     {
-        return $this->value;
+        $v = $this->value;
+        if ($condense && $this->isMultiple())
+            $v = $this->condenseMultiple($v);
+        return $v;
     }
 
     public function setValue ($value)
@@ -151,7 +208,7 @@ abstract class Field extends Component
     public function getAttributes ()
     {
         return array_merge(parent::getAttributes(), array(
-            "name"  => $this->getName(),
+            "name"  => $this->getName(true),
             "value" => $this->getValue(),
             "id"    => $this->getId()
         ));
@@ -240,5 +297,4 @@ abstract class Field extends Component
     {
         return $this->value;
     }
-
 }
