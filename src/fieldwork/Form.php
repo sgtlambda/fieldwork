@@ -309,7 +309,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     public function getHTML ($showLabel = true)
     {
-        return $this->wrap(parent::getHTML($showLabel));
+        return $this->wrap(parent::getHTML());
     }
 
     public function getID ()

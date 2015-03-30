@@ -25,10 +25,10 @@ abstract class Field extends Component
     /**
      * Creates a new form field component
      *
-     * @param string $slug              internal slug to use
-     * @param string $label             label to display
-     * @param string $value             default value
-     * @param int    $storeValueLocally how long to store last used value in cookie (set to 0 for no cookie)
+     * @param string          $slug              internal slug to use
+     * @param string          $label             label to display
+     * @param string|string[] $value             initial value
+     * @param int             $storeValueLocally how long to store last used value in cookie (set to 0 for no cookie)
      */
     public function __construct ($slug, $label = '', $value = '', $storeValueLocally = 0)
     {

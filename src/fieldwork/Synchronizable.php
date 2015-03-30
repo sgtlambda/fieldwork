@@ -11,6 +11,9 @@ namespace fieldwork;
 interface Synchronizable
 {
 
+    /**
+     * @return array<string, mixed>
+     */
     function getJsonData ();
 
     /**
