@@ -1,16 +1,7 @@
+@import 'common';
 @import "tooltips";
 @import "select2";
 @import "../../node_modules/sweetalert/lib/sweet-alert";
-
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear:   both;
-  }
-}
-
-$spacing: 16px;
 
 .form-error {
   padding:          8px;
@@ -25,21 +16,7 @@ $spacing: 16px;
 }
 
 input.fieldwork-field:not(.button), textarea.fieldwork-field {
-  box-sizing:         border-box;
-  width:              100%;
-  padding:            10px;
-  margin:             $spacing/2 0;
-  border-radius:      3px;
-  background:         white;
-  border:             1px solid #ccc;
-  -webkit-transition: background 0.2s;
-  line-height:        1.4em;
-  &:focus {
-    border: 1px solid #5897fb;
-  }
-  &.invalid:not(:focus) {
-    background: lighten(red, 47%);
-  }
+  @include fwfield();
 }
 
 button.jfcomponent {
