@@ -45,15 +45,16 @@ class SelectBox extends Field
     /**
      * Constructs a new SelectBox
      *
-     * @param string           $slug              The field identifier
-     * @param string           $label             The label to display
-     * @param array            $options           The available options for the field
-     * @param string|string[]  $value             The current value or values
-     * @param bool             $isMultipleAllowed Whether multiple fields can be selected
-     * @param bool|string|null $emptyValue        The value to return when an empty option is selected (this is useful
-     *                                            for relational fields in the database where you should provide NULL ).
-     *                                            Set to FALSE if you wish to use the default empty value
-     * @param int              $storeValueLocally
+     * @param string                    $slug              The field identifier
+     * @param string                    $label             The label to display
+     * @param array                     $options           The available options for the field
+     * @param string|string[]           $value             The current value or values
+     * @param bool                      $isMultipleAllowed Whether multiple fields can be selected
+     * @param string|string[]|bool|null $emptyValue        The value to return when an empty option is selected (this
+     *                                                     is useful for relational fields in the database where you
+     *                                                     should provide NULL ). Set to FALSE if you wish to use the
+     *                                                     default empty value
+     * @param int                       $storeValueLocally
      */
     public function __construct ($slug, $label, array $options = array(), $value = '', $isMultipleAllowed = false, $emptyValue = false, $storeValueLocally = 0)
     {
