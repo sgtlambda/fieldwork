@@ -14,7 +14,7 @@ class HorizontalGroup extends GroupComponent
         ));
     }
 
-    public function getHTML ()
+    public function getHTML ($showLabel = true)
     {
         return '<div ' . $this->getAttributesString() . '>' . parent::getHTML('<div data-wrapper-for="%slug%" class="group-item horizontal-group-item %classes%">', '</div>') . '</div>';
     }
