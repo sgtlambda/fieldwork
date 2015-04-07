@@ -1,20 +1,20 @@
 {
-  "name": "fieldwork",
-  "private": true,
+  "name":            "fieldwork",
+  "private":         true,
   "devDependencies": {
-    "gulp": "^3.8.10",
+    "gulp":              "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
-    "gulp-concat": "^2.4.3",
-    "gulp-sass": "^1.2.4",
-    "gulp-sourcemaps": "^1.3.0",
-    "gulp-uglifyjs": "^0.5.0",
-    "select2": "^3.5.2-browserify",
-    "sweetalert": "^0.4.2"
+    "gulp-concat":       "^2.4.3",
+    "gulp-sass":         "^1.2.4",
+    "gulp-sourcemaps":   "^1.3.0",
+    "gulp-uglifyjs":     "^0.5.0",
+    "select2":           "^3.5.2-browserify",
+    "sweetalert":        "^0.4.2"
   },
-  "jshintConfig": {
+  "jshintConfig":    {
     "node": true
   },
-  "dependencies": {
+  "dependencies":    {
     "lodash": "^3.6.0"
   }
 }
