@@ -1,5 +1,9 @@
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')();
+var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
+var concat = require('gulp-concat');
+var sass = require('gulp-sass');
+var uglify = require('gulp-uglifyjs');
 
 var out = './dist';
 
@@ -9,11 +13,11 @@ gulp.task('styles', function () {
         'node_modules/select2/select2.css',
         'assets/styles/main.scss'
     ])
-        .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.sass())
-        .pipe(plugins.autoprefixer())
-        .pipe(plugins.concat('fieldwork.css'))
-        .pipe(plugins.sourcemaps.write())
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(autoprefixer())
+        .pipe(concat('fieldwork.css'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(out));
 });
 
@@ -22,14 +26,14 @@ gulp.task('scripts', function () {
         'bower_components/jquery-maskedinputs/dist/jquery.maskedinput.min.js',
         'bower_components/datetimepicker/jquery.datetimepicker.js',
 
-        'node_modules/underscore/underscore-min.js',
+        'node_modules/lodash/index.js',
         'node_modules/sweetalert/lib/sweet-alert.min.js',
         'node_modules/select2/select2.js',
 
         'assets/js/fieldwork-tooltips.js',
         'assets/js/fieldwork.js'
     ])
-        .pipe(plugins.uglifyjs('fieldwork.min.js', {
+        .pipe(uglify('fieldwork.min.js', {
             outSourceMap: true
         }))
         .pipe(gulp.dest(out));
