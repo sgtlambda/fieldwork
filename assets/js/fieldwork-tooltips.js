@@ -16,7 +16,7 @@
             var elmtOffset = this.resolveTrackingElement(elmt).offset();
             tooltip.css({
                 top:  elmtOffset.top + elmt.outerHeight(),
-                left: elmtOffset.left + elmt.outerWidth() / 2 - tooltip.outerWidth() / 2
+                left: Math.round ( elmtOffset.left + elmt.outerWidth() / 2 - tooltip.outerWidth() / 2 )
             });
         },
         track:         function () {
