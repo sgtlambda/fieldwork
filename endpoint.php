@@ -20,7 +20,9 @@ function loadWordpressCore ()
     return false;
 }
 
-loadWordpressCore();
+if (!loadWordpressCore()) {
+    die('The WordPress core could not be located');
+}
 
 $response = FW::handleAjaxRequest();
 
