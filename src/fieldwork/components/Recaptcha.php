@@ -74,4 +74,9 @@ class Recaptcha extends Field
     {
         return 'g-recaptcha-response';
     }
+
+    public function getCollectData ()
+    {
+        return false;
+    }
 }
