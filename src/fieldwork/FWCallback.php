@@ -2,7 +2,7 @@
 
 namespace fieldwork;
 
-abstract class Callback
+abstract class FWCallback
 {
 
     private $slug;

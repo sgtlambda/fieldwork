@@ -27,9 +27,9 @@ class FW
     /**
      * Registers given ajax method globally.
      *
-     * @param Callback $ajaxMethod
+     * @param FWCallback $ajaxMethod
      */
-    static function registerAjaxMethod (Callback $ajaxMethod)
+    static function registerAjaxMethod (FWCallback $ajaxMethod)
     {
         self::$ajaxMethods[$ajaxMethod->getSlug()] = $ajaxMethod;
     }
@@ -55,7 +55,7 @@ class FW
      *
      * @param string $slug
      *
-     * @return Callback ajaxmethod
+     * @return FWCallback
      */
     static function getCallback ($slug)
     {

@@ -13,7 +13,7 @@ interface Synchronizable
 
     /**
      * Gets the JSON data array that will be passed to the front-end library
-     * @return mixed[]
+     * @return array
      */
     function getJsonData ();
 
