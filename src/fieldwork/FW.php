@@ -25,16 +25,6 @@ class FW
     }
 
     /**
-     * Registers given ajax method globally.
-     *
-     * @param FWCallback $ajaxMethod
-     */
-    static function registerAjaxMethod (FWCallback $ajaxMethod)
-    {
-        self::$ajaxMethods[$ajaxMethod->getSlug()] = $ajaxMethod;
-    }
-
-    /**
      * Retrieves a form by its slug
      *
      * @param string $slug
@@ -48,18 +38,6 @@ class FW
             if ($form->getGlobalSlug() == $slug)
                 return $form;
         return null;
-    }
-
-    /**
-     * Retrieves an ajax method by its slug
-     *
-     * @param string $slug
-     *
-     * @return FWCallback
-     */
-    static function getCallback ($slug)
-    {
-        return self::$ajaxMethods[$slug];
     }
 
     /**
@@ -88,26 +66,4 @@ class FW
     {
         ob_end_flush();
     }
-
-    /**
-     * @return array response
-     */
-    static function handleAjaxRequest ()
-    {
-        try {
-            $data = new FormResults($_POST);
-            if (!isset($_GET['callback']))
-                throw new \Exception('No callback provided');
-            $callback = FW::getCallback($_GET['callback']);
-            $response = $callback->run($data);
-            return $response;
-        } catch (\Exception $e) {
-            return array(
-                'error'        => true,
-                'errorClass'   => get_class($e),
-                'errorMessage' => $e->getMessage()
-            );
-        }
-    }
-
 }
