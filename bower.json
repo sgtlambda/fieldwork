@@ -1,8 +1,0 @@
-{
-  "name":         "fieldwork",
-  "private":      true,
-  "dependencies": {
-    "jquery-maskedinputs": "~1.4.0",
-    "datetimepicker":      "~2.4.1"
-  }
-}
