@@ -13,6 +13,7 @@ abstract class Field extends Component
     protected
         $label,
         $visible = true,
+        $enabled = true,
         $value,
         $initialValue,
         $latestErrorMsg = "",
@@ -25,9 +26,9 @@ abstract class Field extends Component
     /**
      * Creates a new form field component
      *
-     * @param string          $slug              internal slug to use
-     * @param string          $label             label to display
-     * @param string|string[] $value             initial value
+     * @param string          $slug internal slug to use
+     * @param string          $label label to display
+     * @param string|string[] $value initial value
      * @param int             $storeValueLocally how long to store last used value in cookie (set to 0 for no cookie)
      */
     public function __construct ($slug, $label = '', $value = '', $storeValueLocally = 0)
@@ -207,11 +208,14 @@ abstract class Field extends Component
 
     public function getAttributes ()
     {
-        return array_merge(parent::getAttributes(), array(
+        $attributes = array(
             "name"  => $this->getName(true),
             "value" => $this->getValue(),
             "id"    => $this->getId()
-        ));
+        );
+        if (!$this->enabled)
+            $attributes['disabled'] = 'disabled';
+        return array_merge(parent::getAttributes(), $attributes);
     }
 
     public function getClasses ()
@@ -296,5 +300,16 @@ abstract class Field extends Component
     protected function getRestoreDefault ()
     {
         return $this->value;
+    }
+
+    /**
+     * Sets whether the control is enabled
+     * @param boolean $enabled
+     * @return $this
+     */
+    public function setEnabled ($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
     }
 }
