@@ -242,7 +242,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     public function getScript ()
     {
-        return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData()) . "); });";
+        return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData(), JSON_PRETTY_PRINT) . "); });";
     }
 
     public function getScriptHTML ()
