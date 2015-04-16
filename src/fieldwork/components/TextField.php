@@ -13,7 +13,8 @@ class TextField extends Field
 
     public function getAttributes ()
     {
-        $att = array('placeholder' => $this->label);
+        //$att = array('placeholder' => $this->label);
+        $att = array();
         if (!empty($this->onEnter))
             $att['data-input-action-on-enter'] = $this->onEnter;
         if ($this->mask !== null)
@@ -49,7 +50,10 @@ class TextField extends Field
 
     public function getHTML ($showLabel = true)
     {
-        return "<input type='text'" . $this->getAttributesString() . ">";
+        return sprintf("<div class=\"input-field\"><input type='text' %s><label for=\"%s\">%s</label></div>",
+            $this->getAttributesString(),
+            $this->getId(),
+            $this->label);
     }
 
 }
