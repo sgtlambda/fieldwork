@@ -13,7 +13,6 @@ class TextField extends Field
 
     public function getAttributes ()
     {
-        //$att = array('placeholder' => $this->label);
         $att = array();
         if (!empty($this->onEnter))
             $att['data-input-action-on-enter'] = $this->onEnter;
