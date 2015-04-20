@@ -26,9 +26,9 @@ abstract class Field extends Component
     /**
      * Creates a new form field component
      *
-     * @param string          $slug internal slug to use
-     * @param string          $label label to display
-     * @param string|string[] $value initial value
+     * @param string          $slug              internal slug to use
+     * @param string          $label             label to display
+     * @param string|string[] $value             initial value
      * @param int             $storeValueLocally how long to store last used value in cookie (set to 0 for no cookie)
      */
     public function __construct ($slug, $label = '', $value = '', $storeValueLocally = 0)
@@ -311,5 +311,25 @@ abstract class Field extends Component
     {
         $this->enabled = $enabled;
         return $this;
+    }
+
+    /**
+     * Gets the script that will instantiate ONLY this field in an anonymous form
+     * @return string
+     */
+    public function getScript ()
+    {
+        return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData(), JSON_PRETTY_PRINT) . "); });";
+    }
+
+    /**
+     * Gets the script tag that will instantiate ONLY this field in an anonymous form
+     * @return string
+     */
+    public function getScriptHTML ()
+    {
+        $openingTag = "<script type='text/javascript'>";
+        $closingTag = "</script>";
+        return $openingTag . $this->getScript() . $closingTag;
     }
 }
