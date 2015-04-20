@@ -312,4 +312,24 @@ abstract class Field extends Component
         $this->enabled = $enabled;
         return $this;
     }
+
+    /**
+     * Gets the script that will instantiate ONLY this field in an anonymous form
+     * @return string
+     */
+    public function getScript ()
+    {
+        return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData(), JSON_PRETTY_PRINT) . "); });";
+    }
+
+    /**
+     * Gets the script tag that will instantiate ONLY this field in an anonymous form
+     * @return string
+     */
+    public function getScriptHTML ()
+    {
+        $openingTag = "<script type='text/javascript'>";
+        $closingTag = "</script>";
+        return $openingTag . $this->getScript() . $closingTag;
+    }
 }
