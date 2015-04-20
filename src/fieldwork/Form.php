@@ -240,11 +240,19 @@ class Form extends GroupComponent implements FormData, Synchronizable
         ));
     }
 
+    /**
+     * Gets the script that will instantiate the form
+     * @return string
+     */
     public function getScript ()
     {
         return "jQuery(function($){ $('#" . $this->getID() . "').fieldwork(" . json_encode($this->getJsonData(), JSON_PRETTY_PRINT) . "); });";
     }
 
+    /**
+     * Gets the script tag that will instantiate the form
+     * @return string
+     */
     public function getScriptHTML ()
     {
         $openingTag = "<script type='text/javascript'>";
