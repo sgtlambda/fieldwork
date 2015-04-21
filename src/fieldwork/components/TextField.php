@@ -49,10 +49,15 @@ class TextField extends Field
 
     public function getHTML ($showLabel = true)
     {
-        return sprintf("<div class=\"input-field\"><input type='text' %s><label for=\"%s\">%s</label></div>",
-            $this->getAttributesString(),
-            $this->getId(),
-            $this->label);
+        if ($showLabel)
+            return sprintf("<div class=\"input-field\"><input type='text' %s><label for=\"%s\">%s</label></div>",
+                $this->getAttributesString(),
+                $this->getId(),
+                $this->label);
+        else
+            return sprintf("<div class=\"input-field\"><input type='text' %s></div>",
+                $this->getAttributesString(),
+                $this->getId());
     }
 
 }
