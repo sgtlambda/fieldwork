@@ -55,9 +55,9 @@ class TextField extends Field
                 $this->getId(),
                 $this->label);
         else
-            return sprintf("<div class=\"input-field\"><input type='text' %s></div>",
-                $this->getAttributesString(),
-                $this->getId());
+            return sprintf("<div class=\"input-field\"><input placeholder='%s' type='text' %s></div>",
+                $this->label,
+                $this->getAttributesString());
     }
 
 }
