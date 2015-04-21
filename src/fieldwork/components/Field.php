@@ -55,14 +55,30 @@ abstract class Field extends Component
         return $this->collectData;
     }
 
+    /**
+     * Treats the value that was fetched from the request variables. If the control uses a non-scalar to represent its
+     * value, it should be instantiated here
+     * @param string $value
+     * @return string
+     */
+    public function importValue ($value)
+    {
+        return stripslashes($value);
+    }
+
+    /**
+     * Restores the value from the provided method
+     * @param Method $method
+     * @param bool   $sanitize Whether to sanitize the fetched value
+     */
     public function restoreValue (Method $method, $sanitize = true)
     {
         $v = $method->getValue($this->getName(), $this->getRestoreDefault());
         if ($this->isMultiple() && is_array($v)) {
             foreach ($v as &$value)
-                $value = stripslashes($value);
+                $value = $this->importValue($value);
         } else {
-            $v = stripslashes($v);
+            $v = $this->importValue($v);
         }
         if ($sanitize)
             foreach ($this->sanitizers as $s)
