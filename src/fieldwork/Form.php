@@ -262,7 +262,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     public function renderFormError ($errorMsg)
     {
-        return sprintf("<div class=\"card red white\"><div class=\"card-content red-text text-darken-4\">%s</div></div>", $errorMsg);
+        return sprintf("<div class=\"form-error card red white\"><div class=\"card-content red-text text-darken-4\">%s</div></div>", $errorMsg);
     }
 
     /**
