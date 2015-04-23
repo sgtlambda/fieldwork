@@ -13,16 +13,16 @@ class IbanField extends TextField
      *
      * @param string $slug
      * @param string $label
+     * @param string $value
      * @param string $openIbanUsername openiban API username
      * @param string $openIbanPassword openiban API password
-     * @param string $value
      */
-    public function __construct ($slug, $label, $openIbanUsername, $openIbanPassword, $value = '')
+    public function __construct ($slug, $label, $value = '', $openIbanUsername = null, $openIbanPassword = null)
     {
         components\parent::__construct($slug, $label, $value, 0);
         $this->addSanitizer(new sanitizers\FieldUppercaser());
-        $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
+        if ($openIbanPassword !== null && $openIbanUsername !== null)
+            $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
         $this->addValidator(new validators\IbanFieldValidator());
     }
-
 }
