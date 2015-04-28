@@ -19,10 +19,9 @@ class IbanField extends TextField
      */
     public function __construct ($slug, $label, $value = '', $openIbanUsername = null, $openIbanPassword = null)
     {
-        components\parent::__construct($slug, $label, $value, 0);
+        parent::__construct($slug, $label, $value, 0);
         $this->addSanitizer(new sanitizers\FieldUppercaser());
-        if ($openIbanPassword !== null && $openIbanUsername !== null)
-            $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
+        $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
         $this->addValidator(new validators\IbanFieldValidator());
     }
 }
