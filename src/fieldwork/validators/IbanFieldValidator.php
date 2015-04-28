@@ -23,7 +23,7 @@ class IbanFieldValidator extends RegexFieldValidator
 
     public function isValid ($value)
     {
-        return $this->validator->validate($value);
+        $sanitized = preg_replace('/\s/', '', $value);
+        return $this->validator->validate($sanitized);
     }
-
 }
