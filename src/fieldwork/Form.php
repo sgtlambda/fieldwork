@@ -291,7 +291,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     public function getWrapAfter ($includeScripts = true)
     {
-        return "</form>" . $includeScripts ? $this->getScriptHTML() : '';
+        return "</form>" . ($includeScripts ? $this->getScriptHTML() : '');
     }
 
     /**
