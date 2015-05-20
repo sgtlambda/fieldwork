@@ -317,7 +317,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     public function getHTML ($showLabel = true)
     {
-        return $this->wrap(parent::getHTML());
+        return $this->wrap($this->getInnerHTML());
     }
 
     public function getID ()
@@ -536,5 +536,13 @@ class Form extends GroupComponent implements FormData, Synchronizable
         foreach ($this->dataFields as $key => $value)
             $dataFields .= "<input type=\"hidden\" name=\"$key\" value=\"$value\">";
         return $dataFields;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInnerHTML ()
+    {
+        return parent::getHTML();
     }
 }
