@@ -63,5 +63,5 @@ else
 [scrutinizer-g-image]: https://img.shields.io/scrutinizer/g/jmversteeg/fieldwork.svg?style=flat-square
 [scrutinizer-g-url]: https://scrutinizer-ci.com/g/jmversteeg/fieldwork/
 
-[coveralls-image]: https://img.shields.io/coveralls/jmversteeg/fieldwork/5.0.0.svg?style=flat-square
+[coveralls-image]: https://img.shields.io/coveralls/jmversteeg/fieldwork.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/jmversteeg/fieldwork
