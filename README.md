@@ -45,10 +45,8 @@ else
 #### TODO
 
  - Error message i18n
- - Custom layout markups (perhaps through a proprietary HTML derivative)
- - Add ability to run sanitization, validation and callbacks through AJAX
+ - Tighter AJAX integration / API
  - Complete test coverage
- - Add continuous integration
  
 #### HEAD
 
