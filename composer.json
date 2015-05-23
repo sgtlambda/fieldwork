@@ -31,7 +31,8 @@
     "aura/autoload":           "~2.0",
     "egulias/email-validator": "~1.2",
     "jschaedl/iban":           "~1.1",
-    "rmccue/requests":         "~1.6"
+    "rmccue/requests":         "~1.6",
+    "satooshi/php-coveralls":  "0.6.*"
   },
   "require-dev": {
     "phpunit/phpunit": "4.5.*"
