@@ -34,9 +34,6 @@ class NumberSanitizer extends FieldSanitizer
 
     public function sanitize ($value)
     {
-        if ($value === '')
-            return '';
-
         $radixEscaped = implode('', array_map(function ($radix) {
             return preg_quote($radix);
         }, $this->radixes));
@@ -45,7 +42,17 @@ class NumberSanitizer extends FieldSanitizer
         // Remove all character other than 0-9 and the radixes string
         $value = preg_replace('/[^0-9' . $radixEscaped . ']+/', '', $value);
 
-        $floatval        = floatval(preg_replace('/[' . $radixEscaped . ']+/', '.', $value));
+        // Sanity check
+        if ($value === '')
+            return '';
+
+        $delocalized = preg_replace('/[' . $radixEscaped . ']+/', '.', $value);
+
+        // Sanity check
+        if ($delocalized === '.')
+            return '';
+
+        $floatval        = floatval($delocalized);
         $roundedFloatVal = round($floatval / $this->precision) * $this->precision;
 
         return str_replace('.', $primaryRadix, $roundedFloatVal);

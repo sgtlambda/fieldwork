@@ -20,6 +20,9 @@ class NumberSanitizerTest extends FieldSanitizer_TestCase
         $this->assertOutcome('.1', '0.1');
         $this->assertOutcome('a,777', '0.78');
         $this->assertOutcome('', '');
+        $this->assertOutcome('hello world', '');
+        $this->assertOutcome('.', '');
+        $this->assertOutcome('0.565464', '0.57');
     }
 
     public function testPrecision ()
