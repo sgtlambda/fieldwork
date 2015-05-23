@@ -57,6 +57,9 @@ else
  
 #### HEAD
  - Moved the front-end assets into a separate repo
+ - Added NumberSanitizer
+ - Added materialize.css compatible markup generation
+ - Fixed some bugs
  
 #### 4.2.0 (2015-03-19)
  - Made the real-time validation less intrusive (if a field is empty on blur and its value has not changed, it is not validated)
