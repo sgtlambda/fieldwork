@@ -7,22 +7,21 @@ use fieldwork\validators\FieldValidator;
 class FieldValidator_Constraint_IsValid extends \PHPUnit_Framework_Constraint
 {
 
-    private $validator;
+    private $fieldValidator;
 
-    public function __construct (FieldValidator $validator)
+    public function __construct (FieldValidator $fieldValidator)
     {
         parent::__construct();
-        $this->validator = $validator;
+        $this->fieldValidator = $fieldValidator;
     }
 
     protected function matches ($other)
     {
-        return $this->validator->isValid($other);
+        return $this->fieldValidator->isValid($other);
     }
 
     public function toString ()
     {
         return "is valid";
     }
-
 }

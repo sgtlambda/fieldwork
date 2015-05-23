@@ -6,6 +6,7 @@ use fieldwork\validators\FieldLengthValidator;
 
 class FieldLengthValidatorTest extends FieldValidator_TestCase
 {
+
     function __construct ()
     {
         $validator = new FieldLengthValidator(4, 8);
@@ -20,5 +21,4 @@ class FieldLengthValidatorTest extends FieldValidator_TestCase
         $this->assertInvalid('123');
         $this->assertInvalid('123456789');
     }
-
 }
