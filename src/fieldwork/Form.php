@@ -182,12 +182,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return $this->method->hasValue($key);
     }
 
-    public function enableAJAX (FWCallback $method, $ajaxSubmitEnabled = true)
-    {
-        $this->ajaxMethod        = $method;
-        $this->ajaxSubmitEnabled = $ajaxSubmitEnabled;
-    }
-
     /**
      * Attach a function that will be called upon submitting the form. The first argument passed to the function will
      * be an instance of FormData.
@@ -396,7 +390,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
         foreach ($this->callback as $callback)
             if (is_callable($callback))
                 call_user_func($callback, $this);
-        $this->processAjaxLocally();
     }
 
     public function isValid ()
@@ -418,15 +411,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
             if (!$validator->isValid())
                 $e[] = $validator->getErrorMsg();
         return $e;
-    }
-
-    /**
-     * If the form has Ajax handlers but was still submitted to a new page, handles Ajax handlers.
-     */
-    private function processAjaxLocally ()
-    {
-        if ($this->ajaxMethod instanceof FWCallback)
-            $this->ajaxResult = $this->ajaxMethod->run($this);
     }
 
     /**
