@@ -3,7 +3,6 @@
 namespace fieldwork;
 
 /**
- * Class JF
  * Static class used to globally register and retrieve forms
  * @package fieldwork
  */
@@ -53,7 +52,7 @@ class FW
      * If any of your form callbacks uses header redirects, make sure to call before_content() and after_content()
      * before output starts and after output ends.
      */
-    static function before_content ()
+    static function beforeContent ()
     {
         ob_start();
     }
@@ -62,7 +61,7 @@ class FW
      * If any of your form callbacks uses header redirects, make sure to call before_content() and after_content()
      * before output starts and after output ends.
      */
-    static function after_content ()
+    static function afterContent ()
     {
         ob_end_flush();
     }

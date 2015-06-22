@@ -109,7 +109,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function v ($query, $default = '')
     {
         $f = $this->f($query);
-        if ($f != false)
+        if ($f !== null)
             return $f->getValue();
         else
             return $default;
@@ -180,12 +180,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function hasValue ($key)
     {
         return $this->method->hasValue($key);
-    }
-
-    public function enableAJAX (FWCallback $method, $ajaxSubmitEnabled = true)
-    {
-        $this->ajaxMethod        = $method;
-        $this->ajaxSubmitEnabled = $ajaxSubmitEnabled;
     }
 
     /**
@@ -291,7 +285,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     public function getWrapAfter ($includeScripts = true)
     {
-        return "</form>" . $includeScripts ? $this->getScriptHTML() : '';
+        return "</form>" . ($includeScripts ? $this->getScriptHTML() : '');
     }
 
     /**
@@ -317,7 +311,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
      */
     public function getHTML ($showLabel = true)
     {
-        return $this->wrap(parent::getHTML());
+        return $this->wrap($this->getInnerHTML());
     }
 
     public function getID ()
@@ -396,7 +390,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
         foreach ($this->callback as $callback)
             if (is_callable($callback))
                 call_user_func($callback, $this);
-        $this->processAjaxLocally();
     }
 
     public function isValid ()
@@ -418,15 +411,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
             if (!$validator->isValid())
                 $e[] = $validator->getErrorMsg();
         return $e;
-    }
-
-    /**
-     * If the form has Ajax handlers but was still submitted to a new page, handles Ajax handlers.
-     */
-    private function processAjaxLocally ()
-    {
-        if ($this->ajaxMethod instanceof FWCallback)
-            $this->ajaxResult = $this->ajaxMethod->run($this);
     }
 
     /**
@@ -536,5 +520,13 @@ class Form extends GroupComponent implements FormData, Synchronizable
         foreach ($this->dataFields as $key => $value)
             $dataFields .= "<input type=\"hidden\" name=\"$key\" value=\"$value\">";
         return $dataFields;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInnerHTML ()
+    {
+        return parent::getHTML();
     }
 }

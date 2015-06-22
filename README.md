@@ -2,17 +2,14 @@ fieldwork
 ===========
 **Web forms for cool people**
 
+[![Build Status][travis-image]][travis-url]
+[![Code Quality][scrutinizer-g-image]][scrutinizer-g-url]
+[![Code Coverage][coveralls-image]][coveralls-url]
+
 fieldwork will make your life easier by dealing with the trivial tasks of building web forms such as markup generation, validation and sanitization.
 
  - Define entire forms using **PHP only**. All HTML and JavaScript code will be generated for you.
  - Sanitizes and validates **client-side for convenience + performance** and **server-side for security**.
-
-### Installation
-
-```bash
-cd wp-content/plugins
-git clone https://github.com/jmversteeg/fieldwork.git
-```
 
 ### Creating a simple form
 
@@ -34,7 +31,6 @@ $emailField
 // Add a submit button
 $submitButton = new Button('submit', 'Send', 'submit', Button::TYPE_SUBMIT);
 $submitButton
-   ->setGlyphIcon('right-open')
    ->addTo($contactForm);
 
 // Process the form
@@ -46,38 +42,24 @@ else
     echo $contactForm->getHTML();
 ```
 
-#### todo
+#### TODO
 
  - Error message i18n
- - Custom layout markups (perhaps through a proprietary HTML derivative)
- - Add ability to run sanitization, validation and callbacks through AJAX
+ - Tighter AJAX integration / API
  - Complete test coverage
- - Add continuous integration
- - 
  
 #### HEAD
+
  - Moved the front-end assets into a separate repo
- 
-#### 4.2.0 (2015-03-19)
- - Made the real-time validation less intrusive (if a field is empty on blur and its value has not changed, it is not validated)
- 
-#### 4.1.0 (2015-03-17)
- - Various bugfixes
- - Documentation improvement
- - Added some utility methods
+ - Added NumberSanitizer
+ - Added materialize.css compatible markup generation
+ - Fixed some bugs
 
-#### 4.0.2 (2015-02-12)
- - Add PHPunit test framework
- - Remove foreign error message strings
- - Use external libraries for email and IBAN validation
+[travis-image]: https://img.shields.io/travis/jmversteeg/fieldwork.svg?style=flat-square
+[travis-url]: https://travis-ci.org/jmversteeg/fieldwork
 
-#### 4.0.1 (2015-02-11)
- - Move /lib to /src/fieldwork
+[scrutinizer-g-image]: https://img.shields.io/scrutinizer/g/jmversteeg/fieldwork.svg?style=flat-square
+[scrutinizer-g-url]: https://scrutinizer-ci.com/g/jmversteeg/fieldwork/
 
-#### 4.0.0 (2015-02-10)
- - Rename the library and all related classes and namespaces to "Fieldwork"
-
-#### 3.0.0 (2015-01-13)
-
- - Improved class naming
- - Introduced namespaces and autoloader
+[coveralls-image]: https://img.shields.io/coveralls/jmversteeg/fieldwork.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/jmversteeg/fieldwork

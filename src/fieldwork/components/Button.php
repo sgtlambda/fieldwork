@@ -10,7 +10,7 @@ class Button extends Field
     const TYPE_SUBMIT = "submit";
     const TYPE_BUTTON = "button";
 
-    private $type, $icon, $glyphIcon, $isClicked = false, $title = "";
+    private $type, $icon, $glyphIcon, $isClicked = false;
 
     public function __construct ($name, $label, $value = "", $type = Button::TYPE_BUTTON)
     {
@@ -22,12 +22,6 @@ class Button extends Field
     public function isClicked ()
     {
         return $this->isClicked;
-    }
-
-    public function setTitle ($title = "")
-    {
-        $this->title = $title;
-        return $this;
     }
 
     public function setIcon ($file)

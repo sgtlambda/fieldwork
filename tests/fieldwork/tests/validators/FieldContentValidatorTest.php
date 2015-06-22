@@ -18,5 +18,4 @@ class FieldContentValidatorTest extends FieldValidator_TestCase
         $this->assertValid('foo');
         $this->assertInvalid('');
     }
-
 }

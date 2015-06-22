@@ -7,9 +7,20 @@ use fieldwork\validators\FieldValidator;
 abstract class FieldValidator_TestCase extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var FieldValidator The validator to test
+     */
     private $validator;
 
-    function __construct (FieldValidator $validator)
+    function __construct (FieldValidator $validator = null)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
+     * @param FieldValidator $validator
+     */
+    public function setValidator ($validator)
     {
         $this->validator = $validator;
     }
@@ -36,25 +47,24 @@ abstract class FieldValidator_TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Returns a FieldValidator_Constraint_IsValid matcher object
      *
-     * @param FieldValidator $validator
+     * @param FieldValidator $fieldValidator
      *
      * @return FieldValidator_Constraint_IsValid
      */
-    public static function isValid (FieldValidator $validator)
+    public static function isValid (FieldValidator $fieldValidator)
     {
-        return new FieldValidator_Constraint_IsValid($validator);
+        return new FieldValidator_Constraint_IsValid($fieldValidator);
     }
 
     /**
      * Returns a FieldValidator_Constraint_IsInvalid matcher object
      *
-     * @param FieldValidator $validator
+     * @param FieldValidator $fieldValidator
      *
      * @return FieldValidator_Constraint_IsInvalid
      */
-    public static function isInvalid (FieldValidator $validator)
+    public static function isInvalid (FieldValidator $fieldValidator)
     {
-        return new FieldValidator_Constraint_IsInvalid($validator);
+        return new FieldValidator_Constraint_IsInvalid($fieldValidator);
     }
-
 }
