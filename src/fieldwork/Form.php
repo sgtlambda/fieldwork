@@ -109,7 +109,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function v ($query, $default = '')
     {
         $f = $this->f($query);
-        if ($f != false)
+        if ($f !== null)
             return $f->getValue();
         else
             return $default;

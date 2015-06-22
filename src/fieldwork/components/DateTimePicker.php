@@ -15,7 +15,7 @@ class DateTimePicker extends TextField
 
     public function getJsonData ()
     {
-        return array_merge(components\parent::getJsonData(), array(
+        return array_merge(parent::getJsonData(), array(
             'dtConfig' => $this->dtConfig
         ));
     }

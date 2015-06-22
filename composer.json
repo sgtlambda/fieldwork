@@ -1,7 +1,6 @@
 {
   "name":        "jmversteeg/fieldwork",
   "description": "Web forms for cool people",
-  "version":     "0.6.0",
   "keywords":    [
     "forms",
     "form",
