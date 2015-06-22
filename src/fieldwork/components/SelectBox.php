@@ -37,10 +37,6 @@ class SelectBox extends Field
      * @var boolean
      */
     private $isMultipleAllowed;
-    /**
-     * @var bool
-     */
-    private $allowMultiple;
 
     /**
      * Constructs a new SelectBox
@@ -64,7 +60,6 @@ class SelectBox extends Field
         $this->isMultipleAllowed = $isMultipleAllowed;
         $this->emptyValue        = $emptyValue === false ? ($this->isMultipleAllowed ? [] : '') : $emptyValue;
         $this->setPlaceholder();
-        $this->allowMultiple = $isMultipleAllowed;
     }
 
     public function getClasses ()

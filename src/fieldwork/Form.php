@@ -22,9 +22,6 @@ class Form extends GroupComponent implements FormData, Synchronizable
         $target,
         $validators = array(),
         $callback = array(),
-        $ajaxMethod = null,
-        $ajaxResult = null,
-        $ajaxSubmitEnabled = false,
         $activateCallbacks = array(),
         $javascriptCallback = array(),
 
