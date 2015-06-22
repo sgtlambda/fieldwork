@@ -354,12 +354,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
             "submitCallback" => $this->javascriptCallback,
             "isProcessed"    => $this->isProcessed,
             "isActivated"    => $this->isUserSubmitted,
-            "isSubmitted"    => $this->isCallbacksubmitted,
-            "ajax"           => array(
-                "submitEnabled" => $this->ajaxSubmitEnabled,
-                "method"        => $this->ajaxMethod instanceof FWCallback ? $this->ajaxMethod->getSlug() : "",
-                "results"       => $this->ajaxResult
-            )
+            "isSubmitted"    => $this->isCallbacksubmitted
         );
     }
 
