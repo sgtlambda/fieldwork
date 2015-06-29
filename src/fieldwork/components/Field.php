@@ -198,6 +198,9 @@ abstract class Field extends Component
         return $this->visible;
     }
 
+    /**
+     * @return array
+     */
     public function getJsonData ()
     {
         $v = array();
