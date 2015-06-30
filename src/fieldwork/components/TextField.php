@@ -5,11 +5,26 @@ namespace fieldwork\components;
 class TextField extends Field
 {
 
+    private $default_showLabel = true;
+
     const ON_ENTER_NEXT   = 'next';
     const ON_ENTER_SUBMIT = 'submit';
 
     private $onEnter = '',
         $mask = null;
+
+    /**
+     * Whether to show the field's label by default
+     *
+     * @param boolean $default_showLabel
+     *
+     * @return $this
+     */
+    public function setDefaultShowLabel ($default_showLabel)
+    {
+        $this->default_showLabel = $default_showLabel;
+        return $this;
+    }
 
     public function getAttributes ()
     {
@@ -47,8 +62,14 @@ class TextField extends Field
         );
     }
 
-    public function getHTML ($showLabel = true)
+    /**
+     * @param bool|null $showLabel
+     * @return string
+     */
+    public function getHTML ($showLabel = null)
     {
+        if ($showLabel === null)
+            $showLabel = $this->default_showLabel;
         if ($showLabel)
             return sprintf("<div class=\"input-field\"><input type='text' %s><label for=\"%s\">%s</label></div>",
                 $this->getAttributesString(),
