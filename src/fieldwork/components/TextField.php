@@ -11,6 +11,7 @@ class TextField extends Field
     const ON_ENTER_SUBMIT = 'submit';
 
     private $onEnter = '',
+        $wrapNode = true,
         $mask = null;
 
     /**
@@ -63,20 +64,35 @@ class TextField extends Field
     }
 
     /**
+     * Sets whether to wrap the node in an input-field node
+     *
+     * @param boolean $wrapNode
+     *
+     * @return static
+     */
+    public function setWrapNode ($wrapNode)
+    {
+        $this->wrapNode = $wrapNode;
+        return $this;
+    }
+
+    /**
      * @param bool|null $showLabel
      * @return string
      */
     public function getHTML ($showLabel = null)
     {
+        $before = $this->wrapNode ? "<div class=\"input-field\">" : "";
+        $after  = $this->wrapNode ? "</div>" : "";
         if ($showLabel === null)
             $showLabel = $this->default_showLabel;
         if ($showLabel)
-            return sprintf("<div class=\"input-field\"><input type='text' %s><label for=\"%s\">%s</label></div>",
+            return sprintf("$before<input type='text' %s><label for=\"%s\">%s</label>$after",
                 $this->getAttributesString(),
                 $this->getId(),
                 $this->label);
         else
-            return sprintf("<div class=\"input-field\"><input placeholder='%s' type='text' %s></div>",
+            return sprintf("$before<input placeholder='%s' type='text' %s>$after",
                 $this->label,
                 $this->getAttributesString());
     }
