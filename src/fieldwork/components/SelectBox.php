@@ -204,6 +204,7 @@ class SelectBox extends Field
 
     protected function getRestoreDefault ()
     {
+        // TODO find out what this is good for
         return $this->emptyValue;
     }
 }
