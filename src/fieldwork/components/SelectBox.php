@@ -14,7 +14,7 @@ class SelectBox extends Field
     const SELECT2_OPTION_ALLOW_CLEAR                = "allowClear";
     const SELECT2_OPTION_MINIMUM_RESULTS_FOR_SEARCH = "minimumResultsForSearch";
 
-    private $options;
+    protected $options;
 
     /**
      * The value to return if the "empty" option is selected
