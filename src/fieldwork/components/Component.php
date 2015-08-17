@@ -11,12 +11,12 @@ abstract class Component
 
     protected
         $parent,
-        $children         = array();
+        $children         = array(),
+        $customAttributes = array();
     private
         $slug,
         $active           = true,
-        $customClasses    = array(),
-        $customAttributes = array();
+        $customClasses    = array();
 
     public function __construct ($slug)
     {
