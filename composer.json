@@ -1,6 +1,6 @@
 {
-  "name":        "jmversteeg/fieldwork",
-  "description": "Web forms for cool people",
+  "name":        "jmversteeg/fieldwork-core",
+  "description": "Core package that powers the fieldwork library",
   "keywords":    [
     "forms",
     "form",
