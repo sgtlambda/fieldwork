@@ -2,10 +2,10 @@
 
 namespace fieldwork\core;
 
-use fieldwork\core\interfaces\Sanitizer;
+use fieldwork\core\interfaces\StateSanitizer;
 use fieldwork\core\interfaces\Symmetrical;
 
-abstract class SymmetricalSanitizer implements Symmetrical, Sanitizer
+abstract class SymmetricalStateSanitizer implements Symmetrical, StateSanitizer
 {
 
     public function serialize ()

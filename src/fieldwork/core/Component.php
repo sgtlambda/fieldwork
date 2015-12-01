@@ -2,15 +2,8 @@
 
 namespace fieldwork\core;
 
-use fieldwork\core\interfaces\Identifiable;
-
-abstract class Component implements Identifiable
+abstract class Component
 {
-
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var bool
@@ -21,11 +14,6 @@ abstract class Component implements Identifiable
      * @var CompoundComponent|null
      */
     protected $parent = null;
-
-    public function __construct ($name)
-    {
-        $this->name = $name;
-    }
 
     /**
      * Sets whether the component is active
@@ -45,16 +33,6 @@ abstract class Component implements Identifiable
     public function isActive ()
     {
         return $this->active;
-    }
-
-    public function getName ()
-    {
-        return $this->name;
-    }
-
-    public function getIdentifier ()
-    {
-        return $this->parent instanceof Component ? $this->parent->getIdentifier() . '-' . $this->name : $this->name;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace fieldwork\core\interfaces;
 
 use fieldwork\core\State;
 
-interface Sanitizer
+interface StateSanitizer
 {
 
     /**

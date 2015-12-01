@@ -2,47 +2,24 @@
 
 namespace fieldwork\core;
 
-use fieldwork\core\Field;
-use fieldwork\core\CompoundComponent;
-use fieldwork\core\interfaces\Sanitizer;
+use fieldwork\core\interfaces\Identifiable;
+use fieldwork\core\interfaces\StateSanitizer;
 use fieldwork\core\interfaces\Stateful;
 use fieldwork\core\interfaces\Symmetrical;
-use fieldwork\core\interfaces\Validator;
-use fieldwork\core\methods\Method;
-use fieldwork\core\methods\POST;
-use fieldwork\core\FormValidator;
-use fieldwork\core\reflection\StateValidationReflection;
-use fieldwork\core\SynchronizableFormValidator;
-use fieldwork\core\traits\HasSanitizers;
-use fieldwork\core\traits\HasValidators;
+use fieldwork\core\interfaces\StateValidator;
+use fieldwork\core\traits\CompoundImplementedSanitizer;
+use fieldwork\core\traits\CompoundImplementedValidator;
+use fieldwork\core\traits\NamedComponent;
 
-class Form extends CompoundComponent implements Stateful, Symmetrical, Validator, Sanitizer
+class Form extends CompoundComponent implements Identifiable, Stateful, Symmetrical, StateValidator, StateSanitizer
 {
 
-    use HasValidators, HasSanitizers {
-        HasValidators::serialize as serializeValidators;
-        HasSanitizers::serialize as serializeSanitizers;
+    use NamedComponent,
+        CompoundImplementedValidator,
+        CompoundImplementedSanitizer {
+        CompoundImplementedValidator::serialize as serializeValidators;
+        CompoundImplementedSanitizer::serialize as serializeSanitizers;
     };
-
-    const TARGET_SELF  = "_self";
-    const TARGET_BLANK = "_blank";
-
-    private
-        $action,
-        $dataFields;
-
-    /**
-     * Instantiates a new Form
-     *
-     * @param string $name
-     * @param string $action
-     */
-    public function __construct ($name, $action = '')
-    {
-        parent::__construct($name);
-        $this->action                                         = $action;
-        $this->dataFields[$this->getSubmitConfirmFieldName()] = 'true';
-    }
 
     /**
      * Searches form fields
@@ -52,7 +29,7 @@ class Form extends CompoundComponent implements Stateful, Symmetrical, Validator
      *
      * @return null|Field closest match or null if not found
      */
-    public function f ($query, $includeInactiveFields = false)
+    public function find ($query, $includeInactiveFields = false)
     {
         $minLength = -1;
         $match     = null;
@@ -70,77 +47,28 @@ class Form extends CompoundComponent implements Stateful, Symmetrical, Validator
 
     /**
      * Returns an array of fields of which data is to be collected
+     *
      * @return Field[]
      */
-    public function c ()
+    public function collect ()
     {
-        $fields = array();
-        foreach ($this->getFields() as $field)
-            /* @var $field Field */
-            if ($field->getCollectData())
-                $fields[] = $field;
-        return $fields;
-    }
-
-    public function getDataFieldName ($slug)
-    {
-        return $this->getIdentifier() . '-data-' . $slug;
-    }
-
-    public function getSubmitConfirmFieldName ()
-    {
-        return $this->getDataFieldName('submit');
+        return array_filter($this->getFields(), function (Field $field) {
+            return $field->getCollectData();
+        });
     }
 
     /**
      * Finds a field by its short name
      *
-     * @param $shortName
+     * @param $name
      *
      * @return Field|null
      */
-    public function getField ($shortName)
+    public function getField ($name)
     {
-        foreach ($this->getFields() as $field)
-            /* @var $field Field */
-            if ($field->getName() == $shortName)
-                return $field;
-        return null;
-    }
-
-    public function getDataFields ()
-    {
-        return $this->dataFields;
-    }
-
-    public function getAction ()
-    {
-        return $this->action;
-    }
-
-    public function setAction ($action)
-    {
-        $this->action = $action;
-    }
-
-    /**
-     * Gets the script that will instantiate the form
-     * @return string
-     */
-    public function getScript ()
-    {
-        return "jQuery(function($){ $('#" . $this->getIdentifier() . "').fieldwork(" . json_encode($this->serialize(), JSON_PRETTY_PRINT) . "); });";
-    }
-
-    /**
-     * Gets the script tag that will instantiate the form
-     * @return string
-     */
-    public function getScriptHTML ()
-    {
-        $openingTag = "<script type='text/javascript'>";
-        $closingTag = "</script>";
-        return $openingTag . $this->getScript() . $closingTag;
+        return array_first($this->getFields(), function (Field $field) use ($name) {
+            return $field->getName() === $name;
+        });
     }
 
     /**
@@ -152,19 +80,16 @@ class Form extends CompoundComponent implements Stateful, Symmetrical, Validator
      */
     public function getFields ($includeInactiveFields = false)
     {
-        $fields = array();
-        foreach ($this->getChildren(true, $includeInactiveFields) as $component)
-            if ($component instanceof Field)
-                array_push($fields, $component);
-        return $fields;
+        return array_filter($this->getChildren(true, $includeInactiveFields), function (Component $component) {
+            return $component instanceof Field;
+        });
     }
 
     public function serialize ()
     {
         return array_merge([
-            "slug"       => $this->getName(),
-            "fields"     => $this->getFields(),
-            "dataFields" => $this->dataFields
+            "slug"   => $this->getName(),
+            "fields" => $this->getFields(),
         ],
             $this->serializeValidators(),
             $this->serializeSanitizers()

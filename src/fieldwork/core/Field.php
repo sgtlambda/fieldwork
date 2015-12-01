@@ -2,26 +2,30 @@
 
 namespace fieldwork\core;
 
-use fieldwork\core\interfaces\Sanitizer;
+use fieldwork\core\interfaces\Identifiable;
+use fieldwork\core\interfaces\Request;
+use fieldwork\core\interfaces\StateSanitizer;
 use fieldwork\core\interfaces\Stateful;
 use fieldwork\core\interfaces\Symmetrical;
-use fieldwork\core\interfaces\Validator;
-use fieldwork\core\traits\HasSanitizers;
-use fieldwork\core\traits\HasValidators;
+use fieldwork\core\interfaces\StateValidator;
+use fieldwork\core\traits\NamedComponent;
+use fieldwork\core\traits\SimpleImplementedSanitizer;
+use fieldwork\core\traits\SimpleImplementedValidator;
 
-abstract class Field extends Component implements Stateful, Symmetrical, Validator, Sanitizer
+abstract class Field extends Component implements Identifiable, Stateful, Symmetrical, StateValidator, StateSanitizer
 {
 
-    use HasValidators, HasSanitizers {
-        HasValidators::serialize as serializeValidators;
-        HasSanitizers::serialize as serializeSanitizers;
+    use NamedComponent,
+        SimpleImplementedValidator,
+        SimpleImplementedSanitizer {
+        SimpleImplementedValidator::serialize as serializeValidators;
+        SimpleImplementedSanitizer::serialize as serializeSanitizers;
     };
 
-    protected
-        $label,
-        $visible = true,
-        $enabled = true,
-        $collectData = true;
+    protected $label;
+    protected $visible     = true;
+    protected $enabled     = true;
+    protected $collectData = true;
 
     /**
      * Creates a new form field component
@@ -34,6 +38,11 @@ abstract class Field extends Component implements Stateful, Symmetrical, Validat
     {
         parent::__construct($name);
         $this->label = $label;
+    }
+
+    public function getState (Request $request)
+    {
+        return new State($request->getValue($this));
     }
 
     public function setCollectData ($collectData)
@@ -89,19 +98,6 @@ abstract class Field extends Component implements Stateful, Symmetrical, Validat
     }
 
     /**
-     * Adds sanitizer
-     *
-     * @param SymmetricalSanitizer $s
-     *
-     * @return Field
-     */
-    public function addSanitizer (SymmetricalSanitizer $s)
-    {
-        $this->sanitizers[] = $s;
-        return $this;
-    }
-
-    /**
      * Sets whether the control is enabled
      * @param boolean $enabled
      * @return $this
@@ -110,25 +106,5 @@ abstract class Field extends Component implements Stateful, Symmetrical, Validat
     {
         $this->enabled = $enabled;
         return $this;
-    }
-
-    /**
-     * Gets the script that will instantiate ONLY this field in an anonymous form
-     * @return string
-     */
-    public function getScript ()
-    {
-        return "jQuery(function($){ $('#" . $this->getIdentifier() . "').fieldwork(" . json_encode($this->serialize(), JSON_PRETTY_PRINT) . "); });";
-    }
-
-    /**
-     * Gets the script tag that will instantiate ONLY this field in an anonymous form
-     * @return string
-     */
-    public function getScriptHTML ()
-    {
-        $openingTag = "<script type='text/javascript'>";
-        $closingTag = "</script>";
-        return $openingTag . $this->getScript() . $closingTag;
     }
 }

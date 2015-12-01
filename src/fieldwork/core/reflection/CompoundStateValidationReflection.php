@@ -30,4 +30,12 @@ class CompoundStateValidationReflection extends StateValidationReflection
             $errors = array_merge($errors, $reflection->getErrors());
         return $errors;
     }
+
+    /**
+     * @return StateValidationReflection[]
+     */
+    public function getReflections ()
+    {
+        return $this->reflections;
+    }
 }

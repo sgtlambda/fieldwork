@@ -2,34 +2,32 @@
 
 namespace fieldwork\core\traits;
 
-use fieldwork\core\interfaces\Sanitizer;
+use fieldwork\core\interfaces\StateSanitizer;
 use fieldwork\core\interfaces\Symmetrical;
-use fieldwork\core\interfaces\Validator;
+use fieldwork\core\interfaces\StateValidator;
 use fieldwork\core\State;
 
-trait HasSanitizers
+trait SimpleImplementedSanitizer
 {
 
     /**
-     * @var Sanitizer[]
+     * @var StateSanitizer[]
      */
     private $sanitizers;
 
     public function serialize ()
     {
-        return [
-            'sanitizers' => array_filter($this->sanitizers, function (Validator $validator) {
-                return $validator instanceof Symmetrical;
-            })
-        ];
+        return ['sanitizers' => array_filter($this->sanitizers, function (StateValidator $validator) {
+            return $validator instanceof Symmetrical;
+        })];
     }
 
     /**
      * Adds a sanitizer to the sanitizer stack.
-     * @param Sanitizer $sanitizer
+     * @param StateSanitizer $sanitizer
      * @return $this
      */
-    public function addSanitizer (Sanitizer $sanitizer)
+    public function addSanitizer (StateSanitizer $sanitizer)
     {
         array_push($this->sanitizers, $sanitizer);
         return $this;

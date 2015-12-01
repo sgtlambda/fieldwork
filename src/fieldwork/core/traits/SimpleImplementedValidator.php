@@ -3,34 +3,32 @@
 namespace fieldwork\core\traits;
 
 use fieldwork\core\interfaces\Symmetrical;
-use fieldwork\core\interfaces\Validator;
+use fieldwork\core\interfaces\StateValidator;
 use fieldwork\core\reflection\CompoundStateValidationReflection;
 use fieldwork\core\State;
 use fieldwork\core\reflection\StateValidationReflection;
 
-trait HasValidators
+trait SimpleImplementedValidator
 {
 
     /**
-     * @var Validator[]
+     * @var StateValidator[]
      */
     private $validators;
 
     public function serialize ()
     {
-        return [
-            'validators' => array_filter($this->validators, function (Validator $validator) {
-                return $validator instanceof Symmetrical;
-            })
-        ];
+        return ['validators' => array_filter($this->validators, function (StateValidator $validator) {
+            return $validator instanceof Symmetrical;
+        })];
     }
 
     /**
      * Adds a validator to the validation stack.
-     * @param Validator $validator
+     * @param StateValidator $validator
      * @return $this
      */
-    public function addValidator (Validator $validator)
+    public function addValidator (StateValidator $validator)
     {
         array_push($this->validators, $validator);
         return $this;
@@ -39,7 +37,7 @@ trait HasValidators
     /**
      * Validates the provided state
      * @param State $state
-     * @return StateValidationReflection
+     * @return CompoundStateValidationReflection
      */
     public function validate (State $state)
     {

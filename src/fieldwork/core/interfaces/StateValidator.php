@@ -5,7 +5,7 @@ namespace fieldwork\core\interfaces;
 use fieldwork\core\State;
 use fieldwork\core\reflection\StateValidationReflection;
 
-interface Validator
+interface StateValidator
 {
 
     /**

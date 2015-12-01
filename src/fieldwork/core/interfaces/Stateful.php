@@ -7,8 +7,6 @@ use fieldwork\core\State;
 interface Stateful
 {
 
-    public function getIdentifier ();
-
     /**
      * @param Request $request
      *

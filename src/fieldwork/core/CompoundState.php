@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (C) Jan-Merijn Versteeg - All Rights Reserved
- * Unauthorized copying of this file, via any medium, is strictly prohibited
- * Proprietary and confidential
- */
 
 namespace fieldwork\core;
 
@@ -31,5 +26,10 @@ class CompoundState extends State
     {
         /** @noinspection PhpIllegalArrayKeyTypeInspection */
         return $this->children[$identifiable];
+    }
+
+    public function find (Identifiable $identifiable)
+    {
+
     }
 }
