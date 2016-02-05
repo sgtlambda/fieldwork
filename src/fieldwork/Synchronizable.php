@@ -22,5 +22,4 @@ interface Synchronizable
      * @return string
      */
     function describeObject ();
-
 }

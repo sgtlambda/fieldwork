@@ -5,7 +5,7 @@ namespace fieldwork\components;
 class TextField extends Field
 {
 
-    private $default_showLabel = true;
+    private $default_showLabel = false;
 
     const ON_ENTER_NEXT   = 'next';
     const ON_ENTER_SUBMIT = 'submit';
