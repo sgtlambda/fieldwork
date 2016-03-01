@@ -16,12 +16,13 @@ class IbanField extends TextField
      * @param string $value
      * @param string $openIbanUsername openiban API username
      * @param string $openIbanPassword openiban API password
+     * @param string $errorMsg         The error message to show if the field value is not valid
      */
-    public function __construct ($slug, $label, $value = '', $openIbanUsername = null, $openIbanPassword = null)
+    public function __construct ($slug, $label, $value = '', $openIbanUsername = null, $openIbanPassword = null, $errorMsg = validators\IbanFieldValidator::ERROR)
     {
         parent::__construct($slug, $label, $value, 0);
         $this->addSanitizer(new sanitizers\FieldUppercaser());
         $this->addSanitizer(new sanitizers\IbanSanitizer($openIbanUsername, $openIbanPassword));
-        $this->addValidator(new validators\IbanFieldValidator());
+        $this->addValidator(new validators\IbanFieldValidator($errorMsg));
     }
 }

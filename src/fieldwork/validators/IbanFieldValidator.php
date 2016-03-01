@@ -13,10 +13,10 @@ class IbanFieldValidator extends RegexFieldValidator
 
     private $validator;
 
-    public function __construct ()
+    public function __construct ($errorMsg = self::ERROR)
     {
         parent::__construct(
-            self::PATT, self::ERROR, self::PATT_LOCAL
+            self::PATT, $errorMsg, self::PATT_LOCAL
         );
         $this->validator = new IBANValidator();
     }
