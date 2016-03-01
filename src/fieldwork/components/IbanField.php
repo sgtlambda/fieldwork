@@ -24,6 +24,6 @@ class IbanField extends TextField
         parent::__construct($slug, $label, $value, 0);
         $this->addSanitizer(new sanitizers\FieldUppercaser());
         $this->addSanitizer(new sanitizers\IbanSanitizer($convertBban ? $openIbanUsername : null, $convertBban ? $openIbanPassword : null));
-        $this->addValidator(new validators\IbanFieldValidator($errorMsg));
+        $this->addValidator(new validators\IbanFieldValidator($convertBban, $errorMsg));
     }
 }
