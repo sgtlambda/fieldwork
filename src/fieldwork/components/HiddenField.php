@@ -15,9 +15,15 @@ class HiddenField extends Field
         return self::RM_DEFAULT;
     }
 
-    public function getHTML ($showLabel = true)
+    public function getAttributes ()
     {
-        return "<input type='hidden'" . $this->getAttributesString() . ">";
+        return array_merge(parent::getAttributes(), [
+            "type" => "hidden"
+        ]);
     }
 
+    public function getHTML ($showLabel = true)
+    {
+        return "<input " . $this->getAttributesString() . ">";
+    }
 }
