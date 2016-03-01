@@ -3,6 +3,7 @@
 namespace fieldwork\sanitizers;
 
 use fieldwork\sanitizers;
+use GuzzleHttp\Client;
 
 class IbanSanitizer extends sanitizers\FieldSanitizer
 {
@@ -16,6 +17,15 @@ class IbanSanitizer extends sanitizers\FieldSanitizer
     {
         $this->openIbanUsername = $openIbanUsername;
         $this->openIbanPassword = $openIbanPassword;
+    }
+
+    /**
+     * @param $bban
+     * @return string
+     */
+    private static function getRequestEndpoint ($bban)
+    {
+        return self::ENDPOINT . $bban;
     }
 
     public function describeObject ()
@@ -36,8 +46,11 @@ class IbanSanitizer extends sanitizers\FieldSanitizer
     public function sanitize ($value)
     {
         $value = preg_replace('/\s/', '', $value);
-        if (preg_match('/^[0-9]{1,10}$/', $value) && $this->openIbanUsername !== null && $this->openIbanPassword !== null)
-            $value = self::convertUsingOpenIban($value, $this->openIbanUsername, $this->openIbanPassword);
+        if (preg_match('/^[0-9]{1,10}$/', $value) && $this->openIbanUsername !== null && $this->openIbanPassword !== null) {
+            $convertedValue = self::convertUsingOpenIban($value, $this->openIbanUsername, $this->openIbanPassword);
+            if ($convertedValue !== null)
+                $value = $convertedValue;
+        }
         $parts = str_split($value, 4);
         return implode(' ', $parts);
     }
@@ -45,24 +58,24 @@ class IbanSanitizer extends sanitizers\FieldSanitizer
     /**
      * Converst BBAN number into IBAN number using the openiban API
      *
-     * @param $bban
-     * @param $username
-     * @param $password
+     * @param string $bban
+     * @param string $username
+     * @param string $password
      *
      * @return string|null
      */
     private static function convertUsingOpenIban ($bban, $username, $password)
     {
-        $apiCall = curl_init(self::ENDPOINT . $bban);
-        curl_setopt($apiCall, CURLOPT_USERPWD, $username . ":" . $password);
-        curl_setopt($apiCall, CURLOPT_RETURNTRANSFER, true);
-        $response    = curl_exec($apiCall);
-        $apiResponse = json_decode($response, true);
-        curl_close($apiCall);
-        if ($apiResponse === null)
+        try {
+            $client      = new Client();
+            $res         = $client->request('GET', self::getRequestEndpoint($bban), [
+                'auth' => [$username, $password]
+            ]);
+            $apiResponse = json_decode($res->getBody());
+            return $apiResponse === null ? null : $apiResponse['iban'];
+        } catch (\Exception $e) {
             return null;
-        else
-            return $apiResponse['iban'];
+        }
     }
 
 }
