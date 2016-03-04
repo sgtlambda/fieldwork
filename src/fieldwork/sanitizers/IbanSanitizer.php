@@ -3,7 +3,7 @@
 namespace fieldwork\sanitizers;
 
 use fieldwork\sanitizers;
-use GuzzleHttp\Client;
+//use GuzzleHttp\Client;
 
 class IbanSanitizer extends sanitizers\FieldSanitizer
 {
@@ -66,16 +66,16 @@ class IbanSanitizer extends sanitizers\FieldSanitizer
      */
     private static function convertUsingOpenIban ($bban, $username, $password)
     {
-        try {
-            $client      = new Client();
-            $res         = $client->request('GET', self::getRequestEndpoint($bban), [
-                'auth' => [$username, $password]
-            ]);
-            $apiResponse = json_decode($res->getBody());
-            return $apiResponse === null ? null : $apiResponse['iban'];
-        } catch (\Exception $e) {
+//        try {
+//            $client      = new Client();
+//            $res         = $client->request('GET', self::getRequestEndpoint($bban), [
+//                'auth' => [$username, $password]
+//            ]);
+//            $apiResponse = json_decode($res->getBody());
+//            return $apiResponse === null ? null : $apiResponse['iban'];
+//        } catch (\Exception $e) {
             return null;
-        }
+//        }
     }
 
 }
