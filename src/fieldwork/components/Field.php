@@ -212,6 +212,8 @@ abstract class Field extends Component
             /* @var $sanitizer FieldSanitizer */
             $s[] = $sanitizer->getJsonData();
         return array(
+            'valid'       => $this->isValid(),
+            'error'       => $this->latestErrorMsg,
             'validators'  => $v,
             'sanitizers'  => $s,
             'id'          => $this->getID(),
@@ -286,6 +288,7 @@ abstract class Field extends Component
 
     public function isValid ()
     {
+        // TODO cache
         if ($this->forceInvalid)
             return false;
         foreach ($this->validators as $validator) {

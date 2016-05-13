@@ -30,6 +30,15 @@ class Checkbox extends Field
     }
 
     /**
+     * Set the "checked" state of this box
+     * @param bool $checked
+     */
+    public function setChecked ($checked = true)
+    {
+        $this->value = $checked ? self::ON : '';
+    }
+
+    /**
      * Is the checkbox checked in its current state?
      * @return bool
      */
