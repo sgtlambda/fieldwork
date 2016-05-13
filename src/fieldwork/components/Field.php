@@ -14,6 +14,7 @@ abstract class Field extends Component
         $label,
         $visible = true,
         $enabled = true,
+        $restored = false,
         $value,
         $initialValue,
         $latestErrorMsg = "",
@@ -84,7 +85,8 @@ abstract class Field extends Component
             foreach ($this->sanitizers as $s)
                 /* @var $s FieldSanitizer */
                 $v = $s->sanitize($v);
-        $this->value = $v;
+        $this->value    = $v;
+        $this->restored = true;
     }
 
     /**
@@ -211,8 +213,9 @@ abstract class Field extends Component
         foreach ($this->sanitizers as $sanitizer)
             /* @var $sanitizer FieldSanitizer */
             $s[] = $sanitizer->getJsonData();
+        $valid = $this->restored ? $this->isValid() : true;
         return array(
-            'valid'       => $this->isValid(),
+            'valid'       => $valid,
             'error'       => $this->latestErrorMsg,
             'validators'  => $v,
             'sanitizers'  => $s,
