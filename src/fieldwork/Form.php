@@ -251,9 +251,21 @@ class Form extends GroupComponent implements FormData, Synchronizable
         return $openingTag . $this->getScript() . $closingTag;
     }
 
-    public function renderFormError ($errorMsg)
+    static public function renderFormError ($errorMsg)
     {
         return sprintf("<div class=\"form-error card red white\"><div class=\"card-content red-text text-darken-4\">%s</div></div>", $errorMsg);
+    }
+
+    /**
+     * Get all the error messages for form-wide validators that returned invalid
+     */
+    public function getFormErrors ()
+    {
+        return array_map(function (FormValidator $formValidator) {
+            return $formValidator->getErrorMsg();
+        }, array_filter($this->validators, function (FormValidator $validator) {
+            return !$validator->isValid();
+        }));
     }
 
     /**
@@ -264,11 +276,9 @@ class Form extends GroupComponent implements FormData, Synchronizable
     public function getWrapBefore ()
     {
         $dataFields = $this->getDataFieldsHTML();
-        $errors     = '';
-        foreach ($this->validators as $validator)
-            /* @var $validator FormValidator */
-            if (!$validator->isValid())
-                $errors .= $this->renderFormError($validator->getErrorMsg());
+        $errors     = join(array_map(function ($errorMsg) {
+            return Form::renderFormError($errorMsg);
+        }, $this->getFormErrors()));
         return "<form " . $this->getAttributesString() . ">" . $errors . $dataFields;
     }
 
@@ -469,7 +479,7 @@ class Form extends GroupComponent implements FormData, Synchronizable
     /**
      * Gets a complete associated array containing all the data that needs to be stored
      *
-     * @param bool $useName           Whether to use the field name (if not, the fields local slug is used)
+     * @param bool $useName           Whether to use the field name (if not, the fields shorter local slug is used)
      * @param bool $includeDataFields Whether to include the data fields
      *
      * @return array
