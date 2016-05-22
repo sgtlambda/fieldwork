@@ -258,6 +258,8 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Get all the error messages for form-wide validators that returned invalid
+     *
+     * @return string[]
      */
     public function getFormErrors ()
     {
