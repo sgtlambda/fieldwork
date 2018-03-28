@@ -27,7 +27,7 @@
   },
   "require":     {
     "php":                     ">=5.4",
-    "egulias/email-validator": "~1.2",
+    "egulias/email-validator": "*",
     "rmccue/requests":         "~1.6",
     "globalcitizen/php-iban":  "^2.5"
   },
