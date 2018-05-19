@@ -3,6 +3,7 @@
 namespace fieldwork\validators;
 
 use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\RFCValidation;
 
 class EmailFieldValidator extends RegexFieldValidator
 {
@@ -19,7 +20,6 @@ class EmailFieldValidator extends RegexFieldValidator
 
     public function isValid ($value)
     {
-        return $this->validator->isValid($value);
+        return $this->validator->isValid($value, new RFCValidation());
     }
-
 }
