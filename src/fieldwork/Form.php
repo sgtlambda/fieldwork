@@ -313,12 +313,9 @@ class Form extends GroupComponent implements FormData, Synchronizable
 
     /**
      * Renders and returns complete form markup as HTML. Use this to echo the form using default markup to the webpage.
-     *
-     * @param bool $showLabel
-     *
      * @return string
      */
-    public function getHTML ($showLabel = true)
+    public function getHTML ($beforeTpl = '', $after = '', $prefix = '', $suffix = '')
     {
         return $this->wrap($this->getInnerHTML());
     }
