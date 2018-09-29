@@ -159,17 +159,12 @@ abstract class Field extends Component
 
     /**
      * Whether to condense multiple values into a single string
-     *
-     * @param bool $condense
-     *
      * @return string|string[]
      */
-    public function getValue ($condense = true)
+    public function getValue ()
     {
-        $v = $this->value;
-        if ($condense && $this->isMultiple() && is_array($v))
-            $v = $this->condenseMultiple($v);
-        return $v;
+        return $this->isMultiple() && is_array($this->value) ?
+            $this->condenseMultiple($this->value) : $this->value;
     }
 
     public function setValue ($value)

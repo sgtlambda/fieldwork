@@ -17,6 +17,12 @@ class SelectBox extends Field
     protected $options;
 
     /**
+     * @var bool Remove "empty" values from the value array
+     *           (these are sometimes present due to a bug in the select2 library)
+     */
+    protected $sanitizeEmpties = true;
+
+    /**
      * The value to return if the "empty" option is selected
      * @var string|null
      */
@@ -93,10 +99,19 @@ class SelectBox extends Field
         return $r;
     }
 
-    public function getValue ($condense = true)
+    private function sanitizeEmpties ($input)
     {
-        if ($this->value === "" || is_array($this->value) && !count($this->value))
-            return $this->emptyValue;
+        return array_filter($input, function ($value) {
+            return !empty($value);
+        });
+    }
+
+    public function getValue ()
+    {
+        if ($this->sanitizeEmpties && is_array($this->value)) $this->value = $this->sanitizeEmpties($this->value);
+
+        if ($this->value === "" || is_array($this->value) && !count($this->value)) return $this->emptyValue;
+
         return parent::getValue();
     }
 
