@@ -202,7 +202,7 @@ abstract class Component
     {
         $attributePairs = array();
         foreach ($this->getAttributes() as $attr => $value)
-            $attributePairs[] = sprintf('%s="%s"', $attr, str_replace('"', '&quot;', $value));
+            $attributePairs[] = sprintf('%s="%s"', $attr, str_replace('"', '&quot;', $value ?? ""));
         return implode(' ', $attributePairs);
     }
 
